@@ -20,7 +20,9 @@ extern "C" {
         uint16_t magic;
         int16_t lSpeed;
         int16_t rSpeed;
-        uint16_t padding;
+        int16_t armRotate;
+        int16_t armTop;
+        int16_t armBottom;
     };
 
     struct toNUCMsg {

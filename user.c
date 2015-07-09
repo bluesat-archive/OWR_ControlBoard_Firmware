@@ -86,8 +86,8 @@ void InitApp(void)
     OC6R = 86;               // pulse start time
     OC6CON1bits.OCM = 0b110; // continuous pulse mode
     
-    TRISDbits.TRISD4 = 0; // Set SC1/P3 as output
-    RPOR2bits.RP68R = 0b010110; // Link to OC7
+    TRISEbits.TRISE0 = 0; // Set SC7/P5 as output
+    RPOR4bits.RP80R = 0b010110; // Link to OC7
     // Configure Output Compare channel 1 (OC7)
     OC7R = 86;               // pulse start time
     OC7CON1bits.OCM = 0b110; // continuous pulse mode
@@ -98,7 +98,7 @@ void InitApp(void)
     OC8R = 86;               // pulse start time
     OC8CON1bits.OCM = 0b110; // continuous pulse mode
     
-    TRISDbits.TRISD6 = 0; // Set SC1/P3 as output
+    TRISDbits.TRISD6 = 0; // Set SC3/P5 as output
     RPOR3bits.RP70R = 0b100101; // Link to OC9
     // Configure Output Compare channel 1 (OC9)
     OC9R = 86;               // pulse start time

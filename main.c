@@ -53,6 +53,10 @@ int16_t main(void)
             OC5R = msg->rSpeed / 17.33;
             OC6R = msg->rSpeed / 17.33;
             
+            OC7R = msg->armRotate / 17.33;
+            OC8R = msg->armTop / 17.33;
+            OC9R = msg->armBottom / 17.33;
+            
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.vbat = OC1R;
             sendMessage(&sendMsg);
