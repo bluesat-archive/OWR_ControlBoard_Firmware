@@ -37,6 +37,8 @@ extern "C" {
         int16_t armRotate;
         int16_t armTop;
         int16_t armBottom;
+        int16_t clawRotate;
+        int16_t clawGrip;
     };
 
     struct toNUCMsg {

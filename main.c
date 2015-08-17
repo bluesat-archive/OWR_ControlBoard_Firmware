@@ -60,6 +60,8 @@ int16_t main(void)
             OC7R = msg->armRotate / 17.33;
             OC8R = msg->armTop / 17.33;
             OC9R = msg->armBottom / 17.33;
+            OC10R = msg->clawRotate / 17.33;
+            OC11R = msg->clawGrip / 17.33;
             
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.vbat = 0;
