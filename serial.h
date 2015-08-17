@@ -12,6 +12,7 @@
 
 struct toControlMsg *recieveMessage();
 void sendMessage(struct toNUCMsg *msg);
+char* recieveGPS();
 
 #endif	/* SERIAL_H */
 

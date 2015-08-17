@@ -16,12 +16,17 @@
 #include <stdint.h>          /* For uint16_t definition                       */
 #include <stdbool.h>         /* For true/false definition                     */
 #include "user.h"            /* variables/params used by user.c               */
-
+#include <i2c.h>
+#include "system.h"
+#include "srf02.h"
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
+
+#define I2C_FREQ 100000L
+#define I2C_CONFIG2 (((1/I2C_FREQ) * FCY) - 2)
 
 void InitApp(void)
 {
@@ -34,6 +39,7 @@ void InitApp(void)
     /* Setup analog functionality and port direction */
 
     __builtin_write_OSCCONL(OSCCON & ~(1<<6)); 
+    //__builtin_write_OSCCONL(OSCCON & ~(1<<1));
     /* Initialize peripherals */
     // UART enabled, 8N1, BRGH
     U1MODE = 0b1000000000001000;//(1 << 15) | (1 << 3);
@@ -41,7 +47,20 @@ void InitApp(void)
     U1STA = 0b1000010000000000;//(1 << 15) | (1 << 12) | (1 << 10);
     U1BRG = 47; // ((7.37/2)*10^6)/(4*19200)
     RPINR18bits.U1RXR = 75; // Link rx pin
-    RPOR0bits.RP64R = 1; // Link tx pin
+    RPOR0bits.RP65R = 1; // Link tx pin
+    
+    // UART 2
+    // UART enabled, 8N1, BRGH
+    U2MODE = 0b1000000000001000;//(1 << 15) | (1 << 3);
+    // TX interrupt, RX enabled, TX enabled
+    U2STA = 0b1000010000000000;//(1 << 15) | (1 << 12) | (1 << 10);
+    U2BRG = 96; // ((7.37/2)*10^6)/(4*19200)
+    RPINR19bits.U2RXR = 83; // Link rx pin
+    //RPOR0bits.RP64R = 1; // Link tx pin
+    ANSELE = 0;
+    
+    
+    //TRISCbits.TRISC13 = 0;
     
     // Timer setup
     // URX receive timeout
@@ -115,10 +134,32 @@ void InitApp(void)
     IPC2bits.U1RXIP = 6;
     IEC0bits.U1TXIE = 1;
     IPC3bits.U1TXIP = 3;
+    
+    IFS1bits.U2TXIF = 0;
+    IFS1bits.U2RXIF = 0;
+    IEC1bits.U2RXIE = 1;
+    IPC7bits.U2RXIP = 6;
+    IEC1bits.U2TXIE = 1;
+    IPC7bits.U2TXIP = 3;
+    
     IEC0bits.T1IE = 1;
     IPC0bits.T1IP = 3;
-
     
-    __builtin_write_OSCCONL(OSCCON | (1<<6));
-    
+    // Setup I2C
+    /* Baud rate is set for 100 kHz */
+    unsigned int config2 = I2C_CONFIG2;
+    /* Configure I2C for 7 bit address mode */
+    unsigned int config1 = (I2C1_ON & I2C1_IDLE_CON & I2C1_CLK_HLD &
+               I2C1_IPMI_DIS & I2C1_7BIT_ADD &
+               I2C1_SLW_DIS & I2C1_SM_DIS &
+               I2C1_GCALL_DIS & I2C1_STR_DIS &
+               I2C1_NACK & I2C1_ACK_DIS & I2C1_RCV_DIS &
+               I2C1_STOP_DIS & I2C1_RESTART_DIS &
+               I2C1_START_DIS);
+    OpenI2C1(config1,config2);
+    IdleI2C1();
+    __builtin_write_OSCCONL(OSCCON | (1<<6));  
+    //init_hmc();
+    //IdleI2C1();
+    //init_srf02(SRF02_DEFAULT_ADDR);
 }
