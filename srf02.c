@@ -2,33 +2,7 @@
 #include <stdint.h>
 #include "srf02.h"
 #include <i2c.h>
-
-static int8_t read_i2c() {
-    int8_t a = MasterReadI2C1();
-    AckI2C1();
-    while(I2C1CONbits.ACKEN);
-    return a;
-}
-
-static void write_i2c(uint8_t data) {
-    MasterWriteI2C1(data);
-    while(I2C1STATbits.TBF);  // 8 clock cycles
-    while(!IFS1bits.MI2C1IF); // Wait for 9th clock cycle
-    IFS1bits.MI2C1IF = 0;     // Clear interrupt flag
-    while(I2C1STATbits.ACKSTAT);
-}
-
-static void start_i2c() {
-    StartI2C1();
-    while(I2C1CONbits.SEN);
-    IFS1bits.MI2C1IF = 0;
-}
-
-static void stop_i2c() {
-    StopI2C1();
-    while(I2C1CONbits.PEN);
-    IFS1bits.MI2C1IF = 0;
-}
+#include "i2c_lib.h"
 
 void init_srf02(uint8_t addr) {
     // Make the sensor report distance in cm

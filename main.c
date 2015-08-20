@@ -24,6 +24,7 @@
 #include "serial.h"
 #include "HMC5883L.h"
 #include "srf02.h"
+#include "MPU6050.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -48,6 +49,7 @@ int16_t main(void)
     struct toNUCMsg sendMsg;
     GPSData gpsData;
     char *gpsString;
+    init_mpu();
     while(1)
     {
         if (msg = recieveMessage()) {
@@ -64,7 +66,8 @@ int16_t main(void)
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.vbat = 0;
             sendMsg.gpsData = gpsData;
-            sendMsg.magData = read_hmc();
+            //sendMsg.magData = read_hmc();
+            sendMsg.imuData = read_mpu();              
             sendMessage(&sendMsg);
         }
         if (gpsString = recieveGPS()) {

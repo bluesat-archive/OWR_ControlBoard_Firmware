@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c
+SOURCEFILES_QUOTED_IF_SPACED=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c MPU6050.c i2c_lib.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/serial.o.d ${OBJECTDIR}/HMC5883L.o.d ${OBJECTDIR}/srf02.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o ${OBJECTDIR}/MPU6050.o ${OBJECTDIR}/i2c_lib.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/serial.o.d ${OBJECTDIR}/HMC5883L.o.d ${OBJECTDIR}/srf02.o.d ${OBJECTDIR}/MPU6050.o.d ${OBJECTDIR}/i2c_lib.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o
+OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o ${OBJECTDIR}/MPU6050.o ${OBJECTDIR}/i2c_lib.o
 
 # Source Files
-SOURCEFILES=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c
+SOURCEFILES=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c MPU6050.c i2c_lib.c
 
 
 CFLAGS=
@@ -145,6 +145,20 @@ ${OBJECTDIR}/srf02.o: srf02.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  srf02.c  -o ${OBJECTDIR}/srf02.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/srf02.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/srf02.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/MPU6050.o: MPU6050.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/MPU6050.o.d 
+	@${RM} ${OBJECTDIR}/MPU6050.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  MPU6050.c  -o ${OBJECTDIR}/MPU6050.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/MPU6050.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/MPU6050.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/i2c_lib.o: i2c_lib.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c_lib.o.d 
+	@${RM} ${OBJECTDIR}/i2c_lib.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c_lib.c  -o ${OBJECTDIR}/i2c_lib.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/i2c_lib.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/i2c_lib.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/configuration_bits.o: configuration_bits.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -208,6 +222,20 @@ ${OBJECTDIR}/srf02.o: srf02.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/srf02.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  srf02.c  -o ${OBJECTDIR}/srf02.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/srf02.o.d"      -mno-eds-warn  -g -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/srf02.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/MPU6050.o: MPU6050.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/MPU6050.o.d 
+	@${RM} ${OBJECTDIR}/MPU6050.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  MPU6050.c  -o ${OBJECTDIR}/MPU6050.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/MPU6050.o.d"      -mno-eds-warn  -g -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/MPU6050.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/i2c_lib.o: i2c_lib.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c_lib.o.d 
+	@${RM} ${OBJECTDIR}/i2c_lib.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c_lib.c  -o ${OBJECTDIR}/i2c_lib.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/i2c_lib.o.d"      -mno-eds-warn  -g -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/i2c_lib.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

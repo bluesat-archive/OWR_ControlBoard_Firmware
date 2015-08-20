@@ -30,6 +30,11 @@ extern "C" {
         int16_t padding;
     } MagnometerData;
     
+    typedef struct {
+        int16_t gx, gy, gz;
+        int16_t ax, ay, az;
+    } IMUData;
+    
     struct toControlMsg {
         uint16_t magic;
         int16_t lSpeed;
@@ -44,6 +49,7 @@ extern "C" {
         uint16_t vbat;
         GPSData gpsData;
         MagnometerData magData;
+        IMUData imuData;
     };
 
 #ifdef	__cplusplus
