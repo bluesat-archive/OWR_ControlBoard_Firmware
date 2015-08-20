@@ -123,6 +123,18 @@ void InitApp(void)
     OC9R = 86;               // pulse start time
     OC9CON1bits.OCM = 0b110; // continuous pulse mode
     
+    TRISDbits.TRISD3 = 0; // Set SA2/P16 as output
+    RPOR1bits.RP67R = 0b100110; // Link to OC10
+    // Configure Output Compare channel 1 (OC10)
+    OC10R = 86;               // pulse start time
+    OC10CON1bits.OCM = 0b110; // continuous pulse mode
+    
+    TRISDbits.TRISD2 = 0; // Set SA1/P13 as output
+    RPOR1bits.RP66R = 0b100111; // Link to OC11
+    // Configure Output Compare channel 1 (OC11)
+    OC11R = 86;               // pulse start time
+    OC11CON1bits.OCM = 0b110; // continuous pulse mode
+    
     // Configure Timer 2 (default timer for output compare)
     PR2 = 1156;             // Timer 2 period (20ms)
     T2CONbits.TCKPS = 0b10; // Timer 2 prescaler 1:64
