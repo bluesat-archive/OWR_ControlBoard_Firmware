@@ -15,6 +15,7 @@ extern "C" {
 int8_t read_i2c();
 void write_i2c(uint8_t data);
 void start_i2c();
+void restart_i2c();
 void stop_i2c();
 
 #ifdef	__cplusplus

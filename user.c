@@ -25,7 +25,7 @@
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
 
-#define I2C_FREQ 100000L
+#define I2C_FREQ 10000L
 #define I2C_CONFIG2 (((1/I2C_FREQ) * FCY) - 2)
 
 void InitApp(void)
@@ -171,7 +171,4 @@ void InitApp(void)
     OpenI2C1(config1,config2);
     IdleI2C1();
     __builtin_write_OSCCONL(OSCCON | (1<<6));  
-    //init_hmc();
-    //IdleI2C1();
-    //init_srf02(SRF02_DEFAULT_ADDR);
 }

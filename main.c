@@ -50,6 +50,7 @@ int16_t main(void)
     GPSData gpsData;
     char *gpsString;
     init_mpu();
+    init_hmc();
     while(1)
     {
         if (msg = recieveMessage()) {
@@ -68,7 +69,7 @@ int16_t main(void)
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.vbat = 0;
             sendMsg.gpsData = gpsData;
-            //sendMsg.magData = read_hmc();
+            sendMsg.magData = read_hmc();
             sendMsg.imuData = read_mpu();              
             sendMessage(&sendMsg);
         }

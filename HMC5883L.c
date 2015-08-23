@@ -90,7 +90,10 @@ MagnometerData read_hmc(){
     data.z = (h << 8) + l;
     
     h = read_i2c();
-    l = read_i2c();
+    //l = read_i2c();
+    l = MasterReadI2C1();
+    NotAckI2C1();
+    while(I2C1CONbits.ACKEN);
     data.y = (h << 8) + l;
 
     StopI2C1();

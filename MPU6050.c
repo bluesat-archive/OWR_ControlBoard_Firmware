@@ -1,5 +1,6 @@
 #include <xc.h>
 #include <stdint.h>
+#include <i2c.h>
 #include "i2c_lib.h"
 #include "message.h"
 #include "MPU6050.h"
@@ -40,7 +41,10 @@ IMUData read_mpu() {
     l = read_i2c();
     data.gy =(h << 8) + l;
     h = read_i2c();
-    l = read_i2c();
+    //l = read_i2c();
+    l = MasterReadI2C1();
+    NotAckI2C1();
+    while(I2C1CONbits.ACKEN);
     data.gz =(h << 8) + l;
     stop_i2c();
     return data;
