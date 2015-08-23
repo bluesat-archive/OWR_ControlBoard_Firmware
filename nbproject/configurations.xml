@@ -10,6 +10,7 @@
       <itemPath>srf02.h</itemPath>
       <itemPath>i2c_lib.h</itemPath>
       <itemPath>MPU6050.h</itemPath>
+      <itemPath>pwm_lib.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -31,6 +32,7 @@
       <itemPath>srf02.c</itemPath>
       <itemPath>MPU6050.c</itemPath>
       <itemPath>i2c_lib.c</itemPath>
+      <itemPath>pwm_lib.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -359,6 +361,7 @@
         <property key="UART 2" value="true"/>
         <property key="UART 3" value="true"/>
         <property key="UART 4" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

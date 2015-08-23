@@ -44,6 +44,10 @@ extern "C" {
         int16_t armBottom;
         int16_t clawRotate;
         int16_t clawGrip;
+        int16_t cameraBottomRotate;
+        int16_t cameraBottomTilt;
+        int16_t cameraTopRotate;
+        int16_t cameraTopTilt;
     };
 
     struct toNUCMsg {

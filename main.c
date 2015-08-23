@@ -25,6 +25,8 @@
 #include "HMC5883L.h"
 #include "srf02.h"
 #include "MPU6050.h"
+#include "pwm_lib.h"
+#include "message.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -54,17 +56,23 @@ int16_t main(void)
     while(1)
     {
         if (msg = recieveMessage()) {
-            OC1R = msg->lSpeed / 17.33;
-            OC2R = msg->lSpeed / 17.33;
-            OC3R = msg->lSpeed / 17.33;
-            OC4R = msg->rSpeed / 17.33;
-            OC5R = msg->rSpeed / 17.33;
-            OC6R = msg->rSpeed / 17.33;
-            OC7R = msg->armRotate / 17.33;
-            OC8R = msg->armTop / 17.33;
-            OC9R = msg->armBottom / 17.33;
-            OC10R = msg->clawRotate / 17.33;
-            OC11R = msg->clawGrip / 17.33;
+            pwm_set_p17(msg->lSpeed);
+            pwm_set_p21(msg->lSpeed);
+            pwm_set_p15(msg->lSpeed);
+            pwm_set_p12(msg->rSpeed);
+            pwm_set_p42(msg->rSpeed);
+            pwm_set_p10(msg->rSpeed);
+            
+            pwm_set_p7(msg->armRotate);
+            pwm_set_p19(msg->armTop);
+            pwm_set_p25(msg->armBottom);
+            pwm_set_p16(msg->clawRotate);
+            pwm_set_p13(msg->clawGrip);
+            
+            pwm_set_p2(msg->cameraBottomRotate);
+            pwm_set_p3(msg->cameraBottomTilt);
+            pwm_set_p4(msg->cameraTopRotate);
+            pwm_set_p5(msg->cameraTopTilt);
             
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.vbat = 0;

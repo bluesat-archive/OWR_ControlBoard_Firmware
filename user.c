@@ -19,6 +19,7 @@
 #include <i2c.h>
 #include "system.h"
 #include "srf02.h"
+#include "pwm_lib.h"
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
@@ -58,6 +59,10 @@ void InitApp(void)
     RPINR19bits.U2RXR = 83; // Link rx pin
     //RPOR0bits.RP64R = 1; // Link tx pin
     ANSELE = 0;
+    ANSELB = 0;
+    ANSELC = 0;
+    ANSELG = 0;
+    ANSELD = 0;
     
     
     //TRISCbits.TRISC13 = 0;
@@ -69,76 +74,26 @@ void InitApp(void)
     PR1 = 64000; // 10ms 
     
     // PWM setup
-    TRISEbits.TRISE4 = 0; // Set SA7/P17 as output
-    RPOR5bits.RP84R = 0b010000; // Link to OC1
-    // Configure Output Compare channel 1 (OC1)
-    OC1R = 86;               // pulse start time
-    OC1CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISEbits.TRISE5 = 0; // Set SD4/P21 as output
-    RPOR6bits.RP85R = 0b010001; // Link to OC2
-    // Configure Output Compare channel 1 (OC1)
-    OC2R = 86;               // pulse start time
-    OC2CON1bits.OCM = 0b110; // continuous pulse mode
- 
-    TRISEbits.TRISE7 = 0; // Set SD2/P15 as output
-    RPOR6bits.RP87R = 0b010010; // Link to OC3
-    // Configure Output Compare channel 1 (OC3)
-    OC3R = 86;               // pulse start time
-    OC3CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISDbits.TRISD4 = 0; // Set SC1/P3 as output
-    RPOR2bits.RP68R = 0b010011; // Link to OC4
-    // Configure Output Compare channel 1 (OC4)
-    OC4R = 86;               // pulse start time
-    OC4CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISFbits.TRISF6 = 0; // Set SP2/P42 as output
-    RPOR10bits.RP102R = 0b010100; // Link to OC5
-    // Configure Output Compare channel 1 (OC5)
-    OC5R = 86;               // pulse start time
-    OC5CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISDbits.TRISD7 = 0; // Set SC0/P2 as output
-    RPOR3bits.RP71R = 0b010101; // Link to OC6
-    // Configure Output Compare channel 1 (OC3)
-    OC6R = 86;               // pulse start time
-    OC6CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISEbits.TRISE0 = 0; // Set SC7/P5 as output
-    RPOR4bits.RP80R = 0b010110; // Link to OC7
-    // Configure Output Compare channel 1 (OC7)
-    OC7R = 86;               // pulse start time
-    OC7CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISDbits.TRISD5 = 0; // Set SC2/P4 as output
-    RPOR2bits.RP69R = 0b010111; // Link to OC8
-    // Configure Output Compare channel 1 (OC8)
-    OC8R = 86;               // pulse start time
-    OC8CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISDbits.TRISD6 = 0; // Set SC3/P5 as output
-    RPOR3bits.RP70R = 0b100101; // Link to OC9
-    // Configure Output Compare channel 1 (OC9)
-    OC9R = 86;               // pulse start time
-    OC9CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISDbits.TRISD3 = 0; // Set SA2/P16 as output
-    RPOR1bits.RP67R = 0b100110; // Link to OC10
-    // Configure Output Compare channel 1 (OC10)
-    OC10R = 86;               // pulse start time
-    OC10CON1bits.OCM = 0b110; // continuous pulse mode
-    
-    TRISDbits.TRISD2 = 0; // Set SA1/P13 as output
-    RPOR1bits.RP66R = 0b100111; // Link to OC11
-    // Configure Output Compare channel 1 (OC11)
-    OC11R = 86;               // pulse start time
-    OC11CON1bits.OCM = 0b110; // continuous pulse mode
+    pwm_init_p17();
+    pwm_init_p21();
+    pwm_init_p15();
+    pwm_init_p3();
+    pwm_init_p42();
+    pwm_init_p2();
+    pwm_init_p7();
+    pwm_init_p4();
+    pwm_init_p5();
+    pwm_init_p16();
+    pwm_init_p13();
+    pwm_init_p10();
+    pwm_init_p12();
+    pwm_init_p19();
+    pwm_init_p25();
     
     // Configure Timer 2 (default timer for output compare)
-    PR2 = 1156;             // Timer 2 period (20ms)
-    T2CONbits.TCKPS = 0b10; // Timer 2 prescaler 1:64
-    T2CONbits.TON = 1;      // Enable Timer 2
+    //PR2 = 1156;             // Timer 2 period (20ms)
+    //T2CONbits.TCKPS = 0b10; // Timer 2 prescaler 1:64
+    //T2CONbits.TON = 1;      // Enable Timer 2
     
     IFS0bits.U1TXIF = 0;
     IFS0bits.U1RXIF = 0;
