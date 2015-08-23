@@ -2,13 +2,7 @@
 #include <stdint.h>
 #include "HMC5883L.h"
 #include <i2c.h>
-
-static int8_t read_i2c() {
-    int8_t a = MasterReadI2C1();
-    AckI2C1();
-    while(I2C1CONbits.ACKEN);
-    return a;
-}
+#include "i2c_lib.h"
 
 void init_hmc() {
     start_i2c();
@@ -36,7 +30,11 @@ MagnometerData read_hmc(){
     data.z = (h << 8) + l;
     
     h = read_i2c(0);
-    l = read_i2c(1);
+    //l = read_i2c(1);
+    l = MasterReadI2C1();
+    NotAckI2C1();
+    int i;
+    for (i = 0; I2C1CONbits.ACKEN && i < 20000; ++i);
     data.y = (h << 8) + l;
     stop_i2c();
     return data;

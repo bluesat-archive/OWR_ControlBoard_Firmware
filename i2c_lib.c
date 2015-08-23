@@ -3,13 +3,13 @@
 #include <stdint.h>
 #include "i2c_lib.h"
 
-#define I2C_TIMEOUT 500
+#define I2C_TIMEOUT 20000
 static int i = 0;
 
 int8_t read_i2c(int is_last_byte) {
     int8_t a = MasterReadI2C1();
-    if (is_last_byte) NotAckI2C1();
-    else AckI2C1();
+    //if (is_last_byte) NotAckI2C1();
+    AckI2C1();
     for (i = 0; I2C1CONbits.ACKEN && i < I2C_TIMEOUT; ++i);
     return a;
 }
@@ -32,4 +32,5 @@ void stop_i2c() {
     StopI2C1();
     for (i = 0; I2C1CONbits.PEN && i < I2C_TIMEOUT; ++i);
     IFS1bits.MI2C1IF = 0;
+    IdleI2C1();
 }

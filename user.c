@@ -59,10 +59,10 @@ void InitApp(void)
     RPINR19bits.U2RXR = 83; // Link rx pin
     //RPOR0bits.RP64R = 1; // Link tx pin
     ANSELE = 0;
-    ANSELB = 0;
-    ANSELC = 0;
-    ANSELG = 0;
-    ANSELD = 0;
+    //ANSELB = 0;
+    //ANSELC = 0;
+    //ANSELG = 0;
+    //ANSELD = 0;
     
     
     //TRISCbits.TRISC13 = 0;

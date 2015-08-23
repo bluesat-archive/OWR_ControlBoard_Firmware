@@ -41,7 +41,11 @@ IMUData read_mpu() {
     l = read_i2c(0);
     data.gy =(h << 8) + l;
     h = read_i2c(0);
-    l = read_i2c(1);
+    //l = read_i2c(1);
+    l = MasterReadI2C1();
+    NotAckI2C1();
+    int i;
+    for (i = 0; I2C1CONbits.ACKEN && i < 20000; ++i);
     data.gz =(h << 8) + l;
     stop_i2c();
     return data;
