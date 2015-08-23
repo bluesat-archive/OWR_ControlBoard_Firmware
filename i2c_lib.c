@@ -3,29 +3,33 @@
 #include <stdint.h>
 #include "i2c_lib.h"
 
-int8_t read_i2c() {
+#define I2C_TIMEOUT 500
+static int i = 0;
+
+int8_t read_i2c(int is_last_byte) {
     int8_t a = MasterReadI2C1();
-    AckI2C1();
-    while(I2C1CONbits.ACKEN);
+    if (is_last_byte) NotAckI2C1();
+    else AckI2C1();
+    for (i = 0; I2C1CONbits.ACKEN && i < I2C_TIMEOUT; ++i);
     return a;
 }
 
 void write_i2c(uint8_t data) {
     MasterWriteI2C1(data);
-    while(I2C1STATbits.TBF);  // 8 clock cycles
-    while(!IFS1bits.MI2C1IF); // Wait for 9th clock cycle
+    for (i = 0; I2C1STATbits.TBF && i < I2C_TIMEOUT; ++i);  // 8 clock cycles
+    for (i = 0; !IFS1bits.MI2C1IF && i < I2C_TIMEOUT; ++i); // Wait for 9th clock cycle
     IFS1bits.MI2C1IF = 0;     // Clear interrupt flag
-    while(I2C1STATbits.ACKSTAT);
+    for (i = 0; I2C1STATbits.ACKSTAT && i < I2C_TIMEOUT; ++i);
 }
 
 void start_i2c() {
     StartI2C1();
-    while(I2C1CONbits.SEN);
+    for (i = 0; I2C1CONbits.SEN && i < I2C_TIMEOUT; ++i);
     IFS1bits.MI2C1IF = 0;
 }
 
 void stop_i2c() {
     StopI2C1();
-    while(I2C1CONbits.PEN);
+    for (i = 0; I2C1CONbits.PEN && i < I2C_TIMEOUT; ++i);
     IFS1bits.MI2C1IF = 0;
 }
