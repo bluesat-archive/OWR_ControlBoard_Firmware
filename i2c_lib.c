@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "i2c_lib.h"
 
-#define I2C_TIMEOUT 20000
+#define I2C_TIMEOUT 2000
 static int i = 0;
 
 int8_t read_i2c(int is_last_byte) {

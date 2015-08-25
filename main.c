@@ -74,8 +74,13 @@ int16_t main(void)
             pwm_set_p4(msg->cameraTopRotate);
             pwm_set_p5(msg->cameraTopTilt);
             
+            AD1CON1bits.SAMP = 0;
+            while (!AD1CON1bits.DONE);
+            AD1CON1bits.DONE = 0;
+            
+            int s = ADC1BUF2;
             sendMsg.magic = MESSAGE_MAGIC;
-            sendMsg.vbat = 0;
+            sendMsg.vbat = ADC1BUF0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
             sendMsg.imuData = read_mpu();              

@@ -35,6 +35,9 @@ void InitApp(void)
     TRISBbits.TRISB0 = 0;
     TRISBbits.TRISB1 = 0;
     
+    //TRISBbits.TRISB4 = 1;
+    //TRISEbits.TRISE2 = 1;
+    
     LATBbits.LATB0 = 1;
     LATBbits.LATB1 = 1;
     /* Setup analog functionality and port direction */
@@ -59,11 +62,32 @@ void InitApp(void)
     RPINR19bits.U2RXR = 83; // Link rx pin
     //RPOR0bits.RP64R = 1; // Link tx pin
     ANSELE = 0;
-    //ANSELB = 0;
-    //ANSELC = 0;
-    //ANSELG = 0;
-    //ANSELD = 0;
+    ANSELB = 0;
+    ANSELC = 0;
+    ANSELG = 0;
+    ANSELD = 0;
+    ANSELBbits.ANSB4 = 1; // SP4
+    ANSELEbits.ANSE2 = 1; // SD5
+    AD1CON1 = 0;
+    AD1CON2 = 0;
+    AD1CON3 = 0;
+    AD1CON4 = 0;
+    AD1CHS0 = 0x0000;
+    AD1CHS123 = 0x0000;
+    AD1CSSHbits.CSS26 = 1;
+    AD1CSSLbits.CSS4 = 1;
+    AD1CON1bits.SSRCG = 0;
+    AD1CON1bits.SIMSAM = 1;
+    AD1CON1bits.SSRC = 0; // auto convert
+    AD1CHS0bits.CH0SA = 26; // AN26
+    AD1CON2bits.CHPS = 2; // Read CH0 - CH3 
+    //AD1CHS0bits.CH0NB = 26; // AN2
+    AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
+    AD1CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
+    AD1CHS123bits.CH123SA = 1;
     
+    AD1CON1bits.ASAM = 1;
+    AD1CON1bits.ADON = 1;
     
     //TRISCbits.TRISC13 = 0;
     

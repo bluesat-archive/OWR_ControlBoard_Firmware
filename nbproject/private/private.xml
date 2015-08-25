@@ -5,6 +5,7 @@
         <group>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/MPU6050.c</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/user.c</file>
+            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/system.c</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/HMC5883L.c</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/message.h</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/main.c</file>
