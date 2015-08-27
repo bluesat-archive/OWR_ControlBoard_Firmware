@@ -229,28 +229,28 @@ void pwm_set_p19(uint16_t pulse) {
 
 static uint16_t pulse_p25 = PWM_MIDPOINT;
 static uint16_t last_pulse_p25 = PWM_MIDPOINT;
-void __attribute__ ((__interrupt__, no_auto_psv)) _T5Interrupt(void)              
+void __attribute__ ((__interrupt__, no_auto_psv)) _T6Interrupt(void)              
 {  
     if (LATBbits.LATB3) {
         LATBbits.LATB3 = 0;
-        PR5 = PWM_1US * (PWM_PERIOD - last_pulse_p25);
+        PR6 = PWM_1US * (PWM_PERIOD - last_pulse_p25);
     } else {
         LATBbits.LATB3 = 1;
-        PR5 = PWM_1US * (pulse_p25);
+        PR6 = PWM_1US * (pulse_p25);
         last_pulse_p25 = pulse_p25;
     }
-    IFS1bits.T5IF = 0;   
+    IFS2bits.T6IF = 0;   
 }
 
 void pwm_init_p25(void) {
     TRISBbits.TRISB3 = 0; // Set port as output
     LATBbits.LATB3 = 1;
-    T5CONbits.TON = 1;
-    T5CONbits.TCKPS = 0b10; // prescaler 1:64
-    TMR5 = 0;
-    PR5 = PWM_1US * PWM_MIDPOINT;
-    IEC1bits.T5IE = 1;
-    IPC7bits.T5IP = 3;
+    T6CONbits.TON = 1;
+    T6CONbits.TCKPS = 0b10; // prescaler 1:64
+    TMR6 = 0;
+    PR6 = PWM_1US * PWM_MIDPOINT;
+    IEC2bits.T6IE = 1;
+    IPC11bits.T6IP = 3;
 }
 
 void pwm_set_p25(uint16_t pulse) {
