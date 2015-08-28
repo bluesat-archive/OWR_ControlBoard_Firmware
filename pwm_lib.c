@@ -139,28 +139,28 @@ void pwm_set_p13(uint16_t pulse) {
 
 static uint16_t pulse_p10 = 1500;
 static uint16_t last_pulse_p10 = 1500;
-void __attribute__ ((__interrupt__, no_auto_psv)) _T2Interrupt(void)              
+void __attribute__ ((__interrupt__, no_auto_psv)) _T7Interrupt(void)              
 {  
     if (LATGbits.LATG7) {
         LATGbits.LATG7 = 0;
-        PR2 = PWM_1US * (PWM_PERIOD - last_pulse_p10);
+        PR7 = PWM_1US * (PWM_PERIOD - last_pulse_p10);
     } else {
         LATGbits.LATG7 = 1;
-        PR2 = PWM_1US * (pulse_p10);
+        PR7 = PWM_1US * (pulse_p10);
         last_pulse_p10 = pulse_p10;
     }
-    IFS0bits.T2IF = 0;   
+    IFS3bits.T7IF = 0;   
 }
 
 void pwm_init_p10(void) {
     TRISGbits.TRISG7 = 0; // Set port as output
     LATGbits.LATG7 = 1;
-    T2CONbits.TON = 1;
-    T2CONbits.TCKPS = 0b10; // prescaler 1:64
-    TMR2 = 0;
-    PR2 = PWM_1US * PWM_MIDPOINT;
-    IEC0bits.T2IE = 1;
-    IPC1bits.T2IP = 3;
+    T7CONbits.TON = 1;
+    T7CONbits.TCKPS = 0b10; // prescaler 1:64
+    TMR7 = 0;
+    PR7 = PWM_1US * PWM_MIDPOINT;
+    IEC3bits.T7IE = 1;
+    IPC12bits.T7IP = 3;
 }
 
 void pwm_set_p10(uint16_t pulse) {

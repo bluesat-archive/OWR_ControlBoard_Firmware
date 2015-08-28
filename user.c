@@ -90,13 +90,13 @@ void InitApp(void)
     AD1CON1bits.ADON = 1;
     
     // Encoders - 211pg
-    T5CONbits.TON = 1;
-    T5CONbits.TCKPS = 0b10; // prescaler 1:64
-    TMR5 = 0;
-    PR5 = 65000;
+    //T5CONbits.TON = 1;
+    //T5CONbits.TCKPS = 0b10; // prescaler 1:64
+    //TMR5 = 0;
+    //PR5 = 65000;
     // Interrupt on channel A, check B for direction
     // Encoder 0
-    RPINR7bits.IC1R = 40; // A0
+    /*RPINR7bits.IC1R = 40; // A0
     //RPINR7bits.IC2R = 41; // B0
     IC1CON1bits.ICM = 3; // capture every rising edge
     IC1CON1bits.ICI = 1; // interrupt every 2 ticks
@@ -104,7 +104,7 @@ void InitApp(void)
     
     IPC0bits.IC1IP = 1; // Setup IC1 interrupt priority level
     IFS0bits.IC1IF = 0; // Clear IC1 Interrupt Status Flag
-    IEC0bits.IC1IE = 1; // Enable IC1 interrupt
+    IEC0bits.IC1IE = 1; // Enable IC1 interrupt*/
     
     
     
@@ -133,9 +133,10 @@ void InitApp(void)
     pwm_init_p25();
     
     // Configure Timer 2 (default timer for output compare)
-    //PR2 = 1156;             // Timer 2 period (20ms)
-    //T2CONbits.TCKPS = 0b10; // Timer 2 prescaler 1:64
-    //T2CONbits.TON = 1;      // Enable Timer 2
+    // For the hardware pwm dummy
+    PR2 = 1156;             // Timer 2 period (20ms)
+    T2CONbits.TCKPS = 0b10; // Timer 2 prescaler 1:64
+    T2CONbits.TON = 1;      // Enable Timer 2
     
     IFS0bits.U1TXIF = 0;
     IFS0bits.U1RXIF = 0;

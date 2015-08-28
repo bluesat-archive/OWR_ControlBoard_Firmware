@@ -66,8 +66,8 @@ int16_t main(void)
             pwm_set_p7(msg->armRotate);
             pwm_set_p19(msg->armTop);
             pwm_set_p25(msg->armBottom);
-            pwm_set_p16(msg->clawRotate);
-            pwm_set_p13(msg->clawGrip);
+            pwm_set_p16(msg->clawRotate); // colorful
+            pwm_set_p13(msg->clawGrip); // white and red
             
             pwm_set_p2(msg->cameraBottomRotate);
             pwm_set_p3(msg->cameraBottomTilt);
