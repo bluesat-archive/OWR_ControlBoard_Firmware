@@ -25,7 +25,7 @@ IMUData read_mpu() {
     write_i2c(OUT_X_H_A);
     start_i2c();
     write_i2c(MPU_ADDR | MPU_READ);
-    uint8_t h = read_i2c();
+    uint16_t h = read_i2c();
     uint8_t l = read_i2c();
     data.ax = (h << 8) + l;
     h = read_i2c(0);

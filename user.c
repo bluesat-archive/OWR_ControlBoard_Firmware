@@ -20,13 +20,14 @@
 #include "system.h"
 #include "srf02.h"
 #include "pwm_lib.h"
+#include "i2c_lib.h"
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
 
-#define I2C_FREQ 10000L
+#define I2C_FREQ 100000L
 #define I2C_CONFIG2 (((1/I2C_FREQ) * FCY) - 2)
 
 void InitApp(void)
@@ -158,7 +159,7 @@ void InitApp(void)
     // Setup I2C
     /* Baud rate is set for 100 kHz */
     unsigned int config2 = I2C_CONFIG2;
-    /* Configure I2C for 7 bit address mode */
+    // Configure I2C for 7 bit address mode
     unsigned int config1 = (I2C1_ON & I2C1_IDLE_CON & I2C1_CLK_HLD &
                I2C1_IPMI_DIS & I2C1_7BIT_ADD &
                I2C1_SLW_DIS & I2C1_SM_DIS &

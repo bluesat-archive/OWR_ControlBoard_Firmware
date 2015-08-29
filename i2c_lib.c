@@ -2,12 +2,15 @@
 #include <i2c.h>
 #include <stdint.h>
 #include "i2c_lib.h"
+#include "system.h"
+#include <libpic30.h>
 
 #define I2C_TIMEOUT 2000
 static int i = 0;
 
-int8_t read_i2c(int is_last_byte) {
-    int8_t a = MasterReadI2C1();
+uint8_t read_i2c(int is_last_byte) {
+    __delay_us(100);
+    uint8_t a = MasterReadI2C1();
     //if (is_last_byte) NotAckI2C1();
     AckI2C1();
     for (i = 0; I2C1CONbits.ACKEN && i < I2C_TIMEOUT; ++i);

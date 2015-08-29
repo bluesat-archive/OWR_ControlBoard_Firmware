@@ -5,7 +5,11 @@
         <group>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/user.c</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/encoder.c</file>
+            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/HMC5883L.h</file>
+            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/HMC5883L.c</file>
+            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/message.h</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/main.c</file>
+            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/i2c_lib.c</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/traps.c</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/pwm_lib.c</file>
             <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/serial.c</file>

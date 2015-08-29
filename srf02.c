@@ -6,15 +6,15 @@
 
 void init_srf02(uint8_t addr) {
     // Make the sensor report distance in cm
-    start_i2c();
+    /*start_i2c();
     write_i2c(addr);  
     write_i2c(0x0);
     write_i2c(0x51);
-    stop_i2c();
+    stop_i2c();*/
 }
 
 uint16_t read_srf02(uint8_t addr){
-    start_i2c();
+    /*start_i2c();
     write_i2c(addr);
     write_i2c(SRF02_DATA_H);
     //stop_i2c();
@@ -25,6 +25,7 @@ uint16_t read_srf02(uint8_t addr){
     uint8_t l = read_i2c();
     stop_i2c();
 
-    return (h << 8) + l;
+    return (h << 8) + l;*/
+    return 0;
 }
 
