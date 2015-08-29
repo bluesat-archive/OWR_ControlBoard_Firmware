@@ -53,5 +53,11 @@ void ConfigureOscillator(void)
         /* Wait for PLL to lock, only if PLL is needed */
         /* while(OSCCONbits.LOCK != 1); */
 #endif
+        
+        PLLFBD = 112;
+        CLKDIVbits.PLLPOST = 0;
+        CLKDIVbits.PLLPRE = 1;
+        __builtin_write_OSCCONH(1);
+        __builtin_write_OSCCONL(OSCCON | 1);
 }
 

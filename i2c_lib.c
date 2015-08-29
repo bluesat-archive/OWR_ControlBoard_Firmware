@@ -5,7 +5,7 @@
 #include "system.h"
 #include <libpic30.h>
 
-#define I2C_TIMEOUT 2000
+#define I2C_TIMEOUT 30000
 static int i = 0;
 
 uint8_t read_i2c(int is_last_byte) {
@@ -18,6 +18,7 @@ uint8_t read_i2c(int is_last_byte) {
 }
 
 void write_i2c(uint8_t data) {
+    __delay_us(100);
     MasterWriteI2C1(data);
     for (i = 0; I2C1STATbits.TBF && i < I2C_TIMEOUT; ++i);  // 8 clock cycles
     for (i = 0; !IFS1bits.MI2C1IF && i < I2C_TIMEOUT; ++i); // Wait for 9th clock cycle

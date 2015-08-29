@@ -51,7 +51,7 @@ int16_t main(void)
     struct toNUCMsg sendMsg;
     GPSData gpsData;
     char *gpsString;
-    init_mpu();
+    //init_mpu();
     init_hmc();
     while(1)
     {
@@ -83,7 +83,7 @@ int16_t main(void)
             sendMsg.vbat = ADC1BUF0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
-            sendMsg.imuData = read_mpu();              
+            //sendMsg.imuData = read_mpu();              
             sendMessage(&sendMsg);
         }
         if (gpsString = recieveGPS()) {

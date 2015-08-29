@@ -27,8 +27,10 @@
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
 
-#define I2C_FREQ 100000L
+#define I2C_FREQ 70000L
 #define I2C_CONFIG2 (((1/I2C_FREQ) * FCY) - 2)
+
+#define BRGVAL(x) ((FCY)/(4*x))
 
 void InitApp(void)
 {
@@ -50,7 +52,7 @@ void InitApp(void)
     U1MODE = 0b1000000000001000;//(1 << 15) | (1 << 3);
     // TX interrupt, RX enabled, TX enabled
     U1STA = 0b1000010000000000;//(1 << 15) | (1 << 12) | (1 << 10);
-    U1BRG = 47; // ((7.37/2)*10^6)/(4*19200)
+    U1BRG = 911;//BRGVAL(19200); // ((7.37/2)*10^6)/(4*19200)
     RPINR18bits.U1RXR = 75; // Link rx pin
     RPOR0bits.RP65R = 1; // Link tx pin
     
@@ -59,7 +61,7 @@ void InitApp(void)
     U2MODE = 0b1000000000001000;//(1 << 15) | (1 << 3);
     // TX interrupt, RX enabled, TX enabled
     U2STA = 0b1000010000000000;//(1 << 15) | (1 << 12) | (1 << 10);
-    U2BRG = 96; // ((7.37/2)*10^6)/(4*19200)
+    U2BRG = 1822;//BRGVAL(38400); // ((7.37/2)*10^6)/(4*19200)
     RPINR19bits.U2RXR = 83; // Link rx pin
     //RPOR0bits.RP64R = 1; // Link tx pin
     ANSELE = 0;
@@ -72,6 +74,7 @@ void InitApp(void)
     AD1CON1 = 0;
     AD1CON2 = 0;
     AD1CON3 = 0;
+    AD1CON3bits.ADCS = 1;
     AD1CON4 = 0;
     AD1CHS0 = 0x0000;
     AD1CHS123 = 0x0000;
@@ -108,13 +111,13 @@ void InitApp(void)
     IEC0bits.IC1IE = 1; // Enable IC1 interrupt*/
     
     
-    
-    
+     
     // Timer setup
     // URX receive timeout
     T1CON = 0b1000000000000000;
     TMR1 = 0;
-    PR1 = 64000; // 10ms 
+    T1CONbits.TCKPS = 0b11;
+    PR1 = 6400; // ~24ms 
     
     // PWM setup
     pwm_init_p17();
@@ -135,8 +138,8 @@ void InitApp(void)
     
     // Configure Timer 2 (default timer for output compare)
     // For the hardware pwm dummy
-    PR2 = 1156;             // Timer 2 period (20ms)
-    T2CONbits.TCKPS = 0b10; // Timer 2 prescaler 1:64
+    PR2 = 5469;             // Timer 2 period (20ms)
+    T2CONbits.TCKPS = 0b11; // Timer 2 prescaler 1:64
     T2CONbits.TON = 1;      // Enable Timer 2
     
     IFS0bits.U1TXIF = 0;

@@ -33,27 +33,27 @@ MagnometerData read_hmc(){
     __delay_ms(1);
     start_i2c();
     write_i2c(HMC_ADDR | HMC_READ);
-    __delay_ms(1);
+    //__delay_ms(1);
     uint16_t h, l;
     h = read_i2c(0);
-    __delay_ms(1);
+    //__delay_ms(1);
     l = read_i2c(0);
-    __delay_ms(1);
+    //__delay_ms(1);
     data.x = (h << 8) + l;
     
     h = read_i2c(0);
-    __delay_ms(1);
+    //__delay_ms(1);
     l = read_i2c(0);
-    __delay_ms(1);
+    //__delay_ms(1);
     data.z = (h << 8) + l;
     
     h = read_i2c(0);
-    __delay_ms(1);
+    //__delay_ms(1);
     //l = read_i2c(1);
     l = MasterReadI2C1();
     NotAckI2C1();
     int i;
-    for (i = 0; I2C1CONbits.ACKEN && i < 20000; ++i);
+    for (i = 0; I2C1CONbits.ACKEN && i < 30000; ++i);
     data.y = (h << 8) + l;
     
     stop_i2c();
