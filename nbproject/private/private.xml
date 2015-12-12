@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/user.c</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/encoder.c</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/HMC5883L.h</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/HMC5883L.c</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/message.h</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/main.c</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/i2c_lib.c</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/traps.c</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/pwm_lib.c</file>
-            <file>file:/home/steph/MPLABXProjects/Bluetongue-ctrl.X/serial.c</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/serial.h</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/serial.c</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/message.h</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/pwm_lib.c</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/main.c</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/system.c</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/HMC5883L.c</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/configuration_bits.c</file>
         </group>
     </open-files>
 </project-private>
