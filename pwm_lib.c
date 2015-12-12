@@ -268,3 +268,43 @@ void pwm_init_p25(void) {
 void pwm_set_p25(uint16_t pulse) {
     pulse_p25 = safety_cap_pwm(pulse);
 }
+
+
+/* LIDAR control sowftware pwm here
+ * This copies the structure of the software pwms above.
+ * Lidar tilt servo is spec'd to 7V so must use one of appropriate pins: 11,13,16,20,22,24
+ * 
+ * Current pin used: p24 -> register C14
+ */
+
+static uint16_t pulse_p24 = PWM_MIDPOINT;
+static uint16_t last_pulse_p24 = PWM_MIDPOINT;
+
+//Interrupt service routine for the software pwm timer
+void __attribute__ ((__interrupt__, no_auto_psv)) _T9Interrupt(void)              
+{  
+    if (LATCbits.LATC14) {
+        LATCbits.LATC14 = 0;
+        PR9 = PWM_1US * (PWM_PERIOD - last_pulse_p24);
+    } else {
+        LATCbits.LATC14 = 1;
+        PR9 = PWM_1US * (pulse_p24);
+        last_pulse_p24 = pulse_p24;
+    }
+    IFS3bits.T9IF = 0; 			// Clear the Timer_9 interrupt flag  
+}
+
+void pwm_init_p24(void) {
+    TRISCbits.TRISC14 = 0; 		// Set port (register) as output
+    LATCbits.LATC14 = 1;
+    T9CONbits.TON = 1;			// Starts Timer_9 (Timerx On bit)
+    T9CONbits.TCKPS = 0b10; 		// prescaler 1:64
+    TMR9 = 0;				// Clear timer_9 register
+    PR9 = PWM_1US * PWM_MIDPOINT;	// Set period register for timer_9
+    IEC3bits.T9IE = 1;  		// Enable the interrupt
+    IPC13bits.T9IP = 3; 		// Set interrupt priority
+}
+
+void pwm_set_p24(uint16_t pulse) {
+    pulse_p24 = safety_cap_pwm(pulse);
+}
