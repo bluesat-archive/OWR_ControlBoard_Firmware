@@ -10,10 +10,22 @@
 #define MAX_PULSE 2000
 #define MIN_PULSE 1000
 
+//New constraints specific for the lidar tilt
+//taken from wiki/display/OWRM/Lidar+Gimbal#app-switcher
+#define MIN_LIDAR 900
+#define MAX_LIDAR 2080
+#define MID_LIDAR 1330
+
 // If the signal is out of range set to the midpoint
 static uint16_t safety_cap_pwm(uint16_t pulse) {
     pulse = pulse < MIN_PULSE ? PWM_MIDPOINT : pulse;
     pulse = pulse > MAX_PULSE ? PWM_MIDPOINT : pulse;
+    return pulse;
+}
+
+static uint16_t safety_cap_lidar(uint16_t pulse){
+    pulse = pulse < MIN_LIDAR ? MID_LIDAR : pulse;
+    pulse = pulse > MAX_LIDAR ? MID_LIDAR : pulse;
     return pulse;
 }
 
@@ -306,5 +318,5 @@ void pwm_init_p24(void) {
 }
 
 void pwm_set_p24(uint16_t pulse) {
-    pulse_p24 = safety_cap_pwm(pulse);
+    pulse_p24 = safety_cap_lidar(pulse);
 }
