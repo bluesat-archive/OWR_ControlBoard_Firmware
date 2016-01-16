@@ -11,8 +11,12 @@ static int i = 0;
 uint8_t read_i2c(int is_last_byte) {
     __delay_us(100);
     uint8_t a = MasterReadI2C1();
-    //if (is_last_byte) NotAckI2C1();
-    AckI2C1();
+    
+    if (is_last_byte) {
+        NotAckI2C1();
+    } else {
+        AckI2C1();
+    }
     for (i = 0; I2C1CONbits.ACKEN && i < I2C_TIMEOUT; ++i);
     return a;
 }
