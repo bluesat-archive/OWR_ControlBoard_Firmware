@@ -74,6 +74,9 @@ int16_t main(void)
             pwm_set_p4(msg->cameraTopRotate);
             pwm_set_p5(msg->cameraTopTilt);
             
+            //Set lidar tilt pwm
+            pwm_set_p24(msg->lidarTilt);
+
             AD1CON1bits.SAMP = 0;
             while (!AD1CON1bits.DONE);
             AD1CON1bits.DONE = 0;

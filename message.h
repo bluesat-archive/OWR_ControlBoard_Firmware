@@ -48,6 +48,8 @@ extern "C" {
         int16_t cameraBottomTilt;
         int16_t cameraTopRotate;
         int16_t cameraTopTilt;
+        int16_t lidarTilt;	//lidar tilt value.
+        int16_t padding;
     };
 
     struct toNUCMsg {

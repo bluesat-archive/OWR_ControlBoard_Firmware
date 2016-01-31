@@ -60,6 +60,10 @@ void pwm_set_p19(uint16_t pulse);
 void pwm_init_p25(void);
 void pwm_set_p25(uint16_t pulse);
 
+// Init and Setter for lidar-tilt's software pwm
+void pwm_init_p24(void);
+void pwm_set_p24(uint16_t pulse);
+
 #ifdef	__cplusplus
 }
 #endif
