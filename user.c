@@ -93,7 +93,10 @@ void InitApp(void)
     AD1CON1bits.ASAM = 1;
     AD1CON1bits.ADON = 1;
     
-    // Encoders - 211pg
+
+    // **** Encoders using Input Capture (IC) **** //
+    // **** See IC in family reference manual **** //
+ 
     //T5CONbits.TON = 1;
     //T5CONbits.TCKPS = 0b10; // prescaler 1:64
     //TMR5 = 0;
@@ -109,7 +112,7 @@ void InitApp(void)
     IPC0bits.IC1IP = 1; // Setup IC1 interrupt priority level
     IFS0bits.IC1IF = 0; // Clear IC1 Interrupt Status Flag
     IEC0bits.IC1IE = 1; // Enable IC1 interrupt*/
-    
+
     
      
     // Timer setup
@@ -174,4 +177,27 @@ void InitApp(void)
     OpenI2C1(config1,config2);
     IdleI2C1();
     __builtin_write_OSCCONL(OSCCON | (1<<6));  
+}
+
+
+
+    // **** Encoders using Quadrature Encoder Interface (QEI) **** //
+    // ****    This is for testing purposes for IC code       **** //
+    // ****        See QEI in family reference manual         **** //
+void InitQEI(void) {
+    RPINR14 = QEI_INPUT_B & QEI_INPUT_A; // Configure QEI pins as digital inputs
+    QEICONbits.QEIM = 0; // Disable QEI Module
+    QEICONbits.CNTERR = 0; // Clear any count errors
+    QEICONbits.QEISIDL = 0; // Continue operation during sleep
+    QEICONbits.SWPAB = 0; // QEA and QEB not swapped
+    QEICONbits.PCDOUT = 0; // Normal I/O pin operation
+    QEICONbits.POSRES = 1; // Index pulse resets position counter
+    DFLTCONbits.CEID = 1; // Count error interrupts disabled
+    DFLTCONbits.QEOUT = 1; // Digital filters output enabled for QEn pins
+    DFLTCONbits.QECK = 5; // 1:64 clock divide for digital filter for QEn
+    DFLTCONbits.INDOUT = 1; // Digital filter output enabled for Index pin
+    DFLTCONbits.INDCK = 5; // 1:64 clock divide for digital filter for Index
+    POSCNT = 0; // Reset position counter
+    QEICONbits.QEIM = 6; // X4 mode with position counter reset by Index
+    return;
 }

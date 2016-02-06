@@ -23,6 +23,7 @@ static uint16_t safety_cap_pwm(uint16_t pulse) {
     return pulse;
 }
 
+// Specific constraints for the lidar's range of movement
 static uint16_t safety_cap_lidar(uint16_t pulse){
     pulse = pulse < MIN_LIDAR ? MID_LIDAR : pulse;
     pulse = pulse > MAX_LIDAR ? MID_LIDAR : pulse;
