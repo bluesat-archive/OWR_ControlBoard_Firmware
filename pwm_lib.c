@@ -10,8 +10,8 @@
 #define MAX_PULSE 2000
 #define MIN_PULSE 1000
 
-//New constraints specific for the lidar tilt
-//taken from wiki/display/OWRM/Lidar+Gimbal#app-switcher
+// New constraints specific for the lidar tilt
+// taken from wiki/display/OWRM/Lidar+Gimbal#app-switcher
 #define MIN_LIDAR 900
 #define MAX_LIDAR 2080
 #define MID_LIDAR 1330

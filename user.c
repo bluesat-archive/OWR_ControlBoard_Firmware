@@ -93,27 +93,6 @@ void InitApp(void)
     AD1CON1bits.ASAM = 1;
     AD1CON1bits.ADON = 1;
     
-
-    // **** Encoders using Input Capture (IC) **** //
-    // **** See IC in family reference manual **** //
- 
-    //T5CONbits.TON = 1;
-    //T5CONbits.TCKPS = 0b10; // prescaler 1:64
-    //TMR5 = 0;
-    //PR5 = 65000;
-    // Interrupt on channel A, check B for direction
-    // Encoder 0
-    /*RPINR7bits.IC1R = 40; // A0
-    //RPINR7bits.IC2R = 41; // B0
-    IC1CON1bits.ICM = 3; // capture every rising edge
-    IC1CON1bits.ICI = 1; // interrupt every 2 ticks
-    IC1CON1bits.ICTSEL = 3; // Use T5 for capture
-    
-    IPC0bits.IC1IP = 1; // Setup IC1 interrupt priority level
-    IFS0bits.IC1IF = 0; // Clear IC1 Interrupt Status Flag
-    IEC0bits.IC1IE = 1; // Enable IC1 interrupt*/
-
-    
      
     // Timer setup
     // URX receive timeout
@@ -180,7 +159,7 @@ void InitApp(void)
 }
 
 
-
+/*
     // **** Encoders using Quadrature Encoder Interface (QEI) **** //
     // ****    This is for testing purposes for IC code       **** //
     // ****        See QEI in family reference manual         **** //
@@ -201,3 +180,92 @@ void InitQEI(void) {
     QEICONbits.QEIM = 6; // X4 mode with position counter reset by Index
     return;
 }
+*/
+
+
+    // **** Initialisation for all encoders done here **** //
+    // Added on: 11/02/2016 by Simon Ireland
+
+void InitEncoders(void) {
+    //Ensure Channel A & B ports are inputs:
+    TRISB |= B_ENCODER_BITS; // If i recall, mapping to IC, done below, does this but
+    TRISF |= F_ENCODER_BITS; // best practice is to be clear
+    
+    // * Initialise Input Capture Modules and Timer_5 * //
+    
+    //Encoder 0
+    IC1CONbits.ICM = 0b000; // Disable the input capture module and clears buffer
+    RPINR7.IC1R = ENC0_IC; // Map input  to Input Capture 1
+    IC1CONbits.ICTMR = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
+    IC1CONbits.ICI = 0b00;  // Interrupt on every capture event
+    IC1CONbits.ICM = 0b011; // Reenable IC to capture every rising edge
+    
+    IPC0bits.IC1IP = ENC_PRIORITY;
+    IFS0bits.IC1IF = 0;
+    
+    //Encoder 1
+    IC2CONbits.ICM = 0b000;
+    RPINR7.IC2R = ENC1_IC;
+    IC2CONbits.ICTMR = TMR_5;
+    IC2CONbits.ICI = 0b00;
+    IC2CONbits.ICM = 0b011;
+    
+    IPC1bits.IC2IP = ENC_PRIORITY;
+    IFS0bits.IC2IF = 0;
+    
+    //Encoder 2
+    IC3CONbits.ICM = 0b000;
+    RPINR8.IC3R = ENC2_IC;
+    IC3CONbits.ICTMR = TMR_5;
+    IC3CONbits.ICI = 0b00;
+    IC3CONbits.ICM = 0b011;
+    
+    IPC9bits.IC3IP = ENC_PRIORITY;
+    IFS2bits.IC3IF = 0;
+    
+    //Encoder 3
+    IC4CONbits.ICM = 0b000;
+    RPINR8.IC4R = ENC3_IC;
+    IC4CONbits.ICTMR = TMR_5;
+    IC4CONbits.ICI = 0b00;
+    IC4CONbits.ICM = 0b011;
+    
+    IPC9bits.IC3IP = ENC_PRIORITY;
+    IFS2bits.IC3IF = 0;
+    
+    //Encoder 4
+    IC5CONbits.ICM = 0b000;
+    RPINR9.IC5R = ENC4_IC;
+    IC5CONbits.ICTMR = TMR_5;
+    IC5CONbits.ICI = 0b00;
+    IC5CONbits.ICM = 0b011;
+    
+    IPC9bits.IC5IP = ENC_PRIORITY;
+    IFS2bits.IC5IF = 0;
+    
+    //Encoder 5
+    IC6CONbits.ICM = 0b000;
+    RPINR9.IC6R = ENC5_IC;
+    IC6CONbits.ICTMR = TMR_5;
+    IC6CONbits.ICI = 0b00;
+    IC7CONbits.ICM = 0b011;
+    
+    IPC10bits.IC6IP = ENC_PRIORITY;
+    IFS2bits.IC6IF = 0;
+    
+    //Timer 5
+    T5CONbits.TON = 1;          // Starts Timer_9 (Timerx On bit)
+    TMR5 = 0;                   // Clear timer_9 register
+    
+    IPC7bits.T5IP = 3;
+    IFS1bits.T5IF = 0;
+    
+    //Enable Interrupts
+    IEC0bits.IC1IE = 1;
+    IEC0bits.IC2IE = 1;
+    IEC2bits.IC3IE = 1;
+    IEC2bits.IC4IE = 1;
+    IEC2bits.IC5IE = 1;
+    IEC2bits.IC6IE = 1;
+}
+
