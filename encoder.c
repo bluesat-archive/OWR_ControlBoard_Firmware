@@ -11,13 +11,27 @@
 #include <xc.h>
 
 
-unsigned int timePeriod= 0;
+unsigned int timePeriod1 = 0;
+unsigned int timePeriod2 = 0;
+unsigned int timePeriod3 = 0;
+unsigned int timePeriod4 = 0;
+unsigned int timePeriod5 = 0;
+unsigned int timePeriod6 = 0;
 
-// Encoder Test code using the quadrature encoder interface module (QEI)
-// this is designed for use with the encoders used, but is limited since there
-// are only 2 such interfaces on the board. We will use this for comparison with
-// Input Capture code.
 
+    // **** Interupt Handlers for Input capture **** //
+    
+// Input Capture 1, Encoder 0
+void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
+    unsigned int t1, t2;
+    t1 = IC1BUF;
+    t2 = IC2BUF;
+    
+    IFS0bits.IC1IF = 0; // Clear interrupt flag
+    
+    //TODO: account for overflows
+    timePeriod1 = t2-t1; // unsigned subtraction 
+}
 
 
 
