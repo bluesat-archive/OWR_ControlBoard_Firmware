@@ -304,18 +304,20 @@ void __attribute__ ((__interrupt__, no_auto_psv)) _T9Interrupt(void)
         PR9 = PWM_1US * (pulse_p24);
         last_pulse_p24 = pulse_p24;
     }
-    IFS3bits.T9IF = 0; 			// Clear the Timer_9 interrupt flag  
+    IFS3bits.T9IF = 0;          // Clear the Timer_9 interrupt flag  
 }
 
 void pwm_init_p24(void) {
-    TRISCbits.TRISC14 = 0; 		// Set port (register) as output
+    TRISCbits.TRISC14 = 0;          // Set port (register) as output
     LATCbits.LATC14 = 1;
-    T9CONbits.TON = 1;			// Starts Timer_9 (Timerx On bit)
-    T9CONbits.TCKPS = 0b10; 		// prescaler 1:64
-    TMR9 = 0;				// Clear timer_9 register
-    PR9 = PWM_1US * PWM_MIDPOINT;	// Set period register for timer_9
-    IEC3bits.T9IE = 1;  		// Enable the interrupt
-    IPC13bits.T9IP = 3; 		// Set interrupt priority
+    
+    T9CONbits.TON = 1;              // Starts Timer_9 (Timerx On bit)
+    T9CONbits.TCKPS = 0b10;         // prescaler 1:64
+    TMR9 = 0;                       // Clear timer_9 register
+    PR9 = PWM_1US * PWM_MIDPOINT;   // Set period register for timer_9
+    
+    IEC3bits.T9IE = 1;              // Enable the interrupt
+    IPC13bits.T9IP = 3;             // Set interrupt priority
 }
 
 void pwm_set_p24(uint16_t pulse) {

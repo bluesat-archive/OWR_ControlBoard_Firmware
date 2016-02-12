@@ -2,7 +2,7 @@
 /* User Level #define Macros                                                  */
 /******************************************************************************/
 
-//TODO: assign QEI/ICx input pins (pg 213 FRM), NOTE: taking the values from frm, remember to add leading 0.
+// Assign QEI/ICx input pins (pg 213 FRM), NOTE: taking the values from frm, remember to add leading 0.
 //#define QEI_INPUT_A 0b00000000 //Sets channel A input pin
 //#define QEI_INPUT_B 0b00000000 //Sets channel B input pin
 #define ENC0_IC 0b00101000
@@ -12,6 +12,7 @@
 #define ENC4_IC 0b01100100
 #define ENC5_IC 0b01100010
 
+// TRISx bit values for setting each encoder pin as input
 #define ENC0_CHA 0x100     //RB8
 #define ENC0_CHB 0x200     //RB9
 #define ENC1_CHA 0x400     //RB10
@@ -28,8 +29,9 @@
 #define B_ENCODER_BITS (ENC0_CHA | ENC0_CHB | ENC1_CHA | ENC1_CHB | ENC2_CHA | ENC2_CHB | ENC3_CHA | ENC3_CHB)
 #define F_ENCODER_BITS (ENC4_CHA | ENC4_CHB | ENC5_CHA | ENC5_CHB)
 
-#define TMR_5 0b011
-#define ENC_PRIORITY 3
+#define TMR_5 0b011 // Timer code for linking to input capture modules
+#define TIMER_5_PERIOD 600 //Period at which timer 5 will trigger interrupt
+#define ENC_PRIORITY 3 // Interrupt priority for IC interrupts
 
 
 /* TODO Application specific user parameters used in user.c may go here */
