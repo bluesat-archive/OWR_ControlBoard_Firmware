@@ -35,13 +35,6 @@
 
 /* i.e. uint16_t <variable_name>; */
 
-volatile double angVel0 = 0; // Angular speed of the motor
-volatile double angVel1 = 0;
-volatile double angVel2 = 0;
-volatile double angVel3 = 0;
-volatile double angVel4 = 0;
-volatile double angVel5 = 0;
-
 /******************************************************************************/
 /* Main Program                                                               */
 /******************************************************************************/

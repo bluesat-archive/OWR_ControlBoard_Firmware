@@ -9,7 +9,7 @@
 */
 
 #include <xc.h>
-#include "user.h"
+#include "encoder.h"
 #include "message.h"
 
 #define ENC_PI 3.14159265359
