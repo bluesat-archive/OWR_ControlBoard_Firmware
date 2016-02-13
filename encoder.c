@@ -14,6 +14,7 @@
 
 #define ENC_PI 3.14159265359
 #define TMR_5_PS 64 //Prescaler level
+#define NS_IN_S 1000000000
 
 // Time period measurements for encoders
 unsigned int timePeriod0 = 0;
@@ -45,7 +46,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     //TODO: each pulse is 1/3 a rotation, need to account for this in later calculation
     //TODO: if prescaler used, account for that in calculations
     //TODO: account for motor going from +ve to -ve
-    timePeriod0 = TMR_5_PS * ((PR5 * enc0) + t2 - t1); // Calculate time perioid between pulses(part of todo, need to check this with timer period etc)
+    timePeriod0 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc0) + t2 - t1); // Calculate time perioid between pulses(part of todo, need to check this with timer period etc)
     enc0 = 0; //Clear timer overlap counter for encoder 0
     
     angVel0 = (-1.0 * PORTBbits.RB9) * ((2 * ENC_PI)/(3 * timePeriod0)); // Calculate Angular velocity of motor. 1st bracket is to test direction.
@@ -61,7 +62,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC2Interrupt(void) {
     
     IFS0bits.IC1IF = 0; // Clear interrupt flag
     
-    timePeriod1 = TMR_5_PS * ((PR5 * enc1) + t2 - t1);
+    timePeriod1 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc1) + t2 - t1);
     enc1 = 0;
     
     angVel1 = (-1.0 * PORTBbits.RB11) * ((2 * ENC_PI)/(3 * timePeriod1));
@@ -76,7 +77,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC3Interrupt(void) {
     
     IFS0bits.IC1IF = 0; // Clear interrupt flag
     
-    timePeriod2 = TMR_5_PS * ((PR5 * enc2) + t2 - t1);
+    timePeriod2 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc2) + t2 - t1);
     enc2 = 0;
     
     angVel2 = (-1.0 * PORTBbits.RB13) * ((2 * ENC_PI)/(3 * timePeriod2));
@@ -91,7 +92,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC4Interrupt(void) {
     
     IFS0bits.IC1IF = 0; // Clear interrupt flag
     
-    timePeriod3 = TMR_5_PS * ((PR5 * enc3) + t2 - t1);
+    timePeriod3 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc3) + t2 - t1);
     enc3 = 0;
     
     angVel3 = (-1.0 * PORTBbits.RB15) * ((2 * ENC_PI)/(3 * timePeriod3));
@@ -106,7 +107,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC5Interrupt(void) {
     
     IFS0bits.IC1IF = 0; // Clear interrupt flag
     
-    timePeriod4 = TMR_5_PS * ((PR5 * enc4) + t2 - t1);
+    timePeriod4 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc4) + t2 - t1);
     enc4 = 0;
     
     angVel4 = (-1.0 * PORTFbits.RF5) * ((2 * ENC_PI)/(3 * timePeriod4));
@@ -122,7 +123,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     
     IFS0bits.IC1IF = 0; // Clear interrupt flag
     
-    timePeriod5 = TMR_5_PS * ((PR5 * enc5) + t2 - t1);
+    timePeriod5 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc5) + t2 - t1);
     enc5 = 0;
     
     angVel5 = (-1.0 * PORTFbits.RF3) * ((2 * ENC_PI)/(3 * timePeriod5));
