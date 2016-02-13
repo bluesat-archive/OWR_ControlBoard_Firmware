@@ -33,10 +33,6 @@
 #define TIMER_5_PERIOD 600 //Period at which timer 5 will trigger interrupt
 #define ENC_PRIORITY 3 // Interrupt priority for IC interrupts
 
-#define ENC_PI 3.14159265359
-
-
-/* TODO Application specific user parameters used in user.c may go here */
 
 /******************************************************************************/
 /* User Function Prototypes                                                   */

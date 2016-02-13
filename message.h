@@ -35,6 +35,7 @@ extern "C" {
         int16_t ax, ay, az;
     } IMUData;
     
+    
     struct toControlMsg {
         uint16_t magic;
         int16_t lSpeed;
@@ -48,7 +49,7 @@ extern "C" {
         int16_t cameraBottomTilt;
         int16_t cameraTopRotate;
         int16_t cameraTopTilt;
-        int16_t lidarTilt;	//lidar tilt value.
+        int16_t lidarTilt;  //lidar tilt value.
         int16_t padding;
     };
 
@@ -58,6 +59,12 @@ extern "C" {
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;
+        double enc0; // Angular velocities derived from motor encoders
+        double enc1;
+        double enc2;
+        double enc3;
+        double enc4;
+        double enc5;
     };
 
 #ifdef	__cplusplus

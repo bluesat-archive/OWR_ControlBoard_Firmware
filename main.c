@@ -27,12 +27,20 @@
 #include "MPU6050.h"
 #include "pwm_lib.h"
 #include "message.h"
+#include "encoder.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
 
 /* i.e. uint16_t <variable_name>; */
+
+volatile double angVel0 = 0; // Angular speed of the motor
+volatile double angVel1 = 0;
+volatile double angVel2 = 0;
+volatile double angVel3 = 0;
+volatile double angVel4 = 0;
+volatile double angVel5 = 0;
 
 /******************************************************************************/
 /* Main Program                                                               */
@@ -86,7 +94,15 @@ int16_t main(void)
             sendMsg.vbat = ADC1BUF0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
-            //sendMsg.imuData = read_mpu();              
+            //sendMsg.imuData = read_mpu();
+            
+            sendMsg.enc0 = angelVel0;
+            sendMsg.enc1 = angelVel1;
+            sendMsg.enc2 = angelVel2;
+            sendMsg.enc3 = angelVel3;
+            sendMsg.enc4 = angelVel4;
+            sendMsg.enc5 = angelVel5;
+            
             sendMessage(&sendMsg);
         }
         if (gpsString = recieveGPS()) {
