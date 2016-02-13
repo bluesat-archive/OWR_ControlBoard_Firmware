@@ -8,9 +8,9 @@
     edited by: Simon Ireland (11/02/2016)
 */
 
-#include "message.h"
 #include <xc.h>
 #include "user.h"
+#include "message.h"
 
 #define ENC_PI 3.14159265359
 #define TMR_5_PS 64 //Prescaler level
