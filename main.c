@@ -89,12 +89,12 @@ int16_t main(void)
             sendMsg.magData = read_hmc();
             //sendMsg.imuData = read_mpu();
             
-            sendMsg.enc0 = angelVel0;
-            sendMsg.enc1 = angelVel1;
-            sendMsg.enc2 = angelVel2;
-            sendMsg.enc3 = angelVel3;
-            sendMsg.enc4 = angelVel4;
-            sendMsg.enc5 = angelVel5;
+            sendMsg.enc0 = angVel0;
+            sendMsg.enc1 = angVel1;
+            sendMsg.enc2 = angVel2;
+            sendMsg.enc3 = angVel3;
+            sendMsg.enc4 = angVel4;
+            sendMsg.enc5 = angVel5;
             
             sendMessage(&sendMsg);
         }

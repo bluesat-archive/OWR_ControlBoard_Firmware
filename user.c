@@ -195,8 +195,8 @@ void InitEncoders(void) {
     
     //Encoder 0
     IC1CON1bits.ICM = 0b000; // Disable the input capture module and clears buffer
-    RPINR7.IC1R = ENC0_IC; // Map input  to Input Capture 1
-    IC1CON1bits.ICTMR = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
+    RPINR7bits.IC1R = ENC0_IC; // Map input  to Input Capture 1
+    IC1CON1bits.ICTSEL = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
     IC1CON1bits.ICI = 0b01;  // Interrupt on every second capture event (this is done as we need 2 capture events to form a time period)
     IC1CON1bits.ICM = 0b011; // Reenable IC to capture every rising edge
     
@@ -207,8 +207,8 @@ void InitEncoders(void) {
     
     //Encoder 1
     IC2CON1bits.ICM = 0b000;
-    RPINR7.IC2R = ENC1_IC;
-    IC2CON1bits.ICTMR = TMR_5;
+    RPINR7bits.IC2R = ENC1_IC;
+    IC2CON1bits.ICTSEL = TMR_5;
     IC2CON1bits.ICI = 0b01;
     IC2CON1bits.ICM = 0b011;
     
@@ -219,9 +219,9 @@ void InitEncoders(void) {
     
     
     //Encoder 2
-    IC3CONbits.ICM = 0b000;
-    RPINR8.IC3R = ENC2_IC;
-    IC3CON1bits.ICTMR = TMR_5;
+    IC3CON1bits.ICM = 0b000;
+    RPINR8bits.IC3R = ENC2_IC;
+    IC3CON1bits.ICTSEL = TMR_5;
     IC3CON1bits.ICI = 0b01;
     IC3CON1bits.ICM = 0b011;
     
@@ -232,8 +232,8 @@ void InitEncoders(void) {
     
     //Encoder 3
     IC4CON1bits.ICM = 0b000;
-    RPINR8.IC4R = ENC3_IC;
-    IC4CON1bits.ICTMR = TMR_5;
+    RPINR8bits.IC4R = ENC3_IC;
+    IC4CON1bits.ICTSEL = TMR_5;
     IC4CON1bits.ICI = 0b01;
     IC4CON1bits.ICM = 0b011;
     
@@ -244,8 +244,8 @@ void InitEncoders(void) {
     
     //Encoder 4
     IC5CON1bits.ICM = 0b000;
-    RPINR9.IC5R = ENC4_IC;
-    IC5CON1bits.ICTMR = TMR_5;
+    RPINR9bits.IC5R = ENC4_IC;
+    IC5CON1bits.ICTSEL = TMR_5;
     IC5CON1bits.ICI = 0b01;
     IC5CON1bits.ICM = 0b011;
     
@@ -256,8 +256,8 @@ void InitEncoders(void) {
     
     //Encoder 5
     IC6CON1bits.ICM = 0b000;
-    RPINR9.IC6R = ENC5_IC;
-    IC6CON1bits.ICTMR = TMR_5;
+    RPINR9bits.IC6R = ENC5_IC;
+    IC6CON1bits.ICTSEL = TMR_5;
     IC6CON1bits.ICI = 0b01;
     IC7CON1bits.ICM = 0b011;
     

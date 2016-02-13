@@ -8,7 +8,20 @@
     edited by: Simon Ireland (11/02/2016)
 */
 
-#include <xc.h>
+/* Device header file */
+#if defined(__XC16__)
+    #include <xc.h>
+#elif defined(__C30__)
+    #if defined(__dsPIC33E__)
+    	#include <p33Exxxx.h>
+    #elif defined(__dsPIC33F__)
+    	#include <p33Fxxxx.h>
+    #endif
+#endif
+
+
+#include <stdint.h>        /* Includes uint16_t definition                    */
+#include <stdbool.h>       /* Includes true/false definition                  */
 #include "encoder.h"
 #include "message.h"
 
@@ -116,7 +129,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC5Interrupt(void) {
 
 
 // Input Capture 6, Encoder 5
-void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
+void __attribute__((__interrupt__, no_auto_psv)) _IC6Interrupt(void) {
     unsigned int t1, t2;
     t1 = IC6BUF;
     t2 = IC6BUF;
