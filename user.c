@@ -268,7 +268,7 @@ void InitEncoders(void) {
     
     //Timer 5
     T5CONbits.TON = 1;          // Starts Timer_9 (Timerx On bit)
-    //T5CONbits.TCKPS = 0b10;   // prescaler 1:64
+    T5CONbits.TCKPS = 0b10;   // prescaler 1:64
     TMR5 = 0;                   // Clear timer_9 register
     PR5 = TIMER_5_PERIOD;
 
