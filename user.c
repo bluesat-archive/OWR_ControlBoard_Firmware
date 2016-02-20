@@ -237,8 +237,8 @@ void InitEncoders(void) {
     IC4CON1bits.ICI = 0b01;
     IC4CON1bits.ICM = 0b011;
     
-    IPC9bits.IC3IP = ENC_PRIORITY;
-    IFS2bits.IC3IF = 0;
+    IPC9bits.IC4IP = ENC_PRIORITY;
+    IFS2bits.IC4IF = 0;
     
     IEC2bits.IC4IE = 1;
     

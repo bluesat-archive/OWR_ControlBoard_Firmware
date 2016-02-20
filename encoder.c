@@ -81,7 +81,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC2Interrupt(void) {
     t1 = IC2BUF;
     t2 = IC2BUF;
     
-    IFS0bits.IC1IF = 0; // Clear interrupt flag
+    IFS0bits.IC2IF = 0; // Clear interrupt flag
     
     timePeriod1 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc1) + t2 - t1);
     enc1 = 0;
@@ -96,7 +96,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC3Interrupt(void) {
     t1 = IC3BUF;
     t2 = IC3BUF;
     
-    IFS0bits.IC1IF = 0; // Clear interrupt flag
+    IFS2bits.IC3IF = 0; // Clear interrupt flag
     
     timePeriod2 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc2) + t2 - t1);
     enc2 = 0;
@@ -111,7 +111,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC4Interrupt(void) {
     t1 = IC4BUF;
     t2 = IC4BUF;
     
-    IFS0bits.IC1IF = 0; // Clear interrupt flag
+    IFS2bits.IC4IF = 0; // Clear interrupt flag
     
     timePeriod3 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc3) + t2 - t1);
     enc3 = 0;
@@ -126,7 +126,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC5Interrupt(void) {
     t1 = IC5BUF;
     t2 = IC5BUF;
     
-    IFS0bits.IC1IF = 0; // Clear interrupt flag
+    IFS2bits.IC5IF = 0; // Clear interrupt flag
     
     timePeriod4 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc4) + t2 - t1);
     enc4 = 0;
@@ -142,7 +142,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC6Interrupt(void) {
     t1 = IC6BUF;
     t2 = IC6BUF;
     
-    IFS0bits.IC1IF = 0; // Clear interrupt flag
+    IFS2bits.IC6IF = 0; // Clear interrupt flag
     
     timePeriod5 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc5) + t2 - t1);
     enc5 = 0;
