@@ -45,6 +45,13 @@ int16_t enc3 = 0;
 int16_t enc4 = 0;
 int16_t enc5 = 0;
 
+int16_t angVel0 = 0; // Angular speed of the motor
+int16_t angVel1 = 0;
+int16_t angVel2 = 0;
+int16_t angVel3 = 0;
+int16_t angVel4 = 0;
+int16_t angVel5 = 0;
+
     // **** Interrupt Handlers for Input capture **** //
     
 // Input Capture 1, Encoder 0

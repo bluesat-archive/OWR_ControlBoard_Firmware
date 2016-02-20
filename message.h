@@ -56,6 +56,7 @@ extern "C" {
     struct toNUCMsg {
         uint16_t magic;
         uint16_t vbat;
+        uint16_t padding; // PLACEHOLDER FOR VOLTMETER
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;

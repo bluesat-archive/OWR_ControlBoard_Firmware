@@ -10,11 +10,11 @@
 
 #define OVERFLOW_LIMIT 500
 
-volatile int16_t angVel0 = 0; // Angular speed of the motor
-volatile int16_t angVel1 = 0;
-volatile int16_t angVel2 = 0;
-volatile int16_t angVel3 = 0;
-volatile int16_t angVel4 = 0;
-volatile int16_t angVel5 = 0;
+extern int16_t angVel0; // Angular speed of the motor
+extern int16_t angVel1;
+extern int16_t angVel2;
+extern int16_t angVel3;
+extern int16_t angVel4;
+extern int16_t angVel5;
 
 #endif	/* ENCODER_H */
