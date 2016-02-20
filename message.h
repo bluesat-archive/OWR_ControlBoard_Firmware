@@ -59,12 +59,12 @@ extern "C" {
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;
-        double enc0; // Angular velocities derived from motor encoders
-        double enc1;
-        double enc2;
-        double enc3;
-        double enc4;
-        double enc5;
+        int16_t enc0; // Angular velocities derived from motor encoders
+        int16_t enc1;
+        int16_t enc2;
+        int16_t enc3;
+        int16_t enc4;
+        int16_t enc5;
     };
 
 #ifdef	__cplusplus
