@@ -193,90 +193,111 @@ void InitEncoders(void) {
     
     // * Initialise Input Capture Modules and Timer_5 * //
     
-    //Encoder 0
-    IC1CON1bits.ICM = 0b000; // Disable the input capture module and clears buffer
+    //Encoder 0 Initialisation
+    
+    IPC0bits.IC1IP = ENC_PRIORITY; // Set interrupt priority
+    IFS0bits.IC1IF = 0; // Clear interrupt flag
+    IEC0bits.IC1IE = 1; // Enable IC Interrupts
+    
+    IC1CON1bits.ICSDL = 0; //Continue to run Input capture in cpu idle mode
+    IC1CON1bits.ICM = 0b000; // Disable the input capture module and clear buffer
     RPINR7bits.IC1R = ENC0_IC; // Map input  to Input Capture 1
+    
     IC1CON1bits.ICTSEL = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
-    IC1CON1bits.ICI = 0b01;  // Interrupt on every second capture event (this is done as we need 2 capture events to form a time period)
-    IC1CON1bits.ICM = 0b011; // Reenable IC to capture every rising edge
+    IC1CON1bits.ICI = 0;  // Interrupt on every capture event
+    IC1CON1bits.ICM = 0b011; // Reenable IC to capture every rising edge (Simple Capture mode)
     
-    IPC0bits.IC1IP = ENC_PRIORITY;
-    IFS0bits.IC1IF = 0;
     
-    IEC0bits.IC1IE = 1;    //Enable IC Interrupts
     
-    //Encoder 1
-    IC2CON1bits.ICM = 0b000;
-    RPINR7bits.IC2R = ENC1_IC;
-    IC2CON1bits.ICTSEL = TMR_5;
-    IC2CON1bits.ICI = 0b01;
-    IC2CON1bits.ICM = 0b011;
-    
+    //Encoder 1 Initialisation
     IPC1bits.IC2IP = ENC_PRIORITY;
     IFS0bits.IC2IF = 0;
-    
     IEC0bits.IC2IE = 1;
     
+    IC2CON1bits.ICSDL = 0;
+    IC2CON1bits.ICM = 0b000;
+    RPINR7bits.IC2R = ENC1_IC;
     
-    //Encoder 2
-    IC3CON1bits.ICM = 0b000;
-    RPINR8bits.IC3R = ENC2_IC;
-    IC3CON1bits.ICTSEL = TMR_5;
-    IC3CON1bits.ICI = 0b01;
-    IC3CON1bits.ICM = 0b011;
+    IC2CON1bits.ICTSEL = TMR_5;
+    IC2CON1bits.ICI = 0;
+    IC2CON1bits.ICM = 0b011;
     
+
+    
+    
+    //Encoder 2 Initialisation
     IPC9bits.IC3IP = ENC_PRIORITY;
     IFS2bits.IC3IF = 0;
-    
     IEC2bits.IC3IE = 1;
     
-    //Encoder 3
-    IC4CON1bits.ICM = 0b000;
-    RPINR8bits.IC4R = ENC3_IC;
-    IC4CON1bits.ICTSEL = TMR_5;
-    IC4CON1bits.ICI = 0b01;
-    IC4CON1bits.ICM = 0b011;
+    IC3CON1bits.ICSDL = 0;
+    IC3CON1bits.ICM = 0b000;
+    RPINR8bits.IC3R = ENC2_IC;
     
+    IC3CON1bits.ICTSEL = TMR_5;
+    IC3CON1bits.ICI = 0;
+    IC3CON1bits.ICM = 0b011;
+    
+
+    
+    //Encoder 3 Initialisation
     IPC9bits.IC4IP = ENC_PRIORITY;
     IFS2bits.IC4IF = 0;
-    
     IEC2bits.IC4IE = 1;
     
-    //Encoder 4
-    IC5CON1bits.ICM = 0b000;
-    RPINR9bits.IC5R = ENC4_IC;
-    IC5CON1bits.ICTSEL = TMR_5;
-    IC5CON1bits.ICI = 0b01;
-    IC5CON1bits.ICM = 0b011;
+    IC4CON1bits.ICSDL = 0;
+    IC4CON1bits.ICM = 0b000;
+    RPINR8bits.IC4R = ENC3_IC;
     
+    IC4CON1bits.ICTSEL = TMR_5;
+    IC4CON1bits.ICI = 0;
+    IC4CON1bits.ICM = 0b011;
+    
+
+    
+    //Encoder 4 Initialisation
     IPC9bits.IC5IP = ENC_PRIORITY;
     IFS2bits.IC5IF = 0;
-    
     IEC2bits.IC5IE = 1;
     
-    //Encoder 5
-    IC6CON1bits.ICM = 0b000;
-    RPINR9bits.IC6R = ENC5_IC;
-    IC6CON1bits.ICTSEL = TMR_5;
-    IC6CON1bits.ICI = 0b01;
-    IC7CON1bits.ICM = 0b011;
+    IC5CON1bits.ICSDL = 0;
+    IC5CON1bits.ICM = 0b000;
+    RPINR9bits.IC5R = ENC4_IC;
     
+    IC5CON1bits.ICTSEL = TMR_5;
+    IC5CON1bits.ICI = 0;
+    IC5CON1bits.ICM = 0b011;
+    
+
+    
+    //Encoder 5 Initialisation
     IPC10bits.IC6IP = ENC_PRIORITY;
     IFS2bits.IC6IF = 0;
-    
     IEC2bits.IC6IE = 1;
     
-    //Timer 5
-    T5CONbits.TON = 1;          // Starts Timer_9 (Timerx On bit)
-    T5CONbits.TCKPS = 0b10;   // prescaler 1:64
-    TMR5 = 0;                   // Clear timer_9 register
+    IC6CON1bits.ICSDL = 0;
+    IC6CON1bits.ICM = 0b000;
+    RPINR9bits.IC6R = ENC5_IC;
+    
+    IC6CON1bits.ICTSEL = TMR_5;
+    IC6CON1bits.ICI = 0;
+    IC6CON1bits.ICM = 0b011;
+    
+    
+    
+    //Timer 5 Initialisation
+    T5CONbits.TON = 0; // Disable Timer
+    T5CONbits.TCS = 0; // Internal instruction cylce clock
+    T5CONbits.TGATE = 0; // Disable gated timer mode
+    
+    T5CONbits.TCKPS = 0b11;   // prescaler 1:256
+    TMR5 = 0; //Clear timer_9 register
     PR5 = TIMER_5_PERIOD;
-
-    IEC3bits.T9IE = 1;          // Enable the interrupt
-    IPC7bits.T5IP = 3;
-    IFS1bits.T5IF = 0;
     
+    IPC7bits.T5IP = 3;  // Set interrupt priority
+    IFS1bits.T5IF = 0;  // Clear interupt flag
+    IEC3bits.T9IE = 1;  // Enable the interrupt
     
-
+    T5CONbits.TON = 1; //Starts Timer_9 (Timerx On bit)
 }
 

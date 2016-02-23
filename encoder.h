@@ -5,10 +5,11 @@
 #define	ENCODER_H
 
 #define ENC_PI 3.14159265359
-#define TMR_5_PS 64 //Prescaler level
+#define TMR_5_PS 256    //Prescaler level
 #define NS_IN_S 1000000000
 
-#define OVERFLOW_LIMIT 500
+#define OVERFLOW_LIMIT 500 // Set lower to increase deadzone
+#define MULTIPLIER 1000
 
 extern int16_t angVel0; // Angular speed of the motor
 extern int16_t angVel1;
