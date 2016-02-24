@@ -199,12 +199,15 @@ void InitEncoders(void) {
     IFS0bits.IC1IF = 0; // Clear interrupt flag
     IEC0bits.IC1IE = 1; // Enable IC Interrupts
     
-    IC1CON1bits.ICSDL = 0; //Continue to run Input capture in cpu idle mode
+    IC1CON1bits.ICSIDL = 0; //Continue to run Input capture in cpu idle mode
     IC1CON1bits.ICM = 0b000; // Disable the input capture module and clear buffer
     RPINR7bits.IC1R = ENC0_IC; // Map input  to Input Capture 1
     
     IC1CON1bits.ICTSEL = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
     IC1CON1bits.ICI = 0;  // Interrupt on every capture event
+    
+    IC1CON2 = 0b0000000000000000; // Ensure control register 2 is clear
+    
     IC1CON1bits.ICM = 0b011; // Reenable IC to capture every rising edge (Simple Capture mode)
     
     
@@ -214,12 +217,15 @@ void InitEncoders(void) {
     IFS0bits.IC2IF = 0;
     IEC0bits.IC2IE = 1;
     
-    IC2CON1bits.ICSDL = 0;
+    IC2CON1bits.ICSIDL = 0;
     IC2CON1bits.ICM = 0b000;
     RPINR7bits.IC2R = ENC1_IC;
     
     IC2CON1bits.ICTSEL = TMR_5;
     IC2CON1bits.ICI = 0;
+    
+    IC2CON2 = 0b0000000000000000;
+    
     IC2CON1bits.ICM = 0b011;
     
 
@@ -230,12 +236,15 @@ void InitEncoders(void) {
     IFS2bits.IC3IF = 0;
     IEC2bits.IC3IE = 1;
     
-    IC3CON1bits.ICSDL = 0;
+    IC3CON1bits.ICSIDL = 0;
     IC3CON1bits.ICM = 0b000;
     RPINR8bits.IC3R = ENC2_IC;
     
     IC3CON1bits.ICTSEL = TMR_5;
     IC3CON1bits.ICI = 0;
+    
+    IC3CON2 = 0b0000000000000000;
+    
     IC3CON1bits.ICM = 0b011;
     
 
@@ -245,12 +254,15 @@ void InitEncoders(void) {
     IFS2bits.IC4IF = 0;
     IEC2bits.IC4IE = 1;
     
-    IC4CON1bits.ICSDL = 0;
+    IC4CON1bits.ICSIDL = 0;
     IC4CON1bits.ICM = 0b000;
     RPINR8bits.IC4R = ENC3_IC;
     
     IC4CON1bits.ICTSEL = TMR_5;
     IC4CON1bits.ICI = 0;
+    
+    IC1CON2 = 0b0000000000000000;
+    
     IC4CON1bits.ICM = 0b011;
     
 
@@ -260,12 +272,15 @@ void InitEncoders(void) {
     IFS2bits.IC5IF = 0;
     IEC2bits.IC5IE = 1;
     
-    IC5CON1bits.ICSDL = 0;
+    IC5CON1bits.ICSIDL = 0;
     IC5CON1bits.ICM = 0b000;
     RPINR9bits.IC5R = ENC4_IC;
     
     IC5CON1bits.ICTSEL = TMR_5;
     IC5CON1bits.ICI = 0;
+    
+    IC5CON2 = 0b0000000000000000;
+    
     IC5CON1bits.ICM = 0b011;
     
 
@@ -275,12 +290,15 @@ void InitEncoders(void) {
     IFS2bits.IC6IF = 0;
     IEC2bits.IC6IE = 1;
     
-    IC6CON1bits.ICSDL = 0;
+    IC6CON1bits.ICSIDL = 0;
     IC6CON1bits.ICM = 0b000;
     RPINR9bits.IC6R = ENC5_IC;
     
     IC6CON1bits.ICTSEL = TMR_5;
     IC6CON1bits.ICI = 0;
+    
+    IC6CON2 = 0b0000000000000000;
+    
     IC6CON1bits.ICM = 0b011;
     
     
