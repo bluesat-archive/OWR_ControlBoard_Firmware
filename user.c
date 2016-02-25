@@ -191,6 +191,9 @@ void InitEncoders(void) {
     TRISB |= B_ENCODER_BITS; // If i recall, mapping to IC, done below, does this but
     TRISF |= F_ENCODER_BITS; // best practice is to be clear
     
+    //Ensure that the pins are set up for DIGITAL input, not analog
+    ANSELB &= 0x00FF; // Clear bits 8-15 inclusive    
+    
     // * Initialise Input Capture Modules and Timer_5 * //
     
     //Encoder 0 Initialisation
@@ -208,7 +211,7 @@ void InitEncoders(void) {
     
     IC1CON2 = 0b0000000000000000; // Ensure control register 2 is clear
     
-    IC1CON1bits.ICM = 0b011; // Reenable IC to capture every rising edge (Simple Capture mode)
+    IC1CON1bits.ICM = 0b100; // Reenable IC to capture every 4th rising edge (Prescaler Capture mode)
     
     
     
@@ -226,7 +229,7 @@ void InitEncoders(void) {
     
     IC2CON2 = 0b0000000000000000;
     
-    IC2CON1bits.ICM = 0b011;
+    IC2CON1bits.ICM = 0b100;
     
 
     
@@ -245,7 +248,7 @@ void InitEncoders(void) {
     
     IC3CON2 = 0b0000000000000000;
     
-    IC3CON1bits.ICM = 0b011;
+    IC3CON1bits.ICM = 0b100;
     
 
     
@@ -263,7 +266,7 @@ void InitEncoders(void) {
     
     IC1CON2 = 0b0000000000000000;
     
-    IC4CON1bits.ICM = 0b011;
+    IC4CON1bits.ICM = 0b100;
     
 
     
@@ -281,7 +284,7 @@ void InitEncoders(void) {
     
     IC5CON2 = 0b0000000000000000;
     
-    IC5CON1bits.ICM = 0b011;
+    IC5CON1bits.ICM = 0b100;
     
 
     
@@ -299,7 +302,7 @@ void InitEncoders(void) {
     
     IC6CON2 = 0b0000000000000000;
     
-    IC6CON1bits.ICM = 0b011;
+    IC6CON1bits.ICM = 0b100;
     
     
     

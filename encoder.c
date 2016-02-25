@@ -60,7 +60,9 @@ uint16_t enc4Prev = 0;
 uint16_t enc5Prev = 0;
 
     // **** Interrupt Handlers for Input capture **** //
-    
+
+//TODO: account for inpout capture prescaler in clculations.
+
 // Input Capture 1, Encoder 0
 void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     uint16_t t1;
