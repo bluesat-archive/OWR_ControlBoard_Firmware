@@ -58,12 +58,13 @@ int16_t main(void)
     while(1)
     {
         if (msg = recieveMessage()) {
-            pwm_set_p17(msg->lSpeed);
-            pwm_set_p21(msg->lSpeed);
-            pwm_set_p15(msg->lSpeed);
-            pwm_set_p12(msg->rSpeed);
-            pwm_set_p42(msg->rSpeed);
-            pwm_set_p10(msg->rSpeed);
+            pwm_set_p17(msg->flSpeed);
+            pwm_set_p15(msg->blSpeed);
+            pwm_set_p12(msg->frSpeed);
+            pwm_set_p10(msg->brSpeed);
+            
+            pwm_set_p42(msg->flAng);
+            pwm_set_p21(msg->frAng);
             
             pwm_set_p7(msg->armRotate);
             pwm_set_p19(msg->armTop);
