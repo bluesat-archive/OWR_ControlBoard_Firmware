@@ -24,6 +24,9 @@
 
 #include <pps.h>            /* Useful for peripheral pin macros                     */
                             /* http://singularengineer.com/peripheral-pin-select-pps-using-xc16-and-mplab-x/  */
+//the follwing two are somehow not defined in pps.h, so are defined here
+#define IN_FN_PPS_IC5				RPINR9bits.IC5R		/* Assign Input Capture 5 (IC5) to the corresponding RPn pin*/
+#define IN_FN_PPS_IC6				RPINR9bits.IC6R		/* Assign Input Capture 6 (IC6) to the corresponding RPn pin*/
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -210,9 +213,9 @@ void InitEncoders(void) {
     IC1CON1bits.ICSIDL = 0; //Continue to run Input capture in cpu idle mode
     IC1CON1bits.ICM = 0b000; // Disable the input capture module and clear buffer
     
-    PPSUnlock();
-    PPSInput( IN_FN_PPS_IC1, IN_PIN_PPS_RPI140);
-    PPSLock();
+    PPSUnLock;
+    PPSInput( IN_FN_PPS_IC1, IN_PIN_PPS_RPI40);
+    PPSLock;
     //RPINR7bits.IC1R = ENC0_IC; // Map input  to Input Capture 1
     
     IC1CON1bits.ICTSEL = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
@@ -232,9 +235,9 @@ void InitEncoders(void) {
     IC2CON1bits.ICSIDL = 0;
     IC2CON1bits.ICM = 0b000;
     
-    PPSUnlock();
-    PPSInput( IN_FN_PPS_IC2, IN_PIN_PPS_RPI142);
-    PPSLock();
+    PPSUnLock;
+    PPSInput( IN_FN_PPS_IC2, IN_PIN_PPS_RPI42);
+    PPSLock;
     //RPINR7bits.IC2R = ENC1_IC;
     
     IC2CON1bits.ICTSEL = TMR_5;
@@ -255,9 +258,9 @@ void InitEncoders(void) {
     IC3CON1bits.ICSIDL = 0;
     IC3CON1bits.ICM = 0b000;
     
-    PPSUnlock();
-    PPSInput( IN_FN_PPS_IC3, IN_PIN_PPS_RPI144);
-    PPSLock();
+    PPSUnLock;
+    PPSInput( IN_FN_PPS_IC3, IN_PIN_PPS_RPI44);
+    PPSLock;
     //RPINR8bits.IC3R = ENC2_IC;
     
     IC3CON1bits.ICTSEL = TMR_5;
@@ -277,9 +280,9 @@ void InitEncoders(void) {
     IC4CON1bits.ICSIDL = 0;
     IC4CON1bits.ICM = 0b000;
     
-    PPSUnlock();
-    PPSInput( IN_FN_PPS_IC4, IN_PIN_PPS_RPI146);
-    PPSLock();
+    PPSUnLock;
+    PPSInput( IN_FN_PPS_IC4, IN_PIN_PPS_RPI46);
+    PPSLock;
     //RPINR8bits.IC4R = ENC3_IC;
     
     IC4CON1bits.ICTSEL = TMR_5;
@@ -299,9 +302,9 @@ void InitEncoders(void) {
     IC5CON1bits.ICSIDL = 0;
     IC5CON1bits.ICM = 0b000;
     
-    PPSUnlock();
+    PPSUnLock;
     PPSInput( IN_FN_PPS_IC5, IN_PIN_PPS_RP100);
-    PPSLock();
+    PPSLock;
     //RPINR9bits.IC5R = ENC4_IC;
     
     IC5CON1bits.ICTSEL = TMR_5;
@@ -321,9 +324,9 @@ void InitEncoders(void) {
     IC6CON1bits.ICSIDL = 0;
     IC6CON1bits.ICM = 0b000;
     
-    PPSUnlock();
+    PPSUnLock;
     PPSInput( IN_FN_PPS_IC6, IN_PIN_PPS_RP98);
-    PPSLock();
+    PPSLock;
     //RPINR9bits.IC6R = ENC5_IC;
     
     IC6CON1bits.ICTSEL = TMR_5;
