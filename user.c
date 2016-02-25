@@ -21,6 +21,10 @@
 #include "srf02.h"
 #include "pwm_lib.h"
 #include "i2c_lib.h"
+
+#include <PPS.h>            /* Useful for peripheral pin macros                     */
+                            /* http://www.microchip.com/forums/m809842.aspx#810257  */
+
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
@@ -31,6 +35,11 @@
 #define I2C_CONFIG2 (((1/I2C_FREQ) * FCY) - 2)
 
 #define BRGVAL(x) ((FCY)/(4*x))
+
+
+#define PPSIn(fn,pin)    iPPSInput(IN_FN_PPS##fn,IN_PIN_PPS##pin)       /* Part of the peripheral pin select tools */
+#define PPSOut(fn,pin)    iPPSOutput(OUT_PIN_PPS##pin,OUT_FN_PPS##fn)
+
 
 void InitApp(void)
 {
@@ -204,7 +213,9 @@ void InitEncoders(void) {
     
     IC1CON1bits.ICSIDL = 0; //Continue to run Input capture in cpu idle mode
     IC1CON1bits.ICM = 0b000; // Disable the input capture module and clear buffer
-    RPINR7bits.IC1R = ENC0_IC; // Map input  to Input Capture 1
+    
+    PPSIn( IC1, _RPI140);
+    //RPINR7bits.IC1R = ENC0_IC; // Map input  to Input Capture 1
     
     IC1CON1bits.ICTSEL = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
     IC1CON1bits.ICI = 0;  // Interrupt on every capture event
@@ -222,7 +233,9 @@ void InitEncoders(void) {
     
     IC2CON1bits.ICSIDL = 0;
     IC2CON1bits.ICM = 0b000;
-    RPINR7bits.IC2R = ENC1_IC;
+    
+    PPSIn( IC2, _RPI142);
+    //RPINR7bits.IC2R = ENC1_IC;
     
     IC2CON1bits.ICTSEL = TMR_5;
     IC2CON1bits.ICI = 0;
@@ -241,7 +254,9 @@ void InitEncoders(void) {
     
     IC3CON1bits.ICSIDL = 0;
     IC3CON1bits.ICM = 0b000;
-    RPINR8bits.IC3R = ENC2_IC;
+    
+    PPSIn( IC3, _RPI144);
+    //RPINR8bits.IC3R = ENC2_IC;
     
     IC3CON1bits.ICTSEL = TMR_5;
     IC3CON1bits.ICI = 0;
@@ -259,7 +274,9 @@ void InitEncoders(void) {
     
     IC4CON1bits.ICSIDL = 0;
     IC4CON1bits.ICM = 0b000;
-    RPINR8bits.IC4R = ENC3_IC;
+    
+    PPSIn( IC4, _RPI146);
+    //RPINR8bits.IC4R = ENC3_IC;
     
     IC4CON1bits.ICTSEL = TMR_5;
     IC4CON1bits.ICI = 0;
@@ -277,7 +294,9 @@ void InitEncoders(void) {
     
     IC5CON1bits.ICSIDL = 0;
     IC5CON1bits.ICM = 0b000;
-    RPINR9bits.IC5R = ENC4_IC;
+    
+    PPSIn( IC5, _RP100);
+    //RPINR9bits.IC5R = ENC4_IC;
     
     IC5CON1bits.ICTSEL = TMR_5;
     IC5CON1bits.ICI = 0;
@@ -295,7 +314,9 @@ void InitEncoders(void) {
     
     IC6CON1bits.ICSIDL = 0;
     IC6CON1bits.ICM = 0b000;
-    RPINR9bits.IC6R = ENC5_IC;
+    
+    PPSIn( IC6, _RP98);
+    //RPINR9bits.IC6R = ENC5_IC;
     
     IC6CON1bits.ICTSEL = TMR_5;
     IC6CON1bits.ICI = 0;
