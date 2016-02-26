@@ -6,11 +6,24 @@
 
 #define ENC_PI 3.14159265359
 #define TMR_5_PS 256    //Prescaler level
+#define TMR_5_PERIOD 0xFFFF // ENSURE same as in user.h
 #define NS_IN_S 1000000000
 
-#define OVERFLOW_LIMIT 500 // Set lower to increase deadzone
-#define MULTIPLIER 1000 // Used to convert floating point result to a integer
+#define OVERFLOW_LIMIT 100 // Set lower to increase deadzone
+#define MULTIPLIER 1000000000000 // Used to convert floating point result to a integer
 #define PULSES_PER_ROTATION 1365 // Measured from 1 rotation of the motor post-gearbox, see https://bluesat.atlassian.net/browse/OWRS-207
+
+#define IC_PS 4 //Input capture only captures every 4th rising edge
+
+    // *** Oscillator/Frequency Maths maths follows: *** //
+
+#define F_IN 7370000 // Oscillator ctrystal frequency is 7.37 Mhz
+#define F_OSC ((F_IN * 114)/(3*2)) // Oscialltor frequency is about 140MHz (see frm pg179 and system.c)
+#define F_CY F_OSC/2 //~70Mhz; Each instruction, 1 internal instruction clock cycle, requires 2 oscillator clock cycles (frm pg179)
+                     // Alternatively, observe in the documentation that PIC can do 70 million intructions per second (MIPS) = 70Mhz
+
+#define UNSCALE_TIMER_5 TMR_5_PS/F_CY // 1 cycle of the timer taking into account prescaler and instruction clock cycle
+
 
 extern int16_t angVel0; // Angular speed of the motor
 extern int16_t angVel1;

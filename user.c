@@ -213,10 +213,9 @@ void InitEncoders(void) {
     IC1CON1bits.ICSIDL = 0; //Continue to run Input capture in cpu idle mode
     IC1CON1bits.ICM = 0b000; // Disable the input capture module and clear buffer
     
-    PPSUnLock;
-    PPSInput( IN_FN_PPS_IC1, IN_PIN_PPS_RPI40);
-    PPSLock;
-    //RPINR7bits.IC1R = ENC0_IC; // Map input  to Input Capture 1
+    PPSUnLock;                                  // Remap the input to the input capture module
+    PPSInput( IN_FN_PPS_IC1, IN_PIN_PPS_RPI40); // Need to unlock before changing the mapping
+    PPSLock;                                    //
     
     IC1CON1bits.ICTSEL = TMR_5; // Select the timer to use, all input captures shall work off timer 5 (no need for timer interrupt)
     IC1CON1bits.ICI = 0;  // Interrupt on every capture event
@@ -238,7 +237,6 @@ void InitEncoders(void) {
     PPSUnLock;
     PPSInput( IN_FN_PPS_IC2, IN_PIN_PPS_RPI42);
     PPSLock;
-    //RPINR7bits.IC2R = ENC1_IC;
     
     IC2CON1bits.ICTSEL = TMR_5;
     IC2CON1bits.ICI = 0;
@@ -261,7 +259,6 @@ void InitEncoders(void) {
     PPSUnLock;
     PPSInput( IN_FN_PPS_IC3, IN_PIN_PPS_RPI44);
     PPSLock;
-    //RPINR8bits.IC3R = ENC2_IC;
     
     IC3CON1bits.ICTSEL = TMR_5;
     IC3CON1bits.ICI = 0;
@@ -283,7 +280,6 @@ void InitEncoders(void) {
     PPSUnLock;
     PPSInput( IN_FN_PPS_IC4, IN_PIN_PPS_RPI46);
     PPSLock;
-    //RPINR8bits.IC4R = ENC3_IC;
     
     IC4CON1bits.ICTSEL = TMR_5;
     IC4CON1bits.ICI = 0;
@@ -327,7 +323,6 @@ void InitEncoders(void) {
     PPSUnLock;
     PPSInput( IN_FN_PPS_IC6, IN_PIN_PPS_RP98);
     PPSLock;
-    //RPINR9bits.IC6R = ENC5_IC;
     
     IC6CON1bits.ICTSEL = TMR_5;
     IC6CON1bits.ICI = 0;

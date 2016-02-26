@@ -26,8 +26,6 @@
 #include "message.h"
 
 #define ENC_PI 3.14159265359
-#define TMR_5_PS 64 //Prescaler level
-#define NS_IN_S 1000000000
 
 // Time period measurements for encoders
 uint16_t timePeriod0 = 0;
@@ -70,10 +68,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     
     if(enc0 <= OVERFLOW_LIMIT){
         
-        timePeriod0 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc0) + enc0Prev - t1); // Calculate time perioid between pulses 
+        timePeriod0 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc0) + enc0Prev - t1); // Calculate time perioid between pulses 
         
         // Calculate Angular velocity of motor:
-        // Use multiplier to convert from float to integer (sending uint16_t, not double, to laptop)
         // Check direction, interupt occurs when ChA is high, ChB is low if positive direction
         // n pulses are sent per rotation, we are measuring a 1/n rotation in radians => 2pi/n
         // Finally, as we are measuring rad/s; divide by the timePeriod taken in rotating the calculated angle
@@ -92,7 +89,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC2Interrupt(void) {
         
     if(enc1 <= OVERFLOW_LIMIT){
         
-        timePeriod1 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc1) + enc1Prev - t1);
+        timePeriod1 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc1) + enc1Prev - t1);
         
         angVel1 = MULTIPLIER * (-1.0 * PORTBbits.RB11) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod1));
     }
@@ -107,7 +104,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC3Interrupt(void) {
     t1 = IC3BUF;
     
     if(enc2 <= OVERFLOW_LIMIT){
-        timePeriod2 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc2) + enc2Prev - t1);
+        timePeriod2 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc2) + enc2Prev - t1);
         
         angVel2 = MULTIPLIER * (-1.0 * PORTBbits.RB13) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod2));
     }
@@ -123,7 +120,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC4Interrupt(void) {
         
     if(enc3 <= OVERFLOW_LIMIT){
         
-        timePeriod3 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc3) + enc3Prev - t1);
+        timePeriod3 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc3) + enc3Prev - t1);
         
         angVel3 = MULTIPLIER * (-1.0 * PORTBbits.RB15) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod3));
     }
@@ -140,7 +137,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC5Interrupt(void) {
         
     if(enc4 <= OVERFLOW_LIMIT){
         
-        timePeriod4 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc4) + enc4Prev - t1);
+        timePeriod4 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc4) + enc4Prev - t1);
         
         angVel4 = MULTIPLIER * (-1.0 * PORTFbits.RF5) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod4));
     }
@@ -157,7 +154,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC6Interrupt(void) {
         
     if(enc5 <= OVERFLOW_LIMIT){ // If we are going too slow, ignore results and reset overflow counter
         
-        timePeriod5 = (TMR_5_PS/NS_IN_S) * ((PR5 * enc5) + enc5Prev - t1);
+        timePeriod5 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc5) + enc5Prev - t1);
         
         angVel5 = MULTIPLIER * (-1.0 * PORTFbits.RF3) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod5));
     }

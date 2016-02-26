@@ -2,16 +2,6 @@
 /* User Level #define Macros                                                  */
 /******************************************************************************/
 
-// Assign QEI/ICx input pins (pg 213 FRM), NOTE: taking the values from frm, remember to add leading 0.
-//#define QEI_INPUT_A 0b00000000 //Sets channel A input pin
-//#define QEI_INPUT_B 0b00000000 //Sets channel B input pin
-#define ENC0_IC 0b0101000
-#define ENC1_IC 0b0101010
-#define ENC2_IC 0b0101100
-#define ENC3_IC 0b0101110
-#define ENC4_IC 0b1100100
-#define ENC5_IC 0b1100010
-
 // TRISx bit values for setting each encoder pin as input
 #define ENC0_CHA 0x100     //RB8
 #define ENC0_CHB 0x200     //RB9
