@@ -20,7 +20,7 @@
 #define F_ENCODER_BITS (ENC4_CHA | ENC4_CHB | ENC5_CHA | ENC5_CHB)
 
 #define TMR_5 0b011 // Timer code for linking to input capture modules
-#define TIMER_5_PERIOD 0xFFFF //Period at which timer 5 will trigger interrupt (set as max for 16 bit period)
+#define TIMER_5_PERIOD 0xFFFF //Period at which timer 5 will trigger interrupt (set as max for 16 bit period), agrees with encoder.h's
 #define ENC_PRIORITY 3 // Interrupt priority for IC interrupts
 
 

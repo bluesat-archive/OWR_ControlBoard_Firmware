@@ -5,21 +5,21 @@
 #define	ENCODER_H
 
 #define ENC_PI 3.14159265359
-#define TMR_5_PS 256    //Prescaler level
-#define TMR_5_PERIOD 0xFFFF // ENSURE same as in user.h
-#define NS_IN_S 1000000000
+#define TMR_5_PS 256.0    //Prescaler level
+#define TMR_5_PERIOD ((unsigned int)0xFFFF) // ENSURE same as in user.h
 
-#define OVERFLOW_LIMIT 100 // Set lower to increase deadzone
-#define MULTIPLIER 1000000000000 // Used to convert floating point result to a integer
-#define PULSES_PER_ROTATION 1365 // Measured from 1 rotation of the motor post-gearbox, see https://bluesat.atlassian.net/browse/OWRS-207
+#define OVERFLOW_LIMIT 25 // Set lower to increase deadzone
+#define MULTIPLIER 1000000 // Used to convert floating point result to a integer
 
-#define IC_PS 4 //Input capture only captures every 4th rising edge
+#define IC_PS 4.0 //Input capture only captures every 4th rising edge
+
+#define PULSES_PER_ROTATION 3.0/IC_PS // Measured from 1 rotation of the motor pre-gearbox, see https://bluesat.atlassian.net/browse/OWRS-207
 
     // *** Oscillator/Frequency Maths maths follows: *** //
 
-#define F_IN 7370000 // Oscillator ctrystal frequency is 7.37 Mhz
-#define F_OSC ((F_IN * 114)/(3*2)) // Oscialltor frequency is about 140MHz (see frm pg179 and system.c)
-#define F_CY F_OSC/2 //~70Mhz; Each instruction, 1 internal instruction clock cycle, requires 2 oscillator clock cycles (frm pg179)
+#define F_IN 7370000.0 // Oscillator crystal frequency is 7.37 Mhz
+#define F_OSC ((F_IN * 114.0)/(3.0 * 2.0)) // Oscialltor frequency is about 140MHz (see frm pg179 and system.c)
+#define F_CY F_OSC/2.0 //~70Mhz; Each instruction, 1 internal instruction clock cycle, requires 2 oscillator clock cycles (frm pg179)
                      // Alternatively, observe in the documentation that PIC can do 70 million intructions per second (MIPS) = 70Mhz
 
 #define UNSCALE_TIMER_5 TMR_5_PS/F_CY // 1 cycle of the timer taking into account prescaler and instruction clock cycle
@@ -31,5 +31,12 @@ extern int16_t angVel2;
 extern int16_t angVel3;
 extern int16_t angVel4;
 extern int16_t angVel5;
+
+extern int16_t enc0;
+extern int16_t enc1;
+extern int16_t enc2;
+extern int16_t enc3;
+extern int16_t enc4;
+extern int16_t enc5;
 
 #endif	/* ENCODER_H */

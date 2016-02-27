@@ -344,7 +344,7 @@ void InitEncoders(void) {
     
     IPC7bits.T5IP = 3;  // Set interrupt priority
     IFS1bits.T5IF = 0;  // Clear interupt flag
-    IEC3bits.T9IE = 1;  // Enable the interrupt
+    IEC1bits.T5IE = 1;  // Enable the interrupt
     
     T5CONbits.TON = 1; //Starts Timer_9 (Timerx On bit)
 }
