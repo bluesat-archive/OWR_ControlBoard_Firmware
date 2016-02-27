@@ -1,5 +1,6 @@
 // Header file for encoder interface
 // Created on 13/2/2016
+#include "system.h"
 
 #ifndef ENCODER_H
 #define	ENCODER_H
@@ -17,10 +18,11 @@
 
     // *** Oscillator/Frequency Maths maths follows: *** //
 
-#define F_IN 7370000.0 // Oscillator crystal frequency is 7.37 Mhz
+#define F_IN  ((float)SYS_FREQ)//7370000.0 // Oscillator crystal frequency is 7.37 Mhz
 #define F_OSC ((F_IN * 114.0)/(3.0 * 2.0)) // Oscialltor frequency is about 140MHz (see frm pg179 and system.c)
-#define F_CY F_OSC/2.0 //~70Mhz; Each instruction, 1 internal instruction clock cycle, requires 2 oscillator clock cycles (frm pg179)
+//#define F_CY F_OSC/2.0 //~70Mhz; Each instruction, 1 internal instruction clock cycle, requires 2 oscillator clock cycles (frm pg179)
                      // Alternatively, observe in the documentation that PIC can do 70 million intructions per second (MIPS) = 70Mhz
+#define F_CY FCY
 
 #define UNSCALE_TIMER_5 TMR_5_PS/F_CY // 1 cycle of the timer taking into account prescaler and instruction clock cycle
 
