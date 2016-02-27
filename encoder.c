@@ -72,7 +72,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
         // Check direction, interupt occurs when ChA is high, ChB is low if positive direction
         // n pulses are sent per rotation, we are measuring a 1/n rotation in radians => 2pi/n
         // Finally, as we are measuring rad/s; divide by the timePeriod taken in rotating the calculated angle
-        angVel1 = MULTIPLIER * (-1.0 + ( 2.0 * PORTBbits.RB11)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod1));
+        angVel1 = MULTIPLIER * (-1.0 + ( 2.0 * PORTBbits.RB11)) * ((2.0 * ENC_PI)/(PULSES_PER_ROTATION * (float)timePeriod1));
     }
     
     enc0 = 0; //Clear timer overlap counter for encoder 0
@@ -137,7 +137,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC5Interrupt(void) {
         
         timePeriod4 = MULTIPLIER * UNSCALE_TIMER_5/IC_PS * ((TMR_5_PERIOD * enc4) + t1 - enc4Prev);
         
-        angVel4 = MULTIPLIER * (-1.0 + ( 2.0 * PORTFbits.RF5)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod4));
+        angVel4 = MULTIPLIER * (-1.0 + ( 2.0 * PORTFbits.RF5)) * ((2.0 * ENC_PI)/(PULSES_PER_ROTATION * (float)timePeriod4));
     }
     enc4 = 0;
     enc4Prev = t1;

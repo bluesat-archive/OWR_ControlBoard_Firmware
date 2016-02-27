@@ -6,7 +6,7 @@
 
 #define ENC_PI 3.14159265359
 #define TMR_5_PS 256.0    //Prescaler level
-#define TMR_5_PERIOD ((unsigned int)0x0FFF) // ENSURE same as in user.h
+#define TMR_5_PERIOD ((unsigned int)0xFFFF) // ENSURE same as in user.h
 
 #define OVERFLOW_LIMIT 25 // Set lower to increase deadzone
 #define MULTIPLIER 1000000 // Used to convert floating point result to a integer
@@ -31,5 +31,12 @@ extern int16_t angVel2;
 extern int16_t angVel3;
 extern int16_t angVel4;
 extern int16_t angVel5;
+
+extern int16_t enc0;
+extern int16_t enc1;
+extern int16_t enc2;
+extern int16_t enc3;
+extern int16_t enc4;
+extern int16_t enc5;
 
 #endif	/* ENCODER_H */
