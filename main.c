@@ -91,32 +91,32 @@ int16_t main(void)
             //sendMsg.imuData = read_mpu();
             
             if(enc0 <= 1) {
-                sendMsg.enc0 = angVel0;
+                sendMsg.enc0 = angVel0/2;
             } else {
                 sendMsg.enc0 = 0;
             }
             if(enc1 <= 1) {
-                sendMsg.enc1 = angVel1;
+                sendMsg.enc1 = angVel1/2;
             } else {
                 sendMsg.enc1 = 0;
             }
             if(enc2 <= 1) {
-                sendMsg.enc2 = angVel2;
+                sendMsg.enc2 = angVel2/2;
             } else {
                 sendMsg.enc2 = 0;
             }
             if(enc3 <= 1) {
-                sendMsg.enc3 = angVel3;
+                sendMsg.enc3 = angVel3/2;
             } else {
                 sendMsg.enc3 = 0;
             }
             if(enc4 <= 1) {
-                sendMsg.enc4 = angVel4;
+                sendMsg.enc4 = angVel4/2;
             } else {
                 sendMsg.enc4 = 0;
             }
             if(enc5 <= 1) {
-                sendMsg.enc5 = angVel5;
+                sendMsg.enc5 = angVel5/2;
             } else {
                 sendMsg.enc5 = 0;
             }
