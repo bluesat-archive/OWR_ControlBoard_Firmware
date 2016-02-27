@@ -59,8 +59,6 @@ uint16_t enc5Prev = 0;
 
     // **** Interrupt Handlers for Input capture **** //
 
-//TODO: account for inpout capture prescaler in clculations.
-
 // Input Capture 1, Encoder 0
 void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     uint16_t t1;
@@ -68,13 +66,13 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     
     if(enc0 <= OVERFLOW_LIMIT){
         
-        timePeriod0 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc0) + enc0Prev - t1); // Calculate time perioid between pulses 
+        timePeriod0 = MULTIPLIER * UNSCALE_TIMER_5/IC_PS * ((TMR_5_PERIOD * enc0) + t1 - enc0Prev); // Calculate time perioid between pulses, taking into account timer and IC prescalers and clock cycle timing 
         
         // Calculate Angular velocity of motor:
         // Check direction, interupt occurs when ChA is high, ChB is low if positive direction
         // n pulses are sent per rotation, we are measuring a 1/n rotation in radians => 2pi/n
         // Finally, as we are measuring rad/s; divide by the timePeriod taken in rotating the calculated angle
-        angVel1 = MULTIPLIER * (-1 * PORTBbits.RB11) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod1));
+        angVel1 = MULTIPLIER * (-1.0 + ( 2.0 * PORTBbits.RB11)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod1));
     }
     
     enc0 = 0; //Clear timer overlap counter for encoder 0
@@ -89,9 +87,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC2Interrupt(void) {
         
     if(enc1 <= OVERFLOW_LIMIT){
         
-        timePeriod1 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc1) + enc1Prev - t1);
+        timePeriod1 = MULTIPLIER * UNSCALE_TIMER_5/IC_PS * ((TMR_5_PERIOD * enc1) + t1 - enc1Prev);
         
-        angVel1 = MULTIPLIER * (-1.0 * PORTBbits.RB11) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod1));
+        angVel1 = MULTIPLIER * (-1.0 + ( 2.0 * PORTBbits.RB11)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod1));
     }
     enc1 = 0;
     enc1Prev = t1;
@@ -104,9 +102,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC3Interrupt(void) {
     t1 = IC3BUF;
     
     if(enc2 <= OVERFLOW_LIMIT){
-        timePeriod2 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc2) + enc2Prev - t1);
+        timePeriod2 = MULTIPLIER * UNSCALE_TIMER_5/IC_PS * ((TMR_5_PERIOD * enc2) + t1 - enc2Prev);
         
-        angVel2 = MULTIPLIER * (-1.0 * PORTBbits.RB13) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod2));
+        angVel2 = MULTIPLIER * (-1.0 + ( 2.0 * PORTBbits.RB13)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod2));
     }
     enc2 = 0;
     enc2Prev = t1;
@@ -120,9 +118,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC4Interrupt(void) {
         
     if(enc3 <= OVERFLOW_LIMIT){
         
-        timePeriod3 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc3) + enc3Prev - t1);
+        timePeriod3 = MULTIPLIER * UNSCALE_TIMER_5/IC_PS * ((TMR_5_PERIOD * enc3) + t1 - enc3Prev);
         
-        angVel3 = MULTIPLIER * (-1.0 * PORTBbits.RB15) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod3));
+        angVel3 = MULTIPLIER * (-1.0 + ( 2.0 * PORTBbits.RB15)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod3));
     }
     enc3 = 0;
     enc3Prev = t1;
@@ -137,9 +135,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC5Interrupt(void) {
         
     if(enc4 <= OVERFLOW_LIMIT){
         
-        timePeriod4 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc4) + enc4Prev - t1);
+        timePeriod4 = MULTIPLIER * UNSCALE_TIMER_5/IC_PS * ((TMR_5_PERIOD * enc4) + t1 - enc4Prev);
         
-        angVel4 = MULTIPLIER * (-1.0 * PORTFbits.RF5) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod4));
+        angVel4 = MULTIPLIER * (-1.0 + ( 2.0 * PORTFbits.RF5)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod4));
     }
     enc4 = 0;
     enc4Prev = t1;
@@ -154,9 +152,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC6Interrupt(void) {
         
     if(enc5 <= OVERFLOW_LIMIT){ // If we are going too slow, ignore results and reset overflow counter
         
-        timePeriod5 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc5) + enc5Prev - t1);
+        timePeriod5 = MULTIPLIER * UNSCALE_TIMER_5/IC_PS * ((TMR_5_PERIOD * enc5) + t1 - enc5Prev);
         
-        angVel5 = MULTIPLIER * (-1.0 * PORTFbits.RF3) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod5));
+        angVel5 = MULTIPLIER * (-1.0 + (2.0 * PORTFbits.RF3)) * ((2 * ENC_PI)/(PULSES_PER_ROTATION * timePeriod5));
     }
     enc5 = 0;
     enc5Prev = t1;
