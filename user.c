@@ -196,13 +196,15 @@ void InitQEI(void) {
 
 void InitEncoders(void) {
     //Ensure Channel A & B ports are inputs:
-    TRISB |= B_ENCODER_BITS; // If i recall, mapping to IC, done below, does this but
-    TRISF |= F_ENCODER_BITS; // best practice is to be clear
+    TRISB |= B_ENCODER_BITS; // If I recall, mapping to IC, done below, does this but
+    TRISF |= F_ENCODER_BITS; // best practice is to be certain
     
-    //Ensure that the pins are set up for DIGITAL input, not analog
+    //Ensure that the pins are set up for DIGITAL input, not analog, only needed for port B
     ANSELB &= 0x00FF; // Clear bits 8-15 inclusive    
     
-    // * Initialise Input Capture Modules and Timer_5 * //
+    
+    // *** Initialise Input Capture Modules and Timer_5 *** //
+    
     
     //Encoder 0 Initialisation
     
