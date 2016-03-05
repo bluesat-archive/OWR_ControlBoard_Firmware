@@ -52,17 +52,16 @@ void setupADC1() {
     AD1CON1bits.SIMSAM = 1;
     
     //Sample Clock Source Select Bits
-    AD1CON1bits.SSRC = 0; // auto convert (not actually auto)
-    AD1CHS0bits.CH0SA = 26; // AN26
-    AD1CON2bits.CHPS = 2; // Read CH0 - CH3 
-    //AD1CHS0bits.CH0NB = 26; // AN2
+    AD1CON1bits.SSRC = 0; // manual mode, clear SAMP to start conversion
+    AD1CHS0bits.CH0SA = 24; // AN24
+    AD1CHS0bits.CH0NB = 25; // AN25
+    AD1CON2bits.CHPS = 1; // Read CH0 & CH1 (for the 2 actuators)
     
     //voltage reference 
     AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
     AD1CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
-    AD1CHS123bits.CH123SA = 1;
     
-    //automatically begin
+    //automatically begin sampling whenever last conversion finishes
     AD1CON1bits.ASAM = 1;
     
     //enable ADC1
