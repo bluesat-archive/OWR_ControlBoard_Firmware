@@ -44,7 +44,7 @@ void setupADC1() {
     AD1CON1bits.SIMSAM = 1;
     
     //Sample Clock Source Select Bits
-    AD1CON1bits.SSRC = 0; // auto convert
+    AD1CON1bits.SSRC = 0; // manual conversion (in main.c)
     AD1CHS0bits.CH0SA = 26; // AN26
     AD1CON2bits.CHPS = 2; // Read CH0 - CH3 
     
@@ -97,8 +97,7 @@ void setupADC2() {
     
     // Sample and conversion timing and automation
     AD2CON1bits.SSRCG = 0;
-    AD2CON1bits.SSRC = 0b111; // manual mode, clear SAMP to start conversion
-    AD2CON3bits.SAMC = 8; // Tsmp = SAMC * Tad => minimum required is SAMC = 2
+    AD2CON1bits.SSRC = 0; // manual mode, clear SAMP to start conversion, done in main.c
     
     
     //Sample Clock Source Select Bits

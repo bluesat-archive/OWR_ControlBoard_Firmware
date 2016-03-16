@@ -58,6 +58,8 @@ extern "C" {
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;
+        uint16_t armLower;
+        uint16_t armHigher;
     };
 
 #ifdef	__cplusplus
