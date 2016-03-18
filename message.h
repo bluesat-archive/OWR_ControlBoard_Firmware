@@ -65,7 +65,7 @@ extern "C" {
         int16_t enc3;
         int16_t enc4;
         int16_t enc5;
-        uint16_t armLower;
+        uint16_t armLower; // Arm servo displacement measurements
         uint16_t armHigher;
     };
 
