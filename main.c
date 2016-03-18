@@ -27,6 +27,7 @@
 #include "MPU6050.h"
 #include "pwm_lib.h"
 #include "message.h"
+#include "encoder.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -46,7 +47,8 @@ int16_t main(void)
 
     /* Initialize IO ports and peripherals */
     InitApp();
-
+    InitEncoders();
+    
     struct toControlMsg *msg;
     struct toNUCMsg sendMsg;
     GPSData gpsData;
@@ -76,7 +78,7 @@ int16_t main(void)
             
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
-            
+
             AD1CON1bits.SAMP = 0;
             while (!AD1CON1bits.DONE);
             AD1CON1bits.DONE = 0;
@@ -90,7 +92,39 @@ int16_t main(void)
             sendMsg.vbat = ADC1BUF0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
+            //sendMsg.imuData = read_mpu();
             
+            if(enc0 <= 1) {
+                sendMsg.enc0 = angVel0/2;
+            } else {
+                sendMsg.enc0 = 0;
+            }
+            if(enc1 <= 1) {
+                sendMsg.enc1 = angVel1/2;
+            } else {
+                sendMsg.enc1 = 0;
+            }
+            if(enc2 <= 1) {
+                sendMsg.enc2 = angVel2/2;
+            } else {
+                sendMsg.enc2 = 0;
+            }
+            if(enc3 <= 1) {
+                sendMsg.enc3 = angVel3/2;
+            } else {
+                sendMsg.enc3 = 0;
+            }
+            if(enc4 <= 1) {
+                sendMsg.enc4 = angVel4/2;
+            } else {
+                sendMsg.enc4 = 0;
+            }
+            if(enc5 <= 1) {
+                sendMsg.enc5 = angVel5/2;
+            } else {
+                sendMsg.enc5 = 0;
+            }
+
             sendMsg.armLower = ADC2BUF0;
             sendMsg.armHigher = ADC2BUF1;
             

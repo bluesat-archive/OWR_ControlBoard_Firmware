@@ -55,9 +55,16 @@ extern "C" {
     struct toNUCMsg {
         uint16_t magic;
         uint16_t vbat;
+        uint16_t padding; // PLACEHOLDER FOR VOLTMETER
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;
+        int16_t enc0; // Angular velocities derived from motor encoders
+        int16_t enc1;
+        int16_t enc2;
+        int16_t enc3;
+        int16_t enc4;
+        int16_t enc5;
         uint16_t armLower;
         uint16_t armHigher;
     };
