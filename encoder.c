@@ -66,7 +66,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     
     if(enc0 <= OVERFLOW_LIMIT){
         
-        timePeriod0 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc0) + t1 - enc0Prev); // Calculate time perioid between pulses, taking into account timer and IC prescalers and clock cycle timing 
+        timePeriod0 = MULTIPLIER * 8UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc0) + t1 - enc0Prev); // Calculate time perioid between pulses, taking into account timer and IC prescalers and clock cycle timing 
         
         // Calculate Angular velocity of motor:
         // Check direction, interupt occurs when ChA is high, ChB is low if positive direction
@@ -173,3 +173,41 @@ void __attribute__ ((__interrupt__, no_auto_psv)) _T5Interrupt(void) {
     
     IFS1bits.T5IF = 0; // Clear timer 5 interrupt flag
 }
+
+//External Interrupt for Wheel Reset Magnet.
+//Authored by Jared Rieger
+void initMagnet(void){
+
+	// magnet 0 || SC7 RP96/RF0 
+	// magnet 1 || SC6 AN25/PWM1H/PMD1/RPI81/RE1
+	
+	TRISFbits.TRISF0 = 1; // Magnet 1|| TRIS bit to be replace by actuall TRIS bit
+	TRISEbits.TRISE1 = 1; // Magnet 2|| TRIS bit to be replace by actuall TRIS bit
+
+	//using external interupt INT0EP
+	
+	IPC0.INT0IP = 0;	//Sets priority to highest
+		
+	IFS0bits.INT0IF = 0;        /*Reset INT0 interrupt flag */
+	IEC0bits.INT0IE = 1;	//enable interupt
+
+	
+
+
+}
+//external interupt function 
+//Jared rieger
+
+void __attribute__ ( (interrupt, no_auto_psv) ) _INT0Interrupt( void )
+
+{
+
+    IFS0bits.INT0IF = 0;        //Clear the INT0 interrupt flag or else
+
+    //the CPU will keep vectoring back to the ISR
+
+}
+
+
+
+
