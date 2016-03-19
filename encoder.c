@@ -24,6 +24,7 @@
 #include <stdbool.h>       /* Includes true/false definition                  */
 #include "encoder.h"
 #include "message.h"
+#include <pps.h> 	//for mapping of modules
 
 #define ENC_PI 3.14159265359
 
@@ -178,36 +179,58 @@ void __attribute__ ((__interrupt__, no_auto_psv)) _T5Interrupt(void) {
 //Authored by Jared Rieger
 void initMagnet(void){
 
-	// magnet 0 || SC7 RP96/RF0 
-	// magnet 1 || SC6 AN25/PWM1H/PMD1/RPI81/RE1
+	// magnet 0 || SC7 RPI96/RF0 == Left wheel
+	// magnet 1 || SC6 RPI81/RE1 == Right Wheel
 	
 	TRISFbits.TRISF0 = 1; // Magnet 1|| TRIS bit to be replace by actuall TRIS bit
 	TRISEbits.TRISE1 = 1; // Magnet 2|| TRIS bit to be replace by actuall TRIS bit
 
-	//using external interupt INT0EP
 	
-	IPC0.INT0IP = 0;	//Sets priority to highest
-		
-	IFS0bits.INT0IF = 0;        /*Reset INT0 interrupt flag */
-	IEC0bits.INT0IE = 1;	//enable interupt
+	//Mapping to pin 1
+	PPSUnLock;		//unlocks pin to map to module
+    	PPSInput( IN_FN_PPS_INT1, IN_PIN_PPS_RPI96);	   
+	PPSLock;
+
+	//Mapping to pin 2
+	PPSUnLock;		//unlocks pin to map to module
+    	PPSInput( IN_FN_PPS_INT2, IN_PIN_PPS_RPI81);	   
+	PPSLock;
 
 	
+	//using external interupt INT1EP
+	//for first pin
+	
+	IPC5bits.INT1IP = 0;	//Sets priority to highest
+	leftMag = 0;	        //init message
+	IFS1bits.INT1IF = 0;    //*Reset INT0 interrupt flag */
+	IEC1bits.INT1IE = 1;	//enable interupt to accept incoming
 
+	//using external interupt INT2EP
+	//for first pin
+	
+	IPC7bits.INT2IP = 0;	//Sets priority to highest
+	rightMag = 0;           //init message
+	IFS1bits.INT2IF = 0;    //*Reset INT0 interrupt flag */
+	IEC1bits.INT2IE = 1;	//enable interupt to accept incoming
 
 }
+
 //external interupt function 
 //Jared rieger
 
-void __attribute__ ( (interrupt, no_auto_psv) ) _INT0Interrupt( void )
+void __attribute__ ( (interrupt, no_auto_psv) ) _INT1Interrupt( void )
 
 {
-
-    IFS0bits.INT0IF = 0;        //Clear the INT0 interrupt flag or else
-
-    //the CPU will keep vectoring back to the ISR
+	IEC1bits.INT1IE = 0;	//disable interupt
+    leftMag = 1;
 
 }
 
+void __attribute__ ( (interrupt, no_auto_psv) ) _INT2Interrupt( void )
 
+{
+	IEC1bits.INT2IE = 0;	//disable interupt
+    rightMag = 1;
 
+}
 

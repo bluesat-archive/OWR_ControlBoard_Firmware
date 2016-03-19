@@ -48,6 +48,7 @@ int16_t main(void)
     /* Initialize IO ports and peripherals */
     InitApp();
     InitEncoders();
+    initMagnet();
     
     struct toControlMsg *msg;
     struct toNUCMsg sendMsg;
@@ -88,6 +89,11 @@ int16_t main(void)
             sendMsg.vbat = ADC1BUF0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
+            
+            //Print Magnet info
+            sendMsg.leftMag = leftMag;
+            sendMsg.rightMag = rightMag;
+            
             //sendMsg.imuData = read_mpu();
             
             if(enc0 <= 1) {
