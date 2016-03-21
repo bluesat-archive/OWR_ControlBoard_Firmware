@@ -100,7 +100,7 @@ void InitApp(void)
     pwm_init_p3();
     pwm_init_p42();
     pwm_init_p2();
-    pwm_init_p7();
+    pwm_init_p9();
     pwm_init_p4();
     pwm_init_p5();
     pwm_init_p16();

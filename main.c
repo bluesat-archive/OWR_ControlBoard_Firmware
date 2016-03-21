@@ -65,7 +65,7 @@ int16_t main(void)
             pwm_set_p42(msg->rSpeed);
             pwm_set_p10(msg->rSpeed);
             
-            pwm_set_p7(msg->armRotate);
+            pwm_set_p9(msg->armRotate);
             pwm_set_p19(msg->armTop);
             pwm_set_p25(msg->armBottom);
             pwm_set_p16(msg->clawRotate); // colorful

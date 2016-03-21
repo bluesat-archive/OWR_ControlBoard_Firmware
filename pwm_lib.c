@@ -102,15 +102,15 @@ void pwm_set_p2(uint16_t pulse) {
     OC6R = safety_cap_pwm(pulse) / HARD_PWM_DIV;
 }
 
-void pwm_init_p7(void) {
-    TRISEbits.TRISE0 = 0; // Set SC5/P7 as output
-    RPOR4bits.RP80R = 0b010110; // Link to OC7
+void pwm_init_p9(void) {
+    TRISFbits.TRISF0 = 0; // Set SC7/P9 as output
+    RPOR4bits.RP80R = 0b110000; // Link to OC7
     // Configure Output Compare channel 1 (OC7)
-    pwm_set_p7(1500);;               // pulse start time
+    pwm_set_p9(1500);;               // pulse start time
     OC7CON1bits.OCM = 0b110; // continuous pulse mode
 }
 
-void pwm_set_p7(uint16_t pulse) {
+void pwm_set_p9(uint16_t pulse) {
     OC7R = safety_cap_pwm(pulse) / HARD_PWM_DIV;
 }
 
