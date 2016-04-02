@@ -83,13 +83,13 @@ int16_t main(void)
             while (!AD1CON1bits.DONE);
             AD1CON1bits.DONE = 0;
             
-            AD2CON1bits.SAMP = 0;
+            /*AD2CON1bits.SAMP = 0;
             while (!AD2CON1bits.DONE);
             AD2CON1bits.DONE = 0;
-            
+            */
             int s = ADC1BUF2;
             sendMsg.magic = MESSAGE_MAGIC;
-            sendMsg.vbat = ADC1BUF0;
+            sendMsg.vbat = 0;//ADC1BUF0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
             //sendMsg.imuData = read_mpu();
@@ -125,8 +125,8 @@ int16_t main(void)
                 sendMsg.enc5 = 0;
             }
 
-            sendMsg.armLower = ADC2BUF0;
-            sendMsg.armHigher = ADC2BUF1;
+            sendMsg.armLower = ADC1BUF0;
+            sendMsg.armHigher = ADC1BUF1;
             
             //sendMsg.imuData = read_mpu();              
             sendMessage(&sendMsg);

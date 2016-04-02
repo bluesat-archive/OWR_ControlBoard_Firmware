@@ -21,7 +21,7 @@
 //#include "srf02.h"
 
 // Setup for the ADC1, used for voltmeter readings
-void setupADC1() {
+/*void setupADC1() {
     //set the control registers to zero, these contain garbage after a reset
     AD1CON1 = 0;
     AD1CON2 = 0;
@@ -115,3 +115,59 @@ void setupADC2() {
     //enable ADC1
     AD2CON1bits.ADON = 1;
 }
+*/
+
+
+void setupADC2() {
+    
+    // Setup the 2 potentiometers connected to RE0 and RE1 (p7 & 8)
+    ANSELbits.ANSE0 = 1; // Ensure analog input for the pins
+    ANSELbits.ANSE1 = 1;
+    
+    // Set the control registers to zero, these contain garbage after a reset
+    // This also ensures the ADC module is OFF
+    AD1CON1 = 0;
+    AD1CON2 = 0;
+    AD1CON3 = 0;
+    
+    // clock settings, changes the ADC module clock period. ADCS = n gives a clock divider of 1:n+1
+    // TODO: Tad must be greater than 76 ns (electrical specs), T_CY is 1/70Mhz = 14.28 ns, Check with harry
+    AD1CON3bits.ADCS = 1; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
+    
+    // clear CON4, CHS0 and CHS123
+    AD1CON4 = 0;
+    AD1CHS0 = 0x0000;
+    AD1CHS123 = 0x0000;
+    AD1CSSH = 0;
+    AD1CSSL = 0;
+    
+    // channel selection
+    AD1CSSHbits.CSS24 = 1; // The two channels that are connected are AN24 & 25
+    AD1CSSHbits.CSS25 = 1;
+
+    
+    //sample ch0 & 1 simultaniously
+    AD1CON1bits.SIMSAM = 1;
+    
+    // Sample and conversion timing and automation
+    AD1CON1bits.SSRCG = 0;
+    AD1CON1bits.SSRC = 0; // manual mode, clear SAMP to start conversion, done in main.c
+    
+    
+    //Sample Clock Source Select Bits
+    AD1CHS0bits.CH0SA = 24; // AN24
+    AD1CHS0bits.CH0NB = 25; // AN25
+    AD1CON2bits.CHPS = 1; // Read CH0 & CH1 (for the 2 actuators)
+    
+    //voltage reference 
+    AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
+    AD1CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
+    
+    //automatically begin sampling whenever last conversion finishes
+    AD1CON1bits.ASAM = 1;
+    
+    //enable ADC1
+    AD1CON1bits.ADON = 1;
+}
+
+
