@@ -81,7 +81,7 @@ void InitApp(void)
     //see IO ports in Pic Spec
     ANSELBbits.ANSB4 = 1; // SP4
     ANSELEbits.ANSE2 = 1; // SD5
-    setupADC1();
+    //setupADC1();
 	setupADC2();
     
     

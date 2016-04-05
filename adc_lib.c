@@ -121,8 +121,8 @@ void setupADC2() {
 void setupADC2() {
     
     // Setup the 2 potentiometers connected to RE0 and RE1 (p7 & 8)
-    ANSELbits.ANSE0 = 1; // Ensure analog input for the pins
-    ANSELbits.ANSE1 = 1;
+    ANSELEbits.ANSE0 = 1; // Ensure analog input for the pins
+    ANSELEbits.ANSE1 = 1;
     
     // Set the control registers to zero, these contain garbage after a reset
     // This also ensures the ADC module is OFF

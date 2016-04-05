@@ -35,10 +35,15 @@ extern "C" {
         int16_t ax, ay, az;
     } IMUData;
     
+    
     struct toControlMsg {
         uint16_t magic;
-        int16_t lSpeed;
-        int16_t rSpeed;
+        int16_t frSpeed;
+        int16_t flSpeed;
+        int16_t brSpeed;
+        int16_t blSpeed;
+        int16_t flAng;
+        int16_t frAng;
         int16_t armRotate;
         int16_t armTop;
         int16_t armBottom;
@@ -48,7 +53,7 @@ extern "C" {
         int16_t cameraBottomTilt;
         int16_t cameraTopRotate;
         int16_t cameraTopTilt;
-        int16_t lidarTilt;	//lidar tilt value.
+        int16_t lidarTilt;  //lidar tilt value.
         int16_t padding;
     };
 
