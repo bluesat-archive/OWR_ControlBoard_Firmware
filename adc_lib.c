@@ -120,6 +120,9 @@ void setupADC2() {
 
 void setupADC2() {
     
+    TRISEbits.TRISE0 = 1;
+    TRISEbits.TRISE1 = 1;
+    
     // Setup the 2 potentiometers connected to RE0 and RE1 (p7 & 8)
     ANSELEbits.ANSE0 = 1; // Ensure analog input for the pins
     ANSELEbits.ANSE1 = 1;
