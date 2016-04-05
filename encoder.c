@@ -58,6 +58,9 @@ uint16_t enc3Prev = 0;
 uint16_t enc4Prev = 0;
 uint16_t enc5Prev = 0;
 
+int16_t leftMag = 0;
+int16_t rightMag = 0;
+
     // **** Interrupt Handlers for Input capture **** //
 
 // Input Capture 1, Encoder 0
@@ -67,7 +70,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _IC1Interrupt(void) {
     
     if(enc0 <= OVERFLOW_LIMIT){
         
-        timePeriod0 = MULTIPLIER * 8UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc0) + t1 - enc0Prev); // Calculate time perioid between pulses, taking into account timer and IC prescalers and clock cycle timing 
+        timePeriod0 = MULTIPLIER * UNSCALE_TIMER_5 * ((TMR_5_PERIOD * enc0) + t1 - enc0Prev); // Calculate time perioid between pulses, taking into account timer and IC prescalers and clock cycle timing 
         
         // Calculate Angular velocity of motor:
         // Check direction, interupt occurs when ChA is high, ChB is low if positive direction
@@ -200,7 +203,7 @@ void initMagnet(void){
 	//using external interupt INT1EP
 	//for first pin
 	
-	IPC5bits.INT1IP = 0;	//Sets priority to highest
+	IPC5bits.INT1IP = 1;	//Sets priority to highest
 	leftMag = 0;	        //init message
 	IFS1bits.INT1IF = 0;    //*Reset INT0 interrupt flag */
 	IEC1bits.INT1IE = 1;	//enable interupt to accept incoming
@@ -208,7 +211,7 @@ void initMagnet(void){
 	//using external interupt INT2EP
 	//for first pin
 	
-	IPC7bits.INT2IP = 0;	//Sets priority to highest
+	IPC7bits.INT2IP = 1;	//Sets priority to highest
 	rightMag = 0;           //init message
 	IFS1bits.INT2IF = 0;    //*Reset INT0 interrupt flag */
 	IEC1bits.INT2IE = 1;	//enable interupt to accept incoming
