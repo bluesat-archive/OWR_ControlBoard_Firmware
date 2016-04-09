@@ -120,6 +120,7 @@ void setupADC2() {
 
 void setupADC2() {
     
+    // Set appropriate pins as inputs (to read from the pots)
     TRISEbits.TRISE0 = 1;
     TRISEbits.TRISE1 = 1;
     
@@ -137,7 +138,7 @@ void setupADC2() {
     // TODO: Tad must be greater than 76 ns (electrical specs), T_CY is 1/70Mhz = 14.28 ns, Check with harry
     AD1CON3bits.ADCS = 1; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
     
-    // clear CON4, CHS0 and CHS123
+    // clear ADC1 control registers CON4, CHS0 and CHS123
     AD1CON4 = 0;
     AD1CHS0 = 0x0000;
     AD1CHS123 = 0x0000;
@@ -149,7 +150,7 @@ void setupADC2() {
     AD1CSSHbits.CSS25 = 1;
 
     
-    //sample ch0 & 1 simultaniously
+    //sample ch0 & 1 simultaneously
     AD1CON1bits.SIMSAM = 1;
     
     // Sample and conversion timing and automation
