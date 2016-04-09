@@ -135,13 +135,19 @@ void setupADC2() {
     AD1CON3 = 0;
     
     // clock settings, changes the ADC module clock period. ADCS = n gives a clock divider of 1:n+1
-    // TODO: Tad must be greater than 76 ns (electrical specs), T_CY is 1/70Mhz = 14.28 ns, Check with harry
-    AD1CON3bits.ADCS = 1; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
+    // TODO: Tad must be greater than 76 ns (electrical specs, pg562), T_CY is 1/70Mhz 
+    // Tad < T_CY * (ADCS + 1)
+    // Tad/T_CY - 1 < ADCS
+    // ADCS > 4.32 ~ 5
     
-    // clear ADC1 control registers CON4, CHS0 and CHS123
+    // Was set to ASCS = 1 => Tad = 28.57 ns,
+     
+    AD1CON3bits.ADCS = 5; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
+    
+    // clear ADC1 control registers CON4, CHS0, CHS123 and CHSSH/L
     AD1CON4 = 0;
-    AD1CHS0 = 0x0000;
-    AD1CHS123 = 0x0000;
+    AD1CHS0 = 0;
+    AD1CHS123 = 0;
     AD1CSSH = 0;
     AD1CSSL = 0;
     
@@ -167,7 +173,7 @@ void setupADC2() {
     AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
     AD1CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
     
-    //automatically begin sampling whenever last conversion finishes
+    //automatically begin sampling whenever last conversion finishes, DONE bit will be set automatically
     AD1CON1bits.ASAM = 1;
     
     //enable ADC1
