@@ -51,7 +51,7 @@ int16_t main(void)
     initMagnet();
     
     struct toControlMsg *msg;
-    struct toNUCMsg sendMsg;
+    struct toNUCMsgsendMsg;
     GPSData gpsData;
     char *gpsString;
     //init_mpu();
@@ -91,8 +91,8 @@ int16_t main(void)
             sendMsg.magData = read_hmc();
             
             //Print Magnet info
-            sendMsg.leftMag = leftMag;
-            sendMsg.rightMag = rightMag;
+            sendMsg.leftMagFront = leftMagFront;
+            sendMsg.lefttMagBack = leftMagBack;
             
             //sendMsg.imuData = read_mpu();
             

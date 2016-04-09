@@ -66,8 +66,8 @@ extern "C" {
         int16_t enc3;
         int16_t enc4;
         int16_t enc5;
-        int16_t leftMag;
-        int16_t rightMag;
+        int16_t leftMagFront; // front wheels left
+        int16_t lefttMagBack;
     };
 
 #ifdef	__cplusplus
