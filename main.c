@@ -86,8 +86,9 @@ int16_t main(void)
             
             // Wait until ADC1 interupt flag is set (every 2 conversions)
             while(!_AD1IF);
-            _AD1IF = 0;
-            
+            _AD1IF = 0; //Clear interupt flag
+            sendMsg.armLower = ADC1BUF0 * 1000; // Read analog pin 24
+            sendMsg.armHigher = ADC1BUF1 * 1000; // Read analog pin 25
             
             /*AD2CON1bits.SAMP = 0;
             while (!AD2CON1bits.DONE);
@@ -130,9 +131,6 @@ int16_t main(void)
             } else {
                 sendMsg.enc5 = 0;
             }
-
-            sendMsg.armLower = ADC1BUF0 * 1000;
-            sendMsg.armHigher = ADC1BUF1 * 1000;
             
             //sendMsg.imuData = read_mpu();              
             sendMessage(&sendMsg);

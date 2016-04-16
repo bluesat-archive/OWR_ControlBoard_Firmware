@@ -148,8 +148,8 @@ void setupADC2() {
     // Tad/T_CY - 1 < ADCS
     // ADCS > 4.32 ~ 5
     
-    AD1CON3bits.ADCS = 0x6; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
-    AD1CON3bits.SAMC = 0x6; // Sampling for TAD * 9 ~ 684ns
+    AD1CON3bits.ADCS = 0x15; // T_AD = T_CY * (ADCS + 1)
+    AD1CON3bits.SAMC = 0x6; // Sampling for TAD * 6
     
     //Sample Clock Source Select Bits
     AD1CHS0bits.CH0SA = 24; // AN25
@@ -175,8 +175,24 @@ void setupADC2() {
     //automatically begin sampling whenever last conversion finishes, DONE bit will be set automatically
     AD1CON1bits.ASAM = 1;
     
+    // Clear interupt flag, set priority
+    _AD1IF = 0;
+    _AD1IP = 3; 
+    // Enable the interupt
+    _AD1IE = 1; 
+    
     //enable ADC1
     AD1CON1bits.ADON = 1;
+    
+    Delay_us(20); // Suggested delay for adc stabilisation
 }
+
+void Delay_us(unsigned int delay){
+    for (i = 0; i < delay; i++){
+        __asm__ volatile ("repeat #39");
+        __asm__ volatile ("nop");
+    }
+}
+
 
 
