@@ -80,9 +80,12 @@ int16_t main(void)
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
 
-            AD1CON1bits.SAMP = 0;
-            while (!AD1CON1bits.DONE);
-            AD1CON1bits.DONE = 0;
+            //AD1CON1bits.SAMP = 0;
+            //while (!AD1CON1bits.DONE);
+            //AD1CON1bits.DONE = 0;
+            while(!_AD1IF);
+            _AD1IF = 0;
+            
             
             /*AD2CON1bits.SAMP = 0;
             while (!AD2CON1bits.DONE);
@@ -126,8 +129,8 @@ int16_t main(void)
                 sendMsg.enc5 = 0;
             }
 
-            sendMsg.armLower = ADC1BUF0;
-            sendMsg.armHigher = ADC1BUF1;
+            sendMsg.armLower = ADC1BUF0 * 1000;
+            sendMsg.armHigher = ADC1BUF1 * 1000;
             
             //sendMsg.imuData = read_mpu();              
             sendMessage(&sendMsg);
