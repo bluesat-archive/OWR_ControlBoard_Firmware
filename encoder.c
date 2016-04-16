@@ -58,8 +58,8 @@ uint16_t enc3Prev = 0;
 uint16_t enc4Prev = 0;
 uint16_t enc5Prev = 0;
 
-int16_t leftMag = 0;
-int16_t rightMag = 0;
+int16_t leftMagFront = 0;
+int16_t leftMagBack = 0;
 
     // **** Interrupt Handlers for Input capture **** //
 
@@ -184,10 +184,11 @@ void initMagnet(void){
 
 	// magnet 0 || SC7 RPI96/RF0 == Left wheel
 	// magnet 1 || SC6 RPI81/RE1 == Right Wheel
+    
+    // testing point SD0 RPI119/RG7
 	
 	TRISFbits.TRISF0 = 1; // Magnet 1|| TRIS bit to be replace by actuall TRIS bit
 	TRISEbits.TRISE1 = 1; // Magnet 2|| TRIS bit to be replace by actuall TRIS bit
-
 	
 	//Mapping to pin 1
 	PPSUnLock;		//unlocks pin to map to module
@@ -225,7 +226,7 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _INT1Interrupt( void )
 
 {
 	IEC1bits.INT1IE = 0;	//disable interupt
-    leftMag = 1;
+    leftMagFront = 1;
 
 }
 
@@ -233,7 +234,7 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _INT2Interrupt( void )
 
 {
 	IEC1bits.INT2IE = 0;	//disable interupt
-    rightMag = 1;
+    rightMagBack = 1;
 
 }
 
