@@ -134,48 +134,43 @@ void setupADC2() {
     AD1CON2 = 0;
     AD1CON3 = 0;
     
-    // clock settings, changes the ADC module clock period. ADCS = n gives a clock divider of 1:n+1
-    // TODO: Tad must be greater than 76 ns (electrical specs, pg562), T_CY is 1/70Mhz 
-    // Tad < T_CY * (ADCS + 1)
-    // Tad/T_CY - 1 < ADCS
-    // ADCS > 4.32 ~ 5
-    
-    // Was set to ASCS = 1 => Tad = 28.57 ns,
-     
-    //AD1CON3bits.ADCS = 0xF;//11; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
-    
-    // clear ADC1 control registers CON4, CHS0, CHS123 and CHSSH/L
+    // clear ADC1 control registers: CON4, CHS0, CHS123 and CHSSH/L
     AD1CON4 = 0;
     AD1CHS0 = 0;
     AD1CHS123 = 0;
     AD1CSSH = 0;
     AD1CSSL = 0;
     
-    // channel selection
-    //AD1CSSHbits.CSS24 = 1; // The two channels that are connected are AN24 & 25
-    //AD1CSSHbits.CSS25 = 1;
-
+    // Clock settings, changes the ADC module clock period for both conversion ad sampling.
     
-    //sample ch0 & 1 simultaneously
-    AD1CON1bits.SIMSAM = 0;
-    AD1CON1bits.AD12B = 1; //12-bit adc
+    // Tad must be greater than 76 ns (electrical specs, pg562), T_CY is 1/70Mhz 
+    // Tad < T_CY * (ADCS + 1)
+    // Tad/T_CY - 1 < ADCS
+    // ADCS > 4.32 ~ 5
     
-    // Sample and conversion timing and automation
-    AD1CON1bits.SSRCG = 0;
-    AD1CON1bits.SSRC = 0b111; // auto sample mode
-    AD1CON2bits.SMPI = 1; //interrupt on 2nd sample conversion
+    AD1CON3bits.ADCS = 0x6; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
+    AD1CON3bits.SAMC = 0x6; // Sampling for TAD * 9 ~ 684ns
     
     //Sample Clock Source Select Bits
     AD1CHS0bits.CH0SA = 24; // AN25
     AD1CHS0bits.CH0SB = 25; // AN26
-    //AD1CON2bits.CHPS = 1; // Read CH0 & CH1 (for the 2 actuators)
-    AD1CON2bits.ALTS = 1; // Alternate sampling between A and B
+    
+    // Alternate sampling between A and B (this means readings arent a snapshot of current position)
+    AD1CON2bits.ALTS = 1;
+    
+    //12-bit adc (since we are alternating between 2 inputs), we have higher resolution
+    AD1CON1bits.AD12B = 1; 
+    
+    // Sampling and conversion are automated. We interupt on every second conversion (2 potentiometers) 
+    AD1CON1bits.SSRCG = 0;
+    AD1CON1bits.SSRC = 0b111; // auto sample mode
+    AD1CON2bits.SMPI = 1; //interrupt on 2nd sample conversion
+    
     //voltage reference 
     AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
     AD1CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
     AD1CHS0bits.CH0NB = 0; // Select Vref- for CH0 -ve input    
     
-    AD1CON3 = 0x0B0B; // Allow 15*Tad for sampling and 15tcy for conversion
     
     //automatically begin sampling whenever last conversion finishes, DONE bit will be set automatically
     AD1CON1bits.ASAM = 1;

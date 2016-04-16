@@ -83,6 +83,8 @@ int16_t main(void)
             //AD1CON1bits.SAMP = 0;
             //while (!AD1CON1bits.DONE);
             //AD1CON1bits.DONE = 0;
+            
+            // Wait until ADC1 interupt flag is set (every 2 conversions)
             while(!_AD1IF);
             _AD1IF = 0;
             
