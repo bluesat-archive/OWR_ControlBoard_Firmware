@@ -18,6 +18,7 @@
 #include <stdint.h>          /* For uint16_t definition                       */
 #include <stdbool.h>         /* For true/false definition  */
 #include "system.h"
+#include "adc_lib.h"
 //#include "srf02.h"
 
 // Setup for the ADC1, used for voltmeter readings
@@ -148,8 +149,8 @@ void setupADC2() {
     // Tad/T_CY - 1 < ADCS
     // ADCS > 4.32 ~ 5
     
-    AD1CON3bits.ADCS = 0x15; // T_AD = T_CY * (ADCS + 1)
-    AD1CON3bits.SAMC = 0x6; // Sampling for TAD * 6
+    AD1CON3bits.ADCS = 0x2F; // T_AD = T_CY * (ADCS + 1)
+    AD1CON3bits.SAMC = 0xF; // Sampling for TAD * 6
     
     //Sample Clock Source Select Bits
     AD1CHS0bits.CH0SA = 24; // AN25
@@ -184,15 +185,4 @@ void setupADC2() {
     //enable ADC1
     AD1CON1bits.ADON = 1;
     
-    Delay_us(20); // Suggested delay for adc stabilisation
 }
-
-void Delay_us(unsigned int delay){
-    for (i = 0; i < delay; i++){
-        __asm__ volatile ("repeat #39");
-        __asm__ volatile ("nop");
-    }
-}
-
-
-
