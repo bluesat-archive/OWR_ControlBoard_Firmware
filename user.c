@@ -21,7 +21,7 @@
 #include "srf02.h"
 #include "pwm_lib.h"
 #include "i2c_lib.h"
-#include "adc_lib.h"
+//#include "adc_lib.h"
 
 #include <pps.h>            /* Useful for peripheral pin macros                     */
                             /* http://singularengineer.com/peripheral-pin-select-pps-using-xc16-and-mplab-x/  */
@@ -82,7 +82,7 @@ void InitApp(void)
     ANSELBbits.ANSB4 = 1; // SP4
     ANSELEbits.ANSE2 = 1; // SD5
     //setupADC1();
-	setupADC2();
+    //setupADC2();
     
     
      

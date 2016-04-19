@@ -8,6 +8,7 @@
             <file>file:/home/blueros/Bluetongue-ctrl/adc_lib.c</file>
             <file>file:/home/blueros/Bluetongue-ctrl/adc_lib.h</file>
             <file>file:/home/blueros/Bluetongue-ctrl/user.c</file>
+            <file>file:/home/blueros/Bluetongue-ctrl/message.h</file>
             <file>file:/home/blueros/Bluetongue-ctrl/main.c</file>
         </group>
     </open-files>

@@ -119,7 +119,7 @@ void setupADC2() {
 */
 
 
-void setupADC2() {
+void setupADC1() {
     
     // Set appropriate pins as inputs (to read from the pots)
     TRISEbits.TRISE0 = 1;

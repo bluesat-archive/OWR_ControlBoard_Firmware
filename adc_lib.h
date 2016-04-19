@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-    //void setupADC1(); // ADC1 will be the 2 potentiometers for the arm actuators
-    void setupADC2();
+    void setupADC1(); // ADC1 will be the 2 potentiometers for the arm actuators
+    //void setupADC2();
 
 #ifdef	__cplusplus
 }
