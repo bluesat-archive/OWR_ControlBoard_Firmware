@@ -38,3 +38,19 @@ void stop_i2c() {
     IFS1bits.MI2C1IF = 0;
     IdleI2C1();
 }
+
+void initI2C(void){
+    /* Baud rate is set for 100 kHz */
+    unsigned int config2 = I2C_CONFIG2;
+    
+    // Configure I2C for 7 bit address mode
+    unsigned int config1 = (I2C1_ON & I2C1_IDLE_CON & I2C1_CLK_HLD &
+               I2C1_IPMI_DIS & I2C1_7BIT_ADD &
+               I2C1_SLW_DIS & I2C1_SM_DIS &
+               I2C1_GCALL_DIS & I2C1_STR_DIS &
+               I2C1_NACK & I2C1_ACK_DIS & I2C1_RCV_DIS &
+               I2C1_STOP_DIS & I2C1_RESTART_DIS &
+               I2C1_START_DIS);
+    OpenI2C1(config1,config2);
+    IdleI2C1();
+}
