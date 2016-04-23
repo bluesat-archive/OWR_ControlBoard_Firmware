@@ -21,7 +21,7 @@
 #include "srf02.h"
 #include "pwm_lib.h"
 #include "i2c_lib.h"
-//#include "adc_lib.h"
+#include "adc_lib.h"
 
 #include <pps.h>            /* Useful for peripheral pin macros                     */
                             /* http://singularengineer.com/peripheral-pin-select-pps-using-xc16-and-mplab-x/  */
@@ -81,10 +81,9 @@ void InitApp(void)
     //see IO ports in Pic Spec
     ANSELBbits.ANSB4 = 1; // SP4
     ANSELEbits.ANSE2 = 1; // SD5
-    //setupADC1();
-    //setupADC2();
     
-    
+    // Setup adc for arm potentiometers
+    setupADC1();
      
     // Timer setup
     // URX receive timeout
@@ -97,7 +96,7 @@ void InitApp(void)
     pwm_init_p17();
     pwm_init_p21();
     pwm_init_p15();
-    pwm_init_p3();
+    pwm_init_p3(    );
     pwm_init_p42();
     pwm_init_p2();
     pwm_init_p9();

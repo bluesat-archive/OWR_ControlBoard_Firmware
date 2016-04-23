@@ -30,6 +30,7 @@
 #include "encoder.h"
 #include "adc_lib.h"
 
+
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
@@ -49,7 +50,6 @@ int16_t main(void)
     /* Initialize IO ports and peripherals */
     InitApp();
     InitEncoders();
-    setupADC1();
     
     struct toControlMsg *msg;
     struct toNUCMsg sendMsg;
