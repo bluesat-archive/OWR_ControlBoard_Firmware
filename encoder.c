@@ -234,7 +234,7 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _INT2Interrupt( void )
 
 {
 	IEC1bits.INT2IE = 0;	//disable interupt
-    rightMagBack = 1;
+    leftMagBack = 1;
 
 }
 

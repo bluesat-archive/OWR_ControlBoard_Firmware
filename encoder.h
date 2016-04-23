@@ -42,8 +42,8 @@ extern int16_t enc3;
 extern int16_t enc4;
 extern int16_t enc5;
 
-extern int16_t leftMag;
-extern int16_t rightMag;
+extern int16_t leftMagFront;
+extern int16_t leftMagBack;
 
 void initMagnet(void);
 

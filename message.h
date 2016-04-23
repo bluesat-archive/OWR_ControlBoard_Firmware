@@ -38,8 +38,12 @@ extern "C" {
     
     struct toControlMsg {
         uint16_t magic;
-        int16_t lSpeed;
-        int16_t rSpeed;
+        int16_t frSpeed;
+        int16_t flSpeed;
+        int16_t brSpeed;
+        int16_t blSpeed;
+        int16_t flAng;
+        int16_t frAng;
         int16_t armRotate;
         int16_t armTop;
         int16_t armBottom;
@@ -54,20 +58,22 @@ extern "C" {
     };
 
     struct toNUCMsg {
-        uint16_t magic;
+         uint16_t magic;
         uint16_t vbat;
-        uint16_t padding; // PLACEHOLDER FOR VOLTMETER
+        #ifdef VOLTMETER_ON
+            uint16_t voltmeter;
+        #else
+            uint16_t padding;
+        #endif
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;
-        int16_t enc0; // Angular velocities derived from motor encoders
+        int16_t enc0;
         int16_t enc1;
         int16_t enc2;
         int16_t enc3;
         int16_t enc4;
         int16_t enc5;
-        int16_t leftMagFront; // front wheels left
-        int16_t lefttMagBack;
     };
 
 #ifdef	__cplusplus
