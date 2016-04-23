@@ -205,7 +205,7 @@ void initMagnet(void){
 	//for first pin
 	
 	IPC5bits.INT1IP = 1;	//Sets priority to highest
-	leftMag = 0;	        //init message
+	leftMagFront = 0;	        //init message
 	IFS1bits.INT1IF = 0;    //*Reset INT0 interrupt flag */
 	IEC1bits.INT1IE = 1;	//enable interupt to accept incoming
 
@@ -213,7 +213,7 @@ void initMagnet(void){
 	//for first pin
 	
 	IPC7bits.INT2IP = 1;	//Sets priority to highest
-	rightMag = 0;           //init message
+	leftMagBack = 0;           //init message
 	IFS1bits.INT2IF = 0;    //*Reset INT0 interrupt flag */
 	IEC1bits.INT2IE = 1;	//enable interupt to accept incoming
 
