@@ -18,8 +18,8 @@
 
 // If the signal is out of range set to the midpoint
 static uint16_t safety_cap_pwm(uint16_t pulse) {
-    pulse = pulse < MIN_PULSE ? PWM_MIDPOINT : pulse;
-    pulse = pulse > MAX_PULSE ? PWM_MIDPOINT : pulse;
+    pulse = pulse < MIN_PULSE ? PWM_MIDPOINT : pulse; // tertiary operator, check if pulse < MIN_PULSE
+    pulse = pulse > MAX_PULSE ? PWM_MIDPOINT : pulse; // set to midpoint if true and pulse otherwise
     return pulse;
 }
 
