@@ -60,6 +60,8 @@ uint16_t enc5Prev = 0;
 
 int16_t leftMagFront = 0;
 int16_t leftMagBack = 0;
+int16_t rightMagFront = 0;
+int16_t rightMagBack = 0;
 
     // **** Interrupt Handlers for Input capture **** //
 

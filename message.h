@@ -74,6 +74,11 @@ extern "C" {
         int16_t enc3;
         int16_t enc4;
         int16_t enc5;
+        
+        int16_t leftMagFront;
+        int16_t lefttMagBack;
+        int16_t rightMagFront;
+        int16_t rightMagBack;
     };
 
 #ifdef	__cplusplus
