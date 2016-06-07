@@ -87,10 +87,10 @@ int16_t main(void)
             //AD1CON1bits.DONE = 0;
             
             // Wait until ADC1 interupt flag is set (every 2 conversions)
-            while(!_AD1IF);
-            _AD1IF = 0; //Clear interupt flag
-            sendMsg.armLower = ADC1BUF0 * 1000; // Read analog pin 24
-            sendMsg.armHigher = ADC1BUF1 * 1000; // Read analog pin 25
+            while(!adc_ready);
+            sendMsg.armLower = ADC1BUF0;// * 1000; // Read analog pin 24
+            sendMsg.armHigher = 0;//ADC1BUF1;// * 1000; // Read analog pin 25
+            adc_ready = 0; //Clear adc flag
             
             /*AD2CON1bits.SAMP = 0;
             while (!AD2CON1bits.DONE);

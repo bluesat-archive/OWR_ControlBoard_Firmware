@@ -21,6 +21,9 @@
 #include "adc_lib.h"
 //#include "srf02.h"
 
+
+bool adc_ready = 0;
+
 // Setup for the ADC1, used for voltmeter readings
 /*void setupADC1() {
     //set the control registers to zero, these contain garbage after a reset
@@ -123,11 +126,11 @@ void setupADC1(void) {
     
     // Set appropriate pins as inputs (to read from the pots)
     TRISEbits.TRISE0 = 1;
-    TRISEbits.TRISE1 = 1;
+    //TRISEbits.TRISE1 = 1;
     
     // Setup the 2 potentiometers connected to RE0 and RE1 (p7 & 8)
     ANSELEbits.ANSE0 = 1; // Ensure analog input for the pins
-    ANSELEbits.ANSE1 = 1;
+    //ANSELEbits.ANSE1 = 1;
     
     // Set the control registers to zero, these contain garbage after a reset
     // This also ensures the ADC module is OFF
@@ -149,23 +152,23 @@ void setupADC1(void) {
     // Tad/T_CY - 1 < ADCS
     // ADCS > 4.32 ~ 5
     
-    AD1CON3bits.ADCS = 0x2F; // T_AD = T_CY * (ADCS + 1)
-    AD1CON3bits.SAMC = 0xF; // Sampling for TAD * 6
+    AD1CON3bits.ADCS = 0xFF; // T_AD = T_CY * (ADCS + 1)
+    AD1CON3bits.SAMC = 0x1F; // Sampling for TAD * 6
     
     //Sample Clock Source Select Bits
     AD1CHS0bits.CH0SA = 24; // AN25
-    AD1CHS0bits.CH0SB = 25; // AN26
+    //AD1CHS0bits.CH0SB = 25; // AN26
     
     // Alternate sampling between A and B (this means readings arent a snapshot of current position)
-    AD1CON2bits.ALTS = 1;
+    //AD1CON2bits.ALTS = 1;
     
     //12-bit adc (since we are alternating between 2 inputs), we have higher resolution
-    AD1CON1bits.AD12B = 1; 
+    //AD1CON1bits.AD12B = 1; 
     
     // Sampling and conversion are automated. We interupt on every second conversion (2 potentiometers) 
     AD1CON1bits.SSRCG = 0;
     AD1CON1bits.SSRC = 0b111; // auto sample mode
-    AD1CON2bits.SMPI = 1; //interrupt on 2nd sample conversion
+    AD1CON2bits.SMPI = 0; //interrupt on 2nd sample conversion
     
     //voltage reference 
     AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
@@ -185,4 +188,11 @@ void setupADC1(void) {
     //enable ADC1
     AD1CON1bits.ADON = 1;
     
+}
+
+void __attribute__((__interrupt__, no_auto_psv)) _AD1Interrupt(void) {
+    
+    _AD1IF = 0;
+    adc_ready = 1;
+    // Do nothing
 }
