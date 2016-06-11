@@ -82,14 +82,15 @@ int16_t main(void)
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
 
-            //AD1CON1bits.SAMP = 0;
-            //while (!AD1CON1bits.DONE);
-            //AD1CON1bits.DONE = 0;
+            AD1CON1bits.DONE = 0;
+            AD1CON1bits.SAMP = 0;
+            while (!AD1CON1bits.DONE);
+            AD1CON1bits.DONE = 0;
             
             // Wait until ADC1 interupt flag is set (every 2 conversions)
-            while(!adc_ready);
+            //while(!adc_ready);
             sendMsg.armLower = ADC1BUF0;// * 1000; // Read analog pin 24
-            sendMsg.armHigher = 0;//ADC1BUF1;// * 1000; // Read analog pin 25
+            sendMsg.armHigher = ADC1BUF1 * 1000; // Read analog pin 25
             adc_ready = 0; //Clear adc flag
             
             /*AD2CON1bits.SAMP = 0;
