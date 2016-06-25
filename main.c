@@ -82,24 +82,25 @@ int16_t main(void)
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
 
-            AD1CON1bits.DONE = 0;
-            AD1CON1bits.SAMP = 0;
-            while (!AD1CON1bits.DONE);
-            AD1CON1bits.DONE = 0;
+            // **** ADC **** //
             
-            // Wait until ADC1 interupt flag is set (every 2 conversions)
-            //while(!adc_ready);
-            sendMsg.armLower = ADC1BUF0;// * 1000; // Read analog pin 24
-            sendMsg.armHigher = ADC1BUF1 * 1000; // Read analog pin 25
-            adc_ready = 0; //Clear adc flag
+            // Read analog pins (potentiometers) from ADC1
+            int tempArmLower;
+            int tempArmHigher;
             
-            /*AD2CON1bits.SAMP = 0;
-            while (!AD2CON1bits.DONE);
-            AD2CON1bits.DONE = 0;
-            */
+            // Only update when a sample/conversion has been performed
+            if(adc_ready){
+                tempArmLower = ADC1BUF0; // Read analog pin 24
+                tempArmHigher = ADC1BUF1; // Read analog pin 24
+            }
+            
+            sendMsg.armLower = tempArmLower; 
+            sendMsg.armHigher = tempArmHigher;
+            adc_ready = 0;
+            
             int s = ADC1BUF2;
             sendMsg.magic = MESSAGE_MAGIC;
-            sendMsg.vbat = 0;//ADC1BUF0;
+            sendMsg.vbat = 0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
             //sendMsg.imuData = read_mpu();

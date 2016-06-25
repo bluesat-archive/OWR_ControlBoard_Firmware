@@ -125,12 +125,12 @@ void setupADC2() {
 void setupADC1(void) {
     
     // Set appropriate pins as inputs (to read from the pots)
-    //TRISEbits.TRISE0 = 1; // Set p7 for input
-    TRISBbits.TRISB10 = 1; // Set p8 for input
+    TRISBbits.TRISB12 = 1; // Set p7 for input
+    TRISBbits.TRISB15 = 1; // Set p8 for input
     
     // Setup the 2 potentiometers connected to RE0 and RE1
-    //ANSELEbits.ANSE0 = 1; // Ensure analog input for pin 7
-    ANSELBbits.ANSB10 = 1; // Ensure analog input for pin 8
+    ANSELBbits.ANSB12 = 1; // Ensure analog input for pin 7
+    ANSELBbits.ANSB15 = 1; // Ensure analog input for pin 8
     
     // Set the control registers to zero, these contain garbage after a reset
     // This also ensures the ADC module is OFF
@@ -146,9 +146,9 @@ void setupADC1(void) {
     AD1CSSL = 0;
     
     
+    // *** CLOCK SETTINGS *** //
     
-    
-    // Clock settings, changes the ADC module clock period for both conversion ad sampling.
+    //Changes the ADC module clock period for both conversion ad sampling.
     
     // Tad must be greater than 76 ns (electrical specs, pg562), T_CY is 1/70Mhz 
     // Tad < T_CY * (ADCS + 1)
@@ -157,28 +157,25 @@ void setupADC1(void) {
     // ADCS > 4.32 ~ 5
     
     AD1CON3bits.ADCS = 0x0F; // T_AD = T_CY * (ADCS + 1)
-    //AD1CON3bits.SAMC = 0x06; // Sampling for TAD * 6
+    AD1CON3bits.SAMC = 0x06; // Sampling for TAD * 6
     
-    //Sample Clock Source Select Bits
-    //AD1CHS0bits.CH0SA = 24; // AN25, pin7
-    AD1CHS0bits.CH0SA = 10; // AN26, pin8
+    // Auto-sampling, automatically end sampling an begin conversion
+    AD1CON1bits.SSRC = 0b111;
     
-    // Alternate sampling between A and B (this means readings aren't a snapshot of current position)
-    //AD1CON2bits.ALTS = 1;
     
-    //12-bit adc (since we are alternating between 2 inputs), we have higher resolution
-    //AD1CON1bits.AD12B = 1; 
     
-    // Sampling and conversion are automated. We interupt on every second conversion (2 potentiometers) 
-    //AD1CON1bits.SSRCG = 0;
-    //AD1CON1bits.SSRC = 0b111; // auto sample mode
-    //AD1CON2bits.SMPI = 0; //interrupt on 2nd sample conversion
+    // Select the pins that will be cycled through via input scan select
+    // NOTE: The ADC scans in ascending order of analog number, i.e.
+    // if connecting an4, 9, 5, 12 -> the buffer will be filled:
+    // 4, 5, 9, 12. Ensure any changes enforce this convention!
     
-    //voltage reference 
-    AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
-    AD1CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
-    //AD1CHS0bits.CH0NB = 0; // Select Vref- for CH0 -ve input    
+    AD1CON2bits.CSCNA = 1; // Activate channel scan select
     
+    AD1CSSLbits.CSS12 = 1; // Set p7 for input scan select
+    AD1CSSLbits.CSS15 = 1; // set p8 for input scan select
+    
+    // Will need to interrupt after (N-1) sample/conversion sequences.
+    AD1CON2bits.SMPI = 1; //interrupt on sample conversion
     
     //automatically begin sampling whenever last conversion finishes, SAMP bit will be set automatically
     AD1CON1bits.ASAM = 1;
@@ -194,9 +191,9 @@ void setupADC1(void) {
     
 }
 
-void __attribute__((__interrupt__, no_auto_psv)) _AD1Interrupt(void) {
-    
+// ADC interrupt serve routine (ISR). This sets a variable so that main
+// knows that a conversion has finished and can read from buffer.
+void __attribute__((__interrupt__, no_auto_psv)) _AD1Interrupt(void) { 
     _AD1IF = 0;
     adc_ready = 1;
-    // Do nothing
 }
