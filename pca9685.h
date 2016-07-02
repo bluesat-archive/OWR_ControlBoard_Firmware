@@ -60,4 +60,11 @@
 
 #define PCA9685_PWM_PRESCALE 0xfe
 
+// Initialize a pca9685 at the specified address
+void pca9685_init(int address);
+
+// Send the 12 bit PWM data to the register
+// 0 to 4095 value, 0 to 15 LED channel
+void pca9685_send(int address, long value, int led);
+
 #endif
