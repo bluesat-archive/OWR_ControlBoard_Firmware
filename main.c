@@ -57,11 +57,16 @@ int16_t main(void)
     //init_mpu();
     init_hmc();
 
+    int breathe = 0;
+    
     pca9685_init( PCA9685_BASE0 );
-    pca9685_send( PCA9685_BASE0, 2048, 0 );
+    pca9685_send( PCA9685_BASE0, breathe, 0 );
 
     while(1)
     {
+        ++breathe;
+        if( breathe > 4000) breathe = 0;
+        pca9685_send( PCA9685_BASE0, breathe, 0 );
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
             pwm_set_p15(msg->blSpeed);
