@@ -11,9 +11,9 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-uint8_t read_i2c();
-void write_i2c(uint8_t data);
+    
+unsigned char read_i2c();
+void write_i2c(unsigned char data);
 void start_i2c();
 void restart_i2c();
 void stop_i2c();

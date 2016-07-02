@@ -28,6 +28,7 @@
 #include "pwm_lib.h"
 #include "message.h"
 #include "encoder.h"
+#include "pca9685.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -55,6 +56,10 @@ int16_t main(void)
     char *gpsString;
     //init_mpu();
     init_hmc();
+
+    pca9685_init( PCA9685_BASE0 );
+    pca9685_send( PCA9685_BASE0, 2048, 0 );
+
     while(1)
     {
         if (msg = recieveMessage()) {

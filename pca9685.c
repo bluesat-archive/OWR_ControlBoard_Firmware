@@ -4,6 +4,8 @@
  */
 
 #include <xc.h>
+#include "system.h"
+#include <libpic30.h>
 #include <assert.h>
 #include "pca9685.h"
 #include "i2c_lib.h"
@@ -20,7 +22,7 @@ void pca9685_init(int address) {
     start_i2c();
     write_i2c(address);              // Slave address
     write_i2c(PCA9685_PWM_PRESCALE); // PWM frequency PRE_SCALE address
-    write_i2c(0x04);                 // osc_clk/(4096*update_rate) // 25000000/(4096*1500)= 4.069 ~4
+    write_i2c(0x79);                 // 25MHz/(4096*50Hz)=0x79. So 50Hz Period
     stop_i2c();
 
     __delay_ms(1);
