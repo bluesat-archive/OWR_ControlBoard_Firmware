@@ -85,17 +85,17 @@ int16_t main(void)
             // **** ADC **** //
             
             // Read analog pins (potentiometers) from ADC1
-            int tempArmLower;
-            int tempArmHigher;
+            int tempSwerveLeft;
+            int tempSwerveRight;
             
             // Only update when a sample/conversion has been performed
             if(adc_ready){
-                tempArmLower = ADC1BUF0; // Read analog pin 24
-                tempArmHigher = ADC1BUF1; // Read analog pin 24
+                tempSwerveLeft = ADC1BUF0; // Read analog pin 24
+                tempSwerveRight = ADC1BUF1; // Read analog pin 24
             }
             
-            sendMsg.armLower = tempArmLower; 
-            sendMsg.armHigher = tempArmHigher;
+            sendMsg.swerveLeft = tempSwerveLeft; 
+            sendMsg.swerveRight = tempSwerveRight;
             adc_ready = 0;
             
             int s = ADC1BUF2;

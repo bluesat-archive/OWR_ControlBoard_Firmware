@@ -64,73 +64,21 @@ bool adc_ready = 0;
     //enable ADC1
     AD1CON1bits.ADON = 1;
 }
-
-
-
-// Setup ADC1 in 10bit mode for measuring positional data of arm actuators
-void setupADC2() {
-    
-    // Setup the 2 potentiometers connected to RE0 and RE1 (p7 & 8)
-    ANSELEbits.ANSE0 = 1; // Ensure analog input for the pins
-    ANSELEbits.ANSE1 = 1;
-    
-    // Set the control registers to zero, these contain garbage after a reset
-    // This also ensures the ADC module is OFF
-    AD2CON1 = 0;
-    AD2CON2 = 0;
-    AD2CON3 = 0;
-    
-    // clock settings, changes the ADC module clock period. ADCS = n gives a clock divider of 1:n+1
-    // TODO: Tad must be greater than 76 ns (electrical specs), T_CY is 1/70Mhz = 14.28 ns, Check with harry
-    AD2CON3bits.ADCS = 1; // T_AD = T_CY * (ADCS + 1) => T_AD = 2 * T_CY
-    
-    // clear CON4, CHS0 and CHS123
-    AD2CON4 = 0;
-    AD2CHS0 = 0x0000;
-    AD2CHS123 = 0x0000;
-    AD2CSSH = 0;
-    AD2CSSL = 0;
-    
-    // channel selection
-    AD2CSSHbits.CSS24 = 1; // The two channels that are connected are AN24 & 25
-    AD2CSSHbits.CSS25 = 1;
-
-    
-    //sample ch0 & 1 simultaniously
-    AD2CON1bits.SIMSAM = 1;
-    
-    // Sample and conversion timing and automation
-    AD2CON1bits.SSRCG = 0;
-    AD2CON1bits.SSRC = 0; // manual mode, clear SAMP to start conversion, done in main.c
-    
-    
-    //Sample Clock Source Select Bits
-    AD2CHS0bits.CH0SA = 24; // AN24
-    AD2CHS0bits.CH0NB = 25; // AN25
-    AD2CON2bits.CHPS = 1; // Read CH0 & CH1 (for the 2 actuators)
-    
-    //voltage reference 
-    AD2CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
-    AD2CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
-    
-    //automatically begin sampling whenever last conversion finishes
-    AD2CON1bits.ASAM = 1;
-    
-    //enable ADC1
-    AD2CON1bits.ADON = 1;
-}
 */
 
+// ** Code to setup adc for reading potentiometers          ** //
+// ** Uses the input scan select system to allow reading    ** //
+// ** of multiple analog inputs within a single module      ** //
 
 void setupADC1(void) {
     
     // Set appropriate pins as inputs (to read from the pots)
     TRISBbits.TRISB12 = 1; // Set p7 for input
-    TRISBbits.TRISB15 = 1; // Set p8 for input
+    TRISBbits.TRISB14 = 1; // Set p8 for input
     
     // Setup the 2 potentiometers connected to RE0 and RE1
     ANSELBbits.ANSB12 = 1; // Ensure analog input for pin 7
-    ANSELBbits.ANSB15 = 1; // Ensure analog input for pin 8
+    ANSELBbits.ANSB14 = 1; // Ensure analog input for pin 8
     
     // Set the control registers to zero, these contain garbage after a reset
     // This also ensures the ADC module is OFF
@@ -172,9 +120,10 @@ void setupADC1(void) {
     AD1CON2bits.CSCNA = 1; // Activate channel scan select
     
     AD1CSSLbits.CSS12 = 1; // Set p7 for input scan select
-    AD1CSSLbits.CSS15 = 1; // set p8 for input scan select
+    AD1CSSLbits.CSS14 = 1; // set p8 for input scan select
     
     // Will need to interrupt after (N-1) sample/conversion sequences.
+    // Where N = number of signals being read (e.g. an16 & an24 = 2 signals => SMPI = 1)
     AD1CON2bits.SMPI = 1; //interrupt on sample conversion
     
     //automatically begin sampling whenever last conversion finishes, SAMP bit will be set automatically
