@@ -35,10 +35,15 @@ extern "C" {
         int16_t ax, ay, az;
     } IMUData;
     
+    
     struct toControlMsg {
         uint16_t magic;
-        int16_t lSpeed;
-        int16_t rSpeed;
+        int16_t frSpeed;
+        int16_t flSpeed;
+        int16_t brSpeed;
+        int16_t blSpeed;
+        int16_t flAng;
+        int16_t frAng;
         int16_t armRotate;
         int16_t armTop;
         int16_t armBottom;
@@ -48,16 +53,26 @@ extern "C" {
         int16_t cameraBottomTilt;
         int16_t cameraTopRotate;
         int16_t cameraTopTilt;
-        int16_t lidarTilt;	//lidar tilt value.
+        int16_t lidarTilt;  //lidar tilt value.
         int16_t padding;
     };
 
     struct toNUCMsg {
         uint16_t magic;
         uint16_t vbat;
+        uint16_t padding; // PLACEHOLDER FOR VOLTMETER
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;
+        uint16_t swerveLeft; // Swerve Positions from potentiometers
+        uint16_t swerveRight;
+    
+        uint16_t pot0; // TODO: implement and rename when being used.
+        uint16_t pot1;
+        uint16_t pot2;
+        uint16_t pot3;
+        uint16_t armLower; // Arm servo displacement measurements
+        uint16_t armHigher;
     };
 
 #ifdef	__cplusplus

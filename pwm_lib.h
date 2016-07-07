@@ -33,8 +33,8 @@ void pwm_set_p42(uint16_t pulse);
 void pwm_init_p2(void);
 void pwm_set_p2(uint16_t pulse);
 
-void pwm_init_p7(void);
-void pwm_set_p7(uint16_t pulse);
+void pwm_init_p9(void);
+void pwm_set_p9(uint16_t pulse);
 
 void pwm_init_p4(void);
 void pwm_set_p4(uint16_t pulse);

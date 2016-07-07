@@ -27,6 +27,9 @@
 #include "MPU6050.h"
 #include "pwm_lib.h"
 #include "message.h"
+#include "encoder.h"
+#include "adc_lib.h"
+
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -46,7 +49,8 @@ int16_t main(void)
 
     /* Initialize IO ports and peripherals */
     InitApp();
-
+    InitEncoders();
+    
     struct toControlMsg *msg;
     struct toNUCMsg sendMsg;
     GPSData gpsData;
@@ -56,14 +60,15 @@ int16_t main(void)
     while(1)
     {
         if (msg = recieveMessage()) {
-            pwm_set_p17(msg->lSpeed);
-            pwm_set_p21(msg->lSpeed);
-            pwm_set_p15(msg->lSpeed);
-            pwm_set_p12(msg->rSpeed);
-            pwm_set_p42(msg->rSpeed);
-            pwm_set_p10(msg->rSpeed);
+            pwm_set_p17(msg->flSpeed);
+            pwm_set_p15(msg->blSpeed);
+            pwm_set_p12(msg->frSpeed);
+            pwm_set_p10(msg->brSpeed);
             
-            pwm_set_p7(msg->armRotate);
+            pwm_set_p42(msg->flAng);
+            pwm_set_p21(msg->frAng);
+            
+            pwm_set_p9(msg->armRotate);
             pwm_set_p19(msg->armTop);
             pwm_set_p25(msg->armBottom);
             pwm_set_p16(msg->clawRotate); // colorful
@@ -77,15 +82,30 @@ int16_t main(void)
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
 
-            AD1CON1bits.SAMP = 0;
-            while (!AD1CON1bits.DONE);
-            AD1CON1bits.DONE = 0;
+            // **** ADC **** //
+            
+            // Read analog pins (potentiometers) from ADC1
+            int tempSwerveLeft;
+            int tempSwerveRight;
+            
+            // Only update when a sample/conversion has been performed
+            if(adc_ready){
+                tempSwerveLeft = ADC1BUF0; // Read analog pin 24
+                tempSwerveRight = ADC1BUF1; // Read analog pin 24
+            }
+            
+            sendMsg.swerveLeft = tempSwerveLeft; 
+            sendMsg.swerveRight = tempSwerveRight;
+            adc_ready = 0;
             
             int s = ADC1BUF2;
             sendMsg.magic = MESSAGE_MAGIC;
-            sendMsg.vbat = ADC1BUF0;
+            sendMsg.vbat = 0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
+            //sendMsg.imuData = read_mpu();
+            
+            
             //sendMsg.imuData = read_mpu();              
             sendMessage(&sendMsg);
         }

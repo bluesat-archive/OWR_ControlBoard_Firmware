@@ -10,19 +10,20 @@
 #define MAX_PULSE 2000
 #define MIN_PULSE 1000
 
-//New constraints specific for the lidar tilt
-//taken from wiki/display/OWRM/Lidar+Gimbal#app-switcher
+// New constraints specific for the lidar tilt
+// taken from wiki/display/OWRM/Lidar+Gimbal#app-switcher
 #define MIN_LIDAR 900
 #define MAX_LIDAR 2080
 #define MID_LIDAR 1330
 
 // If the signal is out of range set to the midpoint
 static uint16_t safety_cap_pwm(uint16_t pulse) {
-    pulse = pulse < MIN_PULSE ? PWM_MIDPOINT : pulse;
-    pulse = pulse > MAX_PULSE ? PWM_MIDPOINT : pulse;
+    pulse = pulse < MIN_PULSE ? PWM_MIDPOINT : pulse; // tertiary operator, check if pulse < MIN_PULSE
+    pulse = pulse > MAX_PULSE ? PWM_MIDPOINT : pulse; // set to midpoint if true and pulse otherwise
     return pulse;
 }
 
+// Specific constraints for the lidar's range of movement
 static uint16_t safety_cap_lidar(uint16_t pulse){
     pulse = pulse < MIN_LIDAR ? MID_LIDAR : pulse;
     pulse = pulse > MAX_LIDAR ? MID_LIDAR : pulse;
@@ -101,15 +102,15 @@ void pwm_set_p2(uint16_t pulse) {
     OC6R = safety_cap_pwm(pulse) / HARD_PWM_DIV;
 }
 
-void pwm_init_p7(void) {
-    TRISEbits.TRISE0 = 0; // Set SC5/P7 as output
-    RPOR4bits.RP80R = 0b010110; // Link to OC7
+void pwm_init_p9(void) {
+    TRISFbits.TRISF0 = 0; // Set SC7/P9 as output
+    RPOR4bits.RP80R = 0b110000; // Link to OC7
     // Configure Output Compare channel 1 (OC7)
-    pwm_set_p7(1500);;               // pulse start time
+    pwm_set_p9(1500);;               // pulse start time
     OC7CON1bits.OCM = 0b110; // continuous pulse mode
 }
 
-void pwm_set_p7(uint16_t pulse) {
+void pwm_set_p9(uint16_t pulse) {
     OC7R = safety_cap_pwm(pulse) / HARD_PWM_DIV;
 }
 
@@ -303,18 +304,20 @@ void __attribute__ ((__interrupt__, no_auto_psv)) _T9Interrupt(void)
         PR9 = PWM_1US * (pulse_p24);
         last_pulse_p24 = pulse_p24;
     }
-    IFS3bits.T9IF = 0; 			// Clear the Timer_9 interrupt flag  
+    IFS3bits.T9IF = 0;          // Clear the Timer_9 interrupt flag  
 }
 
 void pwm_init_p24(void) {
-    TRISCbits.TRISC14 = 0; 		// Set port (register) as output
+    TRISCbits.TRISC14 = 0;          // Set port (register) as output
     LATCbits.LATC14 = 1;
-    T9CONbits.TON = 1;			// Starts Timer_9 (Timerx On bit)
-    T9CONbits.TCKPS = 0b10; 		// prescaler 1:64
-    TMR9 = 0;				// Clear timer_9 register
-    PR9 = PWM_1US * PWM_MIDPOINT;	// Set period register for timer_9
-    IEC3bits.T9IE = 1;  		// Enable the interrupt
-    IPC13bits.T9IP = 3; 		// Set interrupt priority
+    
+    T9CONbits.TON = 1;              // Starts Timer_9 (Timerx On bit)
+    T9CONbits.TCKPS = 0b10;         // prescaler 1:64
+    TMR9 = 0;                       // Clear timer_9 register
+    PR9 = PWM_1US * PWM_MIDPOINT;   // Set period register for timer_9
+    
+    IEC3bits.T9IE = 1;              // Enable the interrupt
+    IPC13bits.T9IP = 3;             // Set interrupt priority
 }
 
 void pwm_set_p24(uint16_t pulse) {
