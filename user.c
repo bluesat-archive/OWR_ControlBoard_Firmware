@@ -21,6 +21,7 @@
 #include "srf02.h"
 #include "pwm_lib.h"
 #include "i2c_lib.h"
+#include "adc_lib.h"
 
 #include <pps.h>            /* Useful for peripheral pin macros                     */
                             /* http://singularengineer.com/peripheral-pin-select-pps-using-xc16-and-mplab-x/  */
@@ -38,7 +39,6 @@
 #define I2C_CONFIG2 (((1/I2C_FREQ) * FCY) - 2)
 
 #define BRGVAL(x) ((FCY)/(4*x))
-
 
 void InitApp(void)
 {
@@ -72,35 +72,18 @@ void InitApp(void)
     U2BRG = 1822;//BRGVAL(38400); // ((7.37/2)*10^6)/(4*19200)
     RPINR19bits.U2RXR = 83; // Link rx pin
     //RPOR0bits.RP64R = 1; // Link tx pin
+    //this sets which pins are on the ADC
     ANSELE = 0;
     ANSELB = 0;
     ANSELC = 0;
     ANSELG = 0;
     ANSELD = 0;
+    //see IO ports in Pic Spec
     ANSELBbits.ANSB4 = 1; // SP4
     ANSELEbits.ANSE2 = 1; // SD5
-    AD1CON1 = 0;
-    AD1CON2 = 0;
-    AD1CON3 = 0;
-    AD1CON3bits.ADCS = 1;
-    AD1CON4 = 0;
-    AD1CHS0 = 0x0000;
-    AD1CHS123 = 0x0000;
-    AD1CSSHbits.CSS26 = 1;
-    AD1CSSLbits.CSS4 = 1;
-    AD1CON1bits.SSRCG = 0;
-    AD1CON1bits.SIMSAM = 1;
-    AD1CON1bits.SSRC = 0; // auto convert
-    AD1CHS0bits.CH0SA = 26; // AN26
-    AD1CON2bits.CHPS = 2; // Read CH0 - CH3 
-    //AD1CHS0bits.CH0NB = 26; // AN2
-    AD1CHS123bits.CH123NA = 0; // Select Vref- for CH1/CH2/CH3 -ve inputs
-    AD1CHS0bits.CH0NA = 0; // Select Vref- for CH0 -ve input
-    AD1CHS123bits.CH123SA = 1;
     
-    AD1CON1bits.ASAM = 1;
-    AD1CON1bits.ADON = 1;
-    
+    // Setup adc for arm potentiometers
+    setupADC1();
      
     // Timer setup
     // URX receive timeout
@@ -109,14 +92,16 @@ void InitApp(void)
     T1CONbits.TCKPS = 0b11;
     PR1 = 6400; // ~24ms 
     
+    external_pwm_init();
+    
     // PWM setup
     pwm_init_p17();
     pwm_init_p21();
     pwm_init_p15();
-    pwm_init_p3();
+    pwm_init_p3(    );
     pwm_init_p42();
     pwm_init_p2();
-    pwm_init_p7();
+    pwm_init_p9();
     pwm_init_p4();
     pwm_init_p5();
     pwm_init_p16();
@@ -196,7 +181,7 @@ void InitQEI(void) {
 
 void InitEncoders(void) {
     //Ensure Channel A & B ports are inputs:
-    TRISB |= B_ENCODER_BITS; // If I recall, mapping to IC, done below, does this but
+/*    TRISB |= B_ENCODER_BITS; // If I recall, mapping to IC, done below, does this but
     TRISF |= F_ENCODER_BITS; // best practice is to be certain
     
     //Ensure that the pins are set up for DIGITAL input, not analog, only needed for port B
@@ -349,5 +334,6 @@ void InitEncoders(void) {
     IEC1bits.T5IE = 1;  // Enable the interrupt
     
     T5CONbits.TON = 1; //Starts Timer_9 (Timerx On bit)
+*/
 }
 

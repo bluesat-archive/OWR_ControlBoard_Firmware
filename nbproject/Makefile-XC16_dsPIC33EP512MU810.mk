@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c MPU6050.c i2c_lib.c pwm_lib.c encoder.c pca9685.c
+SOURCEFILES_QUOTED_IF_SPACED=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c MPU6050.c i2c_lib.c pwm_lib.c encoder.c pca9685.c adc_lib.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o ${OBJECTDIR}/MPU6050.o ${OBJECTDIR}/i2c_lib.o ${OBJECTDIR}/pwm_lib.o ${OBJECTDIR}/encoder.o ${OBJECTDIR}/pca9685.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/serial.o.d ${OBJECTDIR}/HMC5883L.o.d ${OBJECTDIR}/srf02.o.d ${OBJECTDIR}/MPU6050.o.d ${OBJECTDIR}/i2c_lib.o.d ${OBJECTDIR}/pwm_lib.o.d ${OBJECTDIR}/encoder.o.d ${OBJECTDIR}/pca9685.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o ${OBJECTDIR}/MPU6050.o ${OBJECTDIR}/i2c_lib.o ${OBJECTDIR}/pwm_lib.o ${OBJECTDIR}/encoder.o ${OBJECTDIR}/pca9685.o ${OBJECTDIR}/adc_lib.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/serial.o.d ${OBJECTDIR}/HMC5883L.o.d ${OBJECTDIR}/srf02.o.d ${OBJECTDIR}/MPU6050.o.d ${OBJECTDIR}/i2c_lib.o.d ${OBJECTDIR}/pwm_lib.o.d ${OBJECTDIR}/encoder.o.d ${OBJECTDIR}/pca9685.o.d ${OBJECTDIR}/adc_lib.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o ${OBJECTDIR}/MPU6050.o ${OBJECTDIR}/i2c_lib.o ${OBJECTDIR}/pwm_lib.o ${OBJECTDIR}/encoder.o ${OBJECTDIR}/pca9685.o
+OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/serial.o ${OBJECTDIR}/HMC5883L.o ${OBJECTDIR}/srf02.o ${OBJECTDIR}/MPU6050.o ${OBJECTDIR}/i2c_lib.o ${OBJECTDIR}/pwm_lib.o ${OBJECTDIR}/encoder.o ${OBJECTDIR}/pca9685.o ${OBJECTDIR}/adc_lib.o
 
 # Source Files
-SOURCEFILES=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c MPU6050.c i2c_lib.c pwm_lib.c encoder.c pca9685.c
+SOURCEFILES=configuration_bits.c interrupts.c main.c system.c traps.c user.c serial.c HMC5883L.c srf02.c MPU6050.c i2c_lib.c pwm_lib.c encoder.c pca9685.c adc_lib.c
 
 
 CFLAGS=
@@ -186,6 +186,13 @@ ${OBJECTDIR}/pca9685.o: pca9685.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  pca9685.c  -o ${OBJECTDIR}/pca9685.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/pca9685.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_XC16_dsPIC33EP512MU810=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/pca9685.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/adc_lib.o: adc_lib.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/adc_lib.o.d 
+	@${RM} ${OBJECTDIR}/adc_lib.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  adc_lib.c  -o ${OBJECTDIR}/adc_lib.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/adc_lib.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_XC16_dsPIC33EP512MU810=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/adc_lib.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/configuration_bits.o: configuration_bits.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -284,6 +291,13 @@ ${OBJECTDIR}/pca9685.o: pca9685.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/pca9685.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  pca9685.c  -o ${OBJECTDIR}/pca9685.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/pca9685.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_XC16_dsPIC33EP512MU810=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/pca9685.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/adc_lib.o: adc_lib.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/adc_lib.o.d 
+	@${RM} ${OBJECTDIR}/adc_lib.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  adc_lib.c  -o ${OBJECTDIR}/adc_lib.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/adc_lib.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_XC16_dsPIC33EP512MU810=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/adc_lib.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

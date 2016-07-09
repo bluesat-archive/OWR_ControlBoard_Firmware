@@ -1,6 +1,8 @@
 #include <xc.h>
 #include <stdint.h>
+#include <math.h>
 #include "pwm_lib.h"
+#include "pca9685.h"
 
 #define PWM_1US (1.09)
 #define PWM_PERIOD (20000)
@@ -18,8 +20,8 @@
 
 // If the signal is out of range set to the midpoint
 static uint16_t safety_cap_pwm(uint16_t pulse) {
-    pulse = pulse < MIN_PULSE ? PWM_MIDPOINT : pulse;
-    pulse = pulse > MAX_PULSE ? PWM_MIDPOINT : pulse;
+    pulse = pulse < MIN_PULSE ? PWM_MIDPOINT : pulse; // tertiary operator, check if pulse < MIN_PULSE
+    pulse = pulse > MAX_PULSE ? PWM_MIDPOINT : pulse; // set to midpoint if true and pulse otherwise
     return pulse;
 }
 
@@ -28,6 +30,22 @@ static uint16_t safety_cap_lidar(uint16_t pulse){
     pulse = pulse < MIN_LIDAR ? MID_LIDAR : pulse;
     pulse = pulse > MAX_LIDAR ? MID_LIDAR : pulse;
     return pulse;
+}
+
+void external_pwm_init() {
+    pca9685_init( PCA9685_BASE0 );
+    int i = 0;
+    for(; i != 16; ++i ) {
+        external_pwm_set(i, PWM_MIDPOINT);
+    }
+}
+
+// Pin is 0-15, value is 1000-2000
+void external_pwm_set(uint16_t pin, uint16_t value) {
+    // External PWM doesn't have as high a resolution
+    // Conversion factor changes range from 0-20000 to 0-4096 at 50hz
+    static float conversion_factor = 4096.0f/20000.0f;
+    pca9685_send( PCA9685_BASE0, floor(safety_cap_pwm(value)*conversion_factor), pin );
 }
 
 void pwm_init_p17(void) {
@@ -102,15 +120,15 @@ void pwm_set_p2(uint16_t pulse) {
     OC6R = safety_cap_pwm(pulse) / HARD_PWM_DIV;
 }
 
-void pwm_init_p7(void) {
-    TRISEbits.TRISE0 = 0; // Set SC5/P7 as output
-    RPOR4bits.RP80R = 0b010110; // Link to OC7
+void pwm_init_p9(void) {
+    TRISFbits.TRISF0 = 0; // Set SC7/P9 as output
+    RPOR4bits.RP80R = 0b110000; // Link to OC7
     // Configure Output Compare channel 1 (OC7)
-    pwm_set_p7(1500);;               // pulse start time
+    pwm_set_p9(1500);;               // pulse start time
     OC7CON1bits.OCM = 0b110; // continuous pulse mode
 }
 
-void pwm_set_p7(uint16_t pulse) {
+void pwm_set_p9(uint16_t pulse) {
     OC7R = safety_cap_pwm(pulse) / HARD_PWM_DIV;
 }
 

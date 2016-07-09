@@ -53,7 +53,7 @@ extern "C" {
         int16_t cameraBottomTilt;
         int16_t cameraTopRotate;
         int16_t cameraTopTilt;
-        int16_t lidarTilt;
+        int16_t lidarTilt;  //lidar tilt value.
         int16_t padding;
     };
 
@@ -64,12 +64,15 @@ extern "C" {
         GPSData gpsData;
         MagnometerData magData;
         IMUData imuData;
-        int16_t enc0; // Angular velocities derived from motor encoders
-        int16_t enc1;
-        int16_t enc2;
-        int16_t enc3;
-        int16_t enc4;
-        int16_t enc5;
+        uint16_t swerveLeft; // Swerve Positions from potentiometers
+        uint16_t swerveRight;
+    
+        uint16_t pot0; // TODO: implement and rename when being used.
+        uint16_t pot1;
+        uint16_t pot2;
+        uint16_t pot3;
+        uint16_t armLower; // Arm servo displacement measurements
+        uint16_t armHigher;
     };
 
 #ifdef	__cplusplus
