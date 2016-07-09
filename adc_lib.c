@@ -73,11 +73,11 @@ bool adc_ready = 0;
 void setupADC1(void) {
     
     // Set appropriate pins as inputs (to read from the pots)
-    TRISBbits.TRISB12 = 1; // Set p7 for input
+    TRISBbits.TRISB10 = 1; // Set p7 for input
     TRISBbits.TRISB15 = 1; // Set p8 for input
     
     // Setup the 2 potentiometers connected to RE0 and RE1
-    ANSELBbits.ANSB12 = 1; // Ensure analog input for pin 7
+    ANSELBbits.ANSB10 = 1; // Ensure analog input for pin 7
     ANSELBbits.ANSB15 = 1; // Ensure analog input for pin 8
     
     // Set the control registers to zero, these contain garbage after a reset
@@ -119,7 +119,7 @@ void setupADC1(void) {
     
     AD1CON2bits.CSCNA = 1; // Activate channel scan select
     
-    AD1CSSLbits.CSS12 = 1; // Set ?? for input scan select
+    AD1CSSLbits.CSS10 = 1; // Set ?? for input scan select
     AD1CSSLbits.CSS15 = 1; // set ?? for input scan select
     
     // Will need to interrupt after (N-1) sample/conversion sequences.
