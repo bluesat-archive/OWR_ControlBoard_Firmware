@@ -45,7 +45,7 @@ void external_pwm_set(uint16_t pin, uint16_t value) {
     // External PWM doesn't have as high a resolution
     // Conversion factor changes range from 0-20000 to 0-4096 at 50hz
     static float conversion_factor = 4096.0f/20000.0f;
-    pca9685_send( PCA9685_BASE0, floor(safety_cap_pwm(value)*conversion_factor), pin );
+    pca9685_send( PCA9685_BASE0, (float)safety_cap_pwm(value)*conversion_factor, pin );
 }
 
 void pwm_init_p17(void) {

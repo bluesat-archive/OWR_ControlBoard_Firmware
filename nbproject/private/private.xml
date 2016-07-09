@@ -7,7 +7,6 @@
             <file>file:/home/seb/bluesat/OWR_ControlBoard_Firmware/HMC5883L.c</file>
             <file>file:/home/seb/bluesat/OWR_ControlBoard_Firmware/main.c</file>
             <file>file:/home/seb/bluesat/OWR_ControlBoard_Firmware/configuration_bits.c</file>
-            <file>file:/home/seb/bluesat/OWR_ControlBoard_Firmware/adc_lib.c</file>
             <file>file:/home/seb/bluesat/OWR_ControlBoard_Firmware/message.h</file>
             <file>file:/home/seb/bluesat/OWR_ControlBoard_Firmware/pca9685.c</file>
             <file>file:/home/seb/bluesat/OWR_ControlBoard_Firmware/i2c_lib.h</file>

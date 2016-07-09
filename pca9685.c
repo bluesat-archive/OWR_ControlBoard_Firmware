@@ -22,7 +22,7 @@ void pca9685_init(int address) {
     start_i2c();
     write_i2c(address);              // Slave address
     write_i2c(PCA9685_PWM_PRESCALE); // PWM frequency PRE_SCALE address
-    write_i2c(0x79);                 // 25MHz/(4096*50Hz)=0x79. So 50Hz Period
+    write_i2c(0x85);                 // 25MHz/(4096*50Hz)=0x79. So 50Hz Period
     stop_i2c();
 
     __delay_ms(1);
