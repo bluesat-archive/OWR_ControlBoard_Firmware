@@ -93,21 +93,22 @@ void setupADC1(void) {
     AD1CSSH = 0;
     AD1CSSL = 0;
     
+    AD1CON1bits.AD12B = 1;
     
     // *** CLOCK SETTINGS *** //
     
     //Changes the ADC module clock period for both conversion ad sampling.
     
-    // Tad must be greater than 76 ns (electrical specs, pg562), T_CY is 1/70Mhz 
+    // Tad must be greater than 117.6 ns (electrical specs, pg560), T_CY is 1/70Mhz 
     // Tad < T_CY * (ADCS + 1)
     // Tad/T_CY - 1 < ADCS
-    // ADCS > (76*10^-9)*(70*10^6) - 1
-    // ADCS > 4.32 ~ 5
+    // ADCS > (117.6*10^-9)*(70*10^6) - 1
+    // ADCS > 7.232 ~ 8
     
-    AD1CON3bits.ADCS = 0x0F; // T_AD = T_CY * (ADCS + 1)
-    AD1CON3bits.SAMC = 0x06; // Sampling for TAD * 6
+    AD1CON3bits.ADCS = 0x08; // T_AD = T_CY * (ADCS + 1)
+    AD1CON3bits.SAMC = 14; // Sampling for TAD * 14 (as required for 12-bit)
     
-    // Auto-sampling, automatically end sampling an begin conversion
+    // Auto-sampling, automatically end sampling and begin conversion
     AD1CON1bits.SSRC = 0b111;
     
     
