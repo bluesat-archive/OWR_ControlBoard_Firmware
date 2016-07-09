@@ -1,6 +1,8 @@
 #include <xc.h>
 #include <stdint.h>
+#include <math.h>
 #include "pwm_lib.h"
+#include "pca9685.h"
 
 #define PWM_1US (1.09)
 #define PWM_PERIOD (20000)
@@ -28,6 +30,22 @@ static uint16_t safety_cap_lidar(uint16_t pulse){
     pulse = pulse < MIN_LIDAR ? MID_LIDAR : pulse;
     pulse = pulse > MAX_LIDAR ? MID_LIDAR : pulse;
     return pulse;
+}
+
+void external_pwm_init() {
+    pca9685_init( PCA9685_BASE0 );
+    int i = 0;
+    for(; i != 16; ++i ) {
+        external_pwm_set(i, PWM_MIDPOINT);
+    }
+}
+
+// Pin is 0-15, value is 1000-2000
+void external_pwm_set(uint16_t pin, uint16_t value) {
+    // External PWM doesn't have as high a resolution
+    // Conversion factor changes range from 0-20000 to 0-4096 at 50hz
+    static float conversion_factor = 4096.0f/20000.0f;
+    pca9685_send( PCA9685_BASE0, (float)safety_cap_pwm(value)*conversion_factor, pin );
 }
 
 void pwm_init_p17(void) {

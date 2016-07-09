@@ -28,8 +28,8 @@
 #include "pwm_lib.h"
 #include "message.h"
 #include "encoder.h"
+#include "pca9685.h"
 #include "adc_lib.h"
-
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -57,12 +57,14 @@ int16_t main(void)
     char *gpsString;
     //init_mpu();
     init_hmc();
+
     while(1)
     {
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
             pwm_set_p15(msg->blSpeed);
-            pwm_set_p12(msg->frSpeed);
+            //pwm_set_p12(msg->frSpeed);
+            external_pwm_set(0, msg->frSpeed);
             pwm_set_p10(msg->brSpeed);
             
             pwm_set_p42(msg->flAng);
