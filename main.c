@@ -56,21 +56,25 @@ int16_t main(void)
     GPSData gpsData;
     char *gpsString;
     //init_mpu();
-    init_hmc();
+    //init_hmc();
+    
+    external_pwm_init();
 
     while(1)
     {
+        
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
             pwm_set_p15(msg->blSpeed);
-            //pwm_set_p12(msg->frSpeed);
-            external_pwm_set(0, msg->frSpeed);
+            pwm_set_p12(msg->frSpeed);
+            
             pwm_set_p10(msg->brSpeed);
             
             pwm_set_p42(msg->flAng);
             pwm_set_p21(msg->frAng);
             
-            pwm_set_p9(msg->armRotate);
+            //pwm_set_p9(msg->armRotate);
+            external_pwm_set(0, msg->armRotate);
             pwm_set_p19(msg->armTop);
             pwm_set_p25(msg->armBottom);
             pwm_set_p16(msg->clawRotate); // colorful
