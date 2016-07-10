@@ -92,8 +92,6 @@ void InitApp(void)
     T1CONbits.TCKPS = 0b11;
     PR1 = 6400; // ~24ms 
     
-    external_pwm_init();
-    
     // PWM setup
     pwm_init_p17();
     pwm_init_p21();
