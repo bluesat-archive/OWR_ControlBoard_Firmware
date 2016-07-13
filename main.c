@@ -95,23 +95,23 @@ int16_t main(void)
             int tempSwerveRight;
             int tempBatVoltage;
             int tempPot0;
-            int tempPot1;
+            //int tempPot1;
             int tempArmLower;
             int tempArmHigher;
             
             // Only update when a sample/conversion has been performed
             if(adc_ready){
                 tempPot0 = ADC1BUF0;
-                tempPot1 = ADC1BUF2;
+                //tempPot1 = ADC1BUF2;
                 tempSwerveLeft = ADC1BUF1;
-                tempSwerveRight = ADC1BUF3;
-                tempArmLower = ADC1BUF4;
-                tempArmHigher = ADC1BUF5;
-                tempBatVoltage = ADC1BUF6;
+                tempSwerveRight = ADC1BUF2;
+                tempArmLower = ADC1BUF3;
+                tempArmHigher = ADC1BUF4;
+                tempBatVoltage = ADC1BUF5;
             }
             
             sendMsg.pot0 = tempPot0; // TODO: implement and rename when being used.
-            sendMsg.pot1 = tempPot1;
+            //sendMsg.pot1 = tempPot1;
             sendMsg.swerveLeft = tempSwerveLeft; 
             sendMsg.swerveRight = tempSwerveRight;
             sendMsg.armLower = tempArmLower; // Arm servo displacement measurements
@@ -120,7 +120,7 @@ int16_t main(void)
 
             adc_ready = 0;
             
-            int s = ADC1BUF2;
+            //int s = ADC1BUF2;
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
