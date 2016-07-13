@@ -102,8 +102,8 @@ int16_t main(void)
             // Only update when a sample/conversion has been performed
             if(adc_ready){
                 tempPot0 = ADC1BUF0;
-                tempPot1 = ADC1BUF1;
-                tempSwerveLeft = ADC1BUF2;
+                tempPot1 = ADC1BUF2;
+                tempSwerveLeft = ADC1BUF1;
                 tempSwerveRight = ADC1BUF3;
                 tempArmLower = ADC1BUF4;
                 tempArmHigher = ADC1BUF5;

@@ -69,8 +69,12 @@ extern "C" {
     
         uint16_t pot0; // TODO: implement and rename when being used.
         uint16_t pot1;
+        uint16_t padding1; // temp until rover code message is fixed.
+        uint16_t padding2;
+        
         uint16_t armLower; // Arm servo displacement measurements
         uint16_t armHigher;
+        
     };
 
 #ifdef	__cplusplus
