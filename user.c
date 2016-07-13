@@ -99,15 +99,10 @@ void InitApp(void)
     pwm_init_p3(    );
     pwm_init_p42();
     pwm_init_p2();
-    pwm_init_p9();
     pwm_init_p4();
     pwm_init_p5();
     pwm_init_p16();
     pwm_init_p13();
-    pwm_init_p10();
-    pwm_init_p12();
-    pwm_init_p19();
-    pwm_init_p25();
     pwm_init_p24(); // Initialise pwm for lidar tilt
     
     // Configure Timer 2 (default timer for output compare)
