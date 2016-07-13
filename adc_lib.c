@@ -119,8 +119,14 @@ void setupADC1(void) {
     
     AD1CON2bits.CSCNA = 1; // Activate channel scan select
     
-    AD1CSSLbits.CSS10 = 1; // Set ?? for input scan select
-    AD1CSSLbits.CSS15 = 1; // set ?? for input scan select
+    AD1CSSLbits.CSS8 =  1;  // Set ?? for input scan select
+    AD1CSSLbits.CSS10 = 1; // set ?? for input scan select
+    AD1CSSLbits.CSS12 = 1; // Read battery voltage
+    AD1CSSLbits.CSS14 = 1; // Set ?? for input scan select
+    AD1CSSHbits.CSS24 = 1; // set ?? for input scan select5
+    AD1CSSHbits.CSS25 = 1; // set ?? for input scan select
+    AD1CSSHbits.CSS26 = 1; // Read battery voltage
+    
     
     // Will need to interrupt after (N-1) sample/conversion sequences.
     // Where N = number of signals being read (e.g. an16 & an24 = 2 signals => SMPI = 1)

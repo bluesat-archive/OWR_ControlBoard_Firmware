@@ -93,20 +93,35 @@ int16_t main(void)
             // Read analog pins (potentiometers) from ADC1
             int tempSwerveLeft;
             int tempSwerveRight;
+            int tempBatVoltage;
+            int tempPot0;
+            int tempPot1;
+            int tempArmLower;
+            int tempArmHigher;
             
             // Only update when a sample/conversion has been performed
             if(adc_ready){
-                tempSwerveLeft = ADC1BUF0; // Read analog pin 24
-                tempSwerveRight = ADC1BUF1; // Read analog pin 24
+                tempPot0 = ADC1BUF0;
+                tempPot1 = ADC1BUF1;
+                tempSwerveLeft = ADC1BUF2;
+                tempSwerveRight = ADC1BUF3;
+                tempArmLower = ADC1BUF4;
+                tempArmHigher = ADC1BUF5;
+                tempBatVoltage = ADC1BUF6;
             }
             
+            sendMsg.pot0 = tempPot0; // TODO: implement and rename when being used.
+            sendMsg.pot1 = tempPot1;
             sendMsg.swerveLeft = tempSwerveLeft; 
             sendMsg.swerveRight = tempSwerveRight;
+            sendMsg.armLower = tempArmLower; // Arm servo displacement measurements
+            sendMsg.armHigher = tempArmHigher;
+            sendMsg.vbat = tempBatVoltage;
+
             adc_ready = 0;
             
             int s = ADC1BUF2;
             sendMsg.magic = MESSAGE_MAGIC;
-            sendMsg.vbat = 0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
             //sendMsg.imuData = read_mpu();
