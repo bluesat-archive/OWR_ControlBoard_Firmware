@@ -76,7 +76,7 @@ void setupADC1(void) {
     TRISBbits.TRISB8 = 1; // Set p7 for input
     TRISBbits.TRISB10 = 1; // Set p8 for input
     TRISBbits.TRISB12 = 1; // Set p7 for input
-    TRISBbits.TRISB14 = 1; // Set p8 for input
+    TRISBbits.TRISB15 = 1; // Set p8 for input
     TRISEbits.TRISE0 = 1; // Set p8 for input
     TRISEbits.TRISE1 = 1; // Set p8 for input
     TRISEbits.TRISE2 = 1; // Set p8 for input
@@ -85,7 +85,7 @@ void setupADC1(void) {
     ANSELBbits.ANSB8 = 1; // Ensure analog input for pin 7
     ANSELBbits.ANSB10 = 1; // Ensure analog input for pin 8
     ANSELBbits.ANSB12 = 1; // Ensure analog input for pin 7
-    ANSELBbits.ANSB14 = 1;
+    ANSELBbits.ANSB15 = 1;
     ANSELEbits.ANSE0 = 1; // Ensure analog input for pin 7
     ANSELEbits.ANSE1 = 1;
     ANSELEbits.ANSE2 = 1;
@@ -131,8 +131,8 @@ void setupADC1(void) {
     
     AD1CSSLbits.CSS8 =  1;
     AD1CSSLbits.CSS10 = 1;
-    //AD1CSSLbits.CSS12 = 1;
-    AD1CSSLbits.CSS14 = 1;
+    AD1CSSLbits.CSS12 = 1;
+    AD1CSSLbits.CSS15 = 1;
     AD1CSSHbits.CSS24 = 1;
     AD1CSSHbits.CSS25 = 1;
     AD1CSSHbits.CSS26 = 1;
@@ -140,7 +140,7 @@ void setupADC1(void) {
     
     // Will need to interrupt after (N-1) sample/conversion sequences.
     // Where N = number of signals being read (e.g. an16 & an24 = 2 signals => SMPI = 1)
-    AD1CON2bits.SMPI = 5; //interrupt on sample conversion
+    AD1CON2bits.SMPI = 6; //interrupt on sample conversion
     
     //automatically begin sampling whenever last conversion finishes, SAMP bit will be set automatically
     AD1CON1bits.ASAM = 1;
