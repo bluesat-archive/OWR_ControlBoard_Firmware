@@ -11,6 +11,7 @@
       <itemPath>i2c_lib.h</itemPath>
       <itemPath>MPU6050.h</itemPath>
       <itemPath>pwm_lib.h</itemPath>
+      <itemPath>pca9685.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -305,7 +306,6 @@
         <property key="COMPARATOR" value="true"/>
         <property key="CRC" value="true"/>
         <property key="DCI" value="true"/>
-        <property key="Freeze All Other Peripherals" value="true"/>
         <property key="I2C1" value="true"/>
         <property key="I2C2" value="true"/>
         <property key="INPUT CAPTURE 1" value="true"/>
