@@ -73,12 +73,24 @@ bool adc_ready = 0;
 void setupADC1(void) {
     
     // Set appropriate pins as inputs (to read from the pots)
-    TRISBbits.TRISB10 = 1; // Set p7 for input
+    TRISBbits.TRISB8 = 1; // Set p7 for input
+    TRISBbits.TRISB10 = 1; // Set p8 for input
+    TRISBbits.TRISB12 = 1; // Set p7 for input
     TRISBbits.TRISB15 = 1; // Set p8 for input
+    TRISEbits.TRISE0 = 1; // Set p8 for input
+    TRISEbits.TRISE1 = 1; // Set p8 for input
+    TRISEbits.TRISE2 = 1; // Set p8 for input
+    TRISEbits.TRISE3 = 1;
     
     // Setup the 2 potentiometers connected to RE0 and RE1
-    ANSELBbits.ANSB10 = 1; // Ensure analog input for pin 7
-    ANSELBbits.ANSB15 = 1; // Ensure analog input for pin 8
+    ANSELBbits.ANSB8 = 1; // Ensure analog input for pin 7
+    ANSELBbits.ANSB10 = 1; // Ensure analog input for pin 8
+    ANSELBbits.ANSB12 = 1; // Ensure analog input for pin 7
+    ANSELBbits.ANSB15 = 1;
+    ANSELEbits.ANSE0 = 1; // Ensure analog input for pin 7
+    ANSELEbits.ANSE1 = 1;
+    ANSELEbits.ANSE2 = 1;
+    ANSELEbits.ANSE3 = 1;
     
     // Set the control registers to zero, these contain garbage after a reset
     // This also ensures the ADC module is OFF
@@ -93,7 +105,7 @@ void setupADC1(void) {
     AD1CSSH = 0;
     AD1CSSL = 0;
     
-    AD1CON1bits.AD12B = 1;
+    AD1CON1bits.AD12B = 1; // Activate 12 bit adc.
     
     // *** CLOCK SETTINGS *** //
     
@@ -120,12 +132,19 @@ void setupADC1(void) {
     
     AD1CON2bits.CSCNA = 1; // Activate channel scan select
     
-    AD1CSSLbits.CSS10 = 1; // Set ?? for input scan select
-    AD1CSSLbits.CSS15 = 1; // set ?? for input scan select
+    AD1CSSLbits.CSS8 =  1;
+    AD1CSSLbits.CSS10 = 1;
+    AD1CSSLbits.CSS12 = 1;
+    AD1CSSLbits.CSS15 = 1;
+    AD1CSSHbits.CSS24 = 1;
+    AD1CSSHbits.CSS25 = 1;
+    AD1CSSHbits.CSS26 = 1;
+    AD1CSSHbits.CSS27 = 1;
+    
     
     // Will need to interrupt after (N-1) sample/conversion sequences.
     // Where N = number of signals being read (e.g. an16 & an24 = 2 signals => SMPI = 1)
-    AD1CON2bits.SMPI = 1; //interrupt on sample conversion
+    AD1CON2bits.SMPI = 7; //interrupt on sample conversion
     
     //automatically begin sampling whenever last conversion finishes, SAMP bit will be set automatically
     AD1CON1bits.ASAM = 1;
