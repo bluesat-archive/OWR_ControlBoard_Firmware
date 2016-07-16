@@ -60,8 +60,45 @@ int16_t main(void)
     
     external_pwm_init();
 
+    int voltCount = 0;
+    
     while(1)
     {
+        // **** ADC **** //
+            
+        // Read analog pins (potentiometers) from ADC1
+        int tempSwerveLeft;
+        int tempSwerveRight;
+        int tempBatVoltage;
+        int tempPot0;
+        int tempPot1;
+        uint16_t tempPot2;
+        int tempPot3;
+        int tempArmLower;
+        int tempArmHigher;
+        int tempVolt;
+
+        
+        // Only update when a sample/conversion has been performed
+        if(adc_ready){
+            tempPot0 = ADC1BUF0;
+            tempSwerveLeft = ADC1BUF1;
+            tempPot1 = ADC1BUF2;
+            tempSwerveRight = ADC1BUF3;
+            tempArmLower = ADC1BUF4;
+            tempArmHigher = ADC1BUF5;
+            tempBatVoltage = ADC1BUF6;
+            tempVolt = ADC1BUF8;
+            
+            if(voltCount <= 20){
+                tempPot2 += ADC1BUF7;
+                voltCount++;
+            }
+            
+            tempPot3 = ADC1BUF9;
+        }
+        
+        adc_ready = 0;
         
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
@@ -86,37 +123,16 @@ int16_t main(void)
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
 
-            // **** ADC **** //
             
-            // Read analog pins (potentiometers) from ADC1
-            int tempSwerveLeft;
-            int tempSwerveRight;
-            int tempBatVoltage;
-            int tempPot0;
-            int tempPot1;
-            int tempPot2;
-            int tempPot3;
-            int tempArmLower;
-            int tempArmHigher;
-            int tempVolt;
-            
-            // Only update when a sample/conversion has been performed
-            if(adc_ready){
-                tempPot0 = ADC1BUF0;
-                tempSwerveLeft = ADC1BUF1;
-                tempPot1 = ADC1BUF2;
-                tempSwerveRight = ADC1BUF3;
-                tempArmLower = ADC1BUF4;
-                tempArmHigher = ADC1BUF5;
-                tempBatVoltage = ADC1BUF6;
-                tempVolt = ADC1BUF8;
-                tempPot2 = ADC1BUF7;
-                tempPot3 = ADC1BUF9;
-            }
             
             sendMsg.pot0 = tempPot0; // TODO: implement and rename when being used.
             sendMsg.pot1 = tempPot1;
-            sendMsg.pot2 = tempPot2; // TODO: implement and rename when being used.
+            
+            sendMsg.pot2 = tempPot2 / voltCount; // TODO: implement and rename when being used.
+            
+            voltCount = 0;
+            tempPot2 = 0;
+            
             sendMsg.pot3 = tempPot3;
             sendMsg.swerveLeft = tempSwerveLeft; 
             sendMsg.swerveRight = tempSwerveRight;
@@ -124,8 +140,6 @@ int16_t main(void)
             sendMsg.armHigher = tempArmHigher;
             sendMsg.vbat = tempBatVoltage;
             sendMsg.voltmeter = tempVolt;
-
-            adc_ready = 0;
             
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.gpsData = gpsData;
