@@ -49,7 +49,7 @@ int16_t main(void)
 
     /* Initialize IO ports and peripherals */
     InitApp();
-    InitEncoders();
+    //InitEncoders();
     
     struct toControlMsg *msg;
     struct toNUCMsg sendMsg;
