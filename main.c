@@ -49,7 +49,7 @@ int16_t main(void)
 
     /* Initialize IO ports and peripherals */
     InitApp();
-    InitEncoders();
+    //InitEncoders();
     
     struct toControlMsg *msg;
     struct toNUCMsg sendMsg;
@@ -66,17 +66,15 @@ int16_t main(void)
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
             pwm_set_p15(msg->blSpeed);
-            pwm_set_p12(msg->frSpeed);
-            
-            pwm_set_p10(msg->brSpeed);
+            external_pwm_set(2, msg->frSpeed);
+            external_pwm_set(1, msg->brSpeed);
             
             pwm_set_p42(msg->flAng);
             pwm_set_p21(msg->frAng);
             
-            //pwm_set_p9(msg->armRotate);
             external_pwm_set(0, msg->armRotate);
-            pwm_set_p19(msg->armTop);
-            pwm_set_p25(msg->armBottom);
+            external_pwm_set(3, msg->armTop);
+            external_pwm_set(4, msg->armBottom);
             pwm_set_p16(msg->clawRotate); // colorful
             pwm_set_p13(msg->clawGrip); // white and red
             
