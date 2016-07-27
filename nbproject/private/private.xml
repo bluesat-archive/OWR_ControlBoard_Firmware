@@ -3,14 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/user.c</file>
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/encoder.c</file>
-=======
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/message.h</file>
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/adc_lib.c</file>
->>>>>>> OWRS-183-Arm-Position-Data
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/main.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/srf02.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/pwm_lib.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/system.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/HMC5883L.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/pwm_lib.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/MPU6050.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/HMC5883L.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/adc_lib.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/message.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/gripController.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/serial.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/user.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/encoder.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/user.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/adc_lib.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/gripController.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/main.c</file>
         </group>
     </open-files>
 </project-private>

@@ -73,6 +73,11 @@ extern "C" {
         uint16_t pot3;
         uint16_t armLower; // Arm servo displacement measurements
         uint16_t armHigher;
+    
+        //TEMP claw readout
+        //uint16_t clawIn;
+        //uint16_t clawActual;
+        //uint16_t clawCommand;
     };
 
 #ifdef	__cplusplus

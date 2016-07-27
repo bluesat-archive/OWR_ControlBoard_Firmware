@@ -80,6 +80,11 @@ void setupADC1(void) {
     ANSELBbits.ANSB12 = 1; // Ensure analog input for pin 7
     ANSELBbits.ANSB15 = 1; // Ensure analog input for pin 8
     
+    //setup register for arm feedback.
+    //B10 for analog input
+    TRISBbits.TRISB10 = 1;
+    ANSELBbits.ANSB10 = 1;
+    
     // Set the control registers to zero, these contain garbage after a reset
     // This also ensures the ADC module is OFF
     AD1CON1 = 0;
@@ -121,10 +126,10 @@ void setupADC1(void) {
     
     AD1CSSLbits.CSS12 = 1; // Set ?? for input scan select
     AD1CSSLbits.CSS15 = 1; // set ?? for input scan select
-    
+    AD1CSSLbits.CSS10 = 1;
     // Will need to interrupt after (N-1) sample/conversion sequences.
     // Where N = number of signals being read (e.g. an16 & an24 = 2 signals => SMPI = 1)
-    AD1CON2bits.SMPI = 1; //interrupt on sample conversion
+    AD1CON2bits.SMPI = 2; //interrupt on sample conversion
     
     //automatically begin sampling whenever last conversion finishes, SAMP bit will be set automatically
     AD1CON1bits.ASAM = 1;

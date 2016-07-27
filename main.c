@@ -29,7 +29,7 @@
 #include "message.h"
 #include "encoder.h"
 #include "adc_lib.h"
-
+#include "gripController.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -57,8 +57,10 @@ int16_t main(void)
     char *gpsString;
     //init_mpu();
     init_hmc();
+    double p_k = 0.1;
     while(1)
     {
+        
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
             pwm_set_p15(msg->blSpeed);
@@ -72,8 +74,20 @@ int16_t main(void)
             pwm_set_p19(msg->armTop);
             pwm_set_p25(msg->armBottom);
             pwm_set_p16(msg->clawRotate); // colorful
-            pwm_set_p13(msg->clawGrip); // white and red
             
+            //move clawGrip msg as it needs to be adjusted
+            //int ret ADCBUF2;
+            uint16_t ADC_out = 0;
+            uint16_t clawGripOut = 0;
+            uint16_t clawActual = 0;
+            int error = 0;
+            if(adc_ready) {
+                clawActual = 0;
+                clawGripOut = gripController(msg->clawGrip, &clawActual, &error);
+                pwm_set_p13(msg->clawGrip);
+                ADC_out = ADC1BUF1;
+            }
+            // white and red
             pwm_set_p2(msg->cameraBottomRotate);
             pwm_set_p3(msg->cameraBottomTilt);
             pwm_set_p4(msg->cameraTopRotate);
@@ -87,9 +101,10 @@ int16_t main(void)
             // Read analog pins (potentiometers) from ADC1
             int tempSwerveLeft;
             int tempSwerveRight;
-            
+            //int tempClawFeedback;
             // Only update when a sample/conversion has been performed
             if(adc_ready){
+                //tempClawFeedback = ADC1BUF0;
                 tempSwerveLeft = ADC1BUF0; // Read analog pin 24
                 tempSwerveRight = ADC1BUF1; // Read analog pin 24
             }
@@ -98,11 +113,19 @@ int16_t main(void)
             sendMsg.swerveRight = tempSwerveRight;
             adc_ready = 0;
             
-            int s = ADC1BUF2;
+            //int s = ADC1BUF2;
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.vbat = 0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
+            sendMsg.pot0 = clawActual;
+            sendMsg.pot1 = msg->clawGrip;
+            sendMsg.pot2 = error;
+            sendMsg.pot3 = clawGripOut;
+            //sendMsg.claw = ret;
+            //sendMsg.clawIn = msg->clawGrip;
+            //sendMsg.clawCommand = clawGripOut;
+            //sendMsg.clawActual = clawActual;
             //sendMsg.imuData = read_mpu();
             
             

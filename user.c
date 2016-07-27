@@ -48,7 +48,6 @@ void InitApp(void)
     
     //TRISBbits.TRISB4 = 1;
     //TRISEbits.TRISE2 = 1;
-    
     LATBbits.LATB0 = 1;
     LATBbits.LATB1 = 1;
     /* Setup analog functionality and port direction */
@@ -96,7 +95,7 @@ void InitApp(void)
     pwm_init_p17();
     pwm_init_p21();
     pwm_init_p15();
-    pwm_init_p3(    );
+    pwm_init_p3();
     pwm_init_p42();
     pwm_init_p2();
     pwm_init_p9();
