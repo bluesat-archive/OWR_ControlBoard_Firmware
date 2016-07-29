@@ -103,6 +103,7 @@ int16_t main(void)
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
             pwm_set_p15(msg->blSpeed);
+            //pwm_set_p15(msg->armTop);
             external_pwm_set(2, msg->frSpeed);
             external_pwm_set(1, msg->brSpeed);
             
