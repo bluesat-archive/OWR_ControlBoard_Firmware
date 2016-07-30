@@ -181,7 +181,7 @@ int16_t main(void)
             pwm_set_p24(msg->lidarTilt);
             
             sendMsg.pot0 = tempPot0; // TODO: implement and rename when being used.
-            sendMsg.pot1 = tempPot1;
+            sendMsg.pot1 = clawActual;
             
             sendMsg.pot2 = tempPot2 / voltCount; // TODO: implement and rename when being used.
             
@@ -200,9 +200,9 @@ int16_t main(void)
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
             //sendMsg.pot0 = avg;
-            sendMsg.pot1 = msg->clawGrip;
-            sendMsg.pot2 = error;
-            sendMsg.pot3 = clawGripOut;
+            //sendMsg.pot1 = msg->clawGrip;
+            //sendMsg.pot2 = error;
+            //sendMsg.pot3 = clawGripOut;
             //sendMsg.claw = ret;
             //sendMsg.clawIn = msg->clawGrip;
             //sendMsg.clawCommand = clawGripOut;
