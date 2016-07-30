@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/message.h</file>
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/user.c</file>
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/adc_lib.c</file>
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/gripController.c</file>
-            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/main.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/gripController.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/gripController.c</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/message.h</file>
+            <file>file:/C:/Users/chris/Documents/Bluesat/main.c</file>
         </group>
     </open-files>
 </project-private>

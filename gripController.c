@@ -32,11 +32,11 @@ double min_pos = 500;
 
 //convert ADC to volts
 //convert volts to PWM
-uint16_t gripController(int desired_pos, int *actual, int * error, int * error_sum) {
+/*uint16_t gripController(int desired_pos, int *actual, int * error, int * error_sum) {
     //double volt = (double) ADC1BUF1 * (3.3)/(max_ADC - min_ADC);
     //int cur_pos = volt * (max_pos - min_pos)/(max_volt - min_volt) + 384.957; 
     //
-    int cur_pos = (int)(((double)ADC1BUF2)*0.565 + 383.839);
+    
     *actual = cur_pos;
     //if(desired_pos < min_pos) desired_pos = min_pos;
     //else if(desired_pos > max_pos) desired_pos = max_pos;
@@ -48,7 +48,7 @@ uint16_t gripController(int desired_pos, int *actual, int * error, int * error_s
     
     /*if(*error > 100 || *error < -100) {
         *error = 0;
-    }*/
+    }
     *error_sum += *error;
     if(*error_sum > 100) {
         *error_sum = 100;
@@ -56,4 +56,4 @@ uint16_t gripController(int desired_pos, int *actual, int * error, int * error_s
         *error_sum = -100;
     }
     return (uint16_t) (p_gain*(double)(*error) + cur_pos);// + i_gain*(*error_sum);
-}
+}*/

@@ -73,7 +73,7 @@ int16_t main(void)
     uint16_t avg_pos = 0;
     pwm_set_p13(1500);
     while(clawActual != 1500) {
-        int tmp = gripController(clawCommand, &clawActual, &error, &error_sum);
+        clawActual = (int)(((double)ADC1BUF2)*0.565 + 383.839);
     }
     error_sum = 0;
 
@@ -98,7 +98,7 @@ int16_t main(void)
         int tempArmHigher;
         int tempVolt;
 
-        
+        uint16_t out;
         // Only update when a sample/conversion has been performed
         if(adc_ready){
             tempPot0 = ADC1BUF0;
@@ -119,26 +119,20 @@ int16_t main(void)
 
             clawActual = 0;
             count++;
-            clawGripOut = gripController(clawCommand, &clawActual, &error, &error_sum);
-            avg += clawGripOut;
+            clawActual = (int)(((double)ADC1BUF2)*0.565 + 383.839);
             avg_pos += clawActual;
             avg_error += error;
             if(count == 10) {
-                avg /= count;
-                avg_error /= count;
                 avg_pos /= count;
+                sendMsg.clawActual = avg_pos;
                 int error_out = clawCommand - avg_pos;
-                uint16_t out;
-                if(error_out < -50 || error_out > 50) {
+                if(error_out < -70 || error_out > 70) {
                     error_out = 0;
-                    out = 0;
+                    out = 0; //0
                 } else {
                     out = (double)(0.5*(double)(error_out) + avg_pos);
                 }
-                sendMsg.pot0 = avg;
-                pwm_set_p13(clawCommand);
-                avg = 0;
-                avg_error = 0;
+                pwm_set_p13(out);
                 avg_pos = 0;
                 count = 0;
             }
@@ -180,9 +174,13 @@ int16_t main(void)
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
             
-            sendMsg.pot0 = ADC1BUF2; // TODO: implement and rename when being used.
-            sendMsg.pot1 = msg->clawGrip;
-            sendMsg.pot2 = clawActual;
+            sendMsg.pot0 = tempPot0; // TODO: implement and rename when being used.
+            sendMsg.pot1 = tempPot1;
+            sendMsg.pot2 = tempPot2;
+            
+            sendMsg.gripEffort = out;
+            //sendMsg.clawActual = avg_pos;
+            
             //sendMsg.pot2 = tempPot2 / voltCount; // TODO: implement and rename when being used.
             
             voltCount = 0;

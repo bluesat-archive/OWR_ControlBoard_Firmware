@@ -10,9 +10,9 @@ CND_CONF=XC16_dsPIC33EP512MU810
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/OWR_ControlBoard_Firmware.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=OWR_ControlBoard_Firmware.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=owrcontrolboardfirmware/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/Bluesat.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=Bluesat.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=bluesat/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/owrcontrolboardfirmware/bin
+makeDirectory ${TMPDIR}/bluesat/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/owrcontrolboardfirmware.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/bluesat.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/owrcontrolboardfirmware.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/bluesat.tar *
 checkReturnCode
 
 # Cleanup

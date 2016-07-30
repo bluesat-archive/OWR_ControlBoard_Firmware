@@ -9,7 +9,7 @@ extern "C" {
     extern double p_gain;
     extern double min_volt;
     extern double max_volt;
-    uint16_t gripController(int desired_pos, int *actual, int *error, int *error_sum); // ADC1 will be the 2 potentiometers for the arm actuators
+    //uint16_t gripController(int desired_pos, int *actual, int *error, int *error_sum); // ADC1 will be the 2 potentiometers for the arm actuators
     
     //void setupADC2();
 
