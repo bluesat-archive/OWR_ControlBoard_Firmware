@@ -36,7 +36,7 @@ uint16_t gripController(int desired_pos, int *actual, int * error, int * error_s
     //double volt = (double) ADC1BUF1 * (3.3)/(max_ADC - min_ADC);
     //int cur_pos = volt * (max_pos - min_pos)/(max_volt - min_volt) + 384.957; 
     //
-    int cur_pos = (int)(((double)ADC1BUF2)*2.376 + 314.508);
+    int cur_pos = (int)(((double)ADC1BUF2)*0.565 + 383.839);
     *actual = cur_pos;
     //if(desired_pos < min_pos) desired_pos = min_pos;
     //else if(desired_pos > max_pos) desired_pos = max_pos;

@@ -136,7 +136,7 @@ int16_t main(void)
                     out = (double)(0.5*(double)(error_out) + avg_pos);
                 }
                 sendMsg.pot0 = avg;
-                pwm_set_p13(out);
+                pwm_set_p13(clawCommand);
                 avg = 0;
                 avg_error = 0;
                 avg_pos = 0;
@@ -180,10 +180,10 @@ int16_t main(void)
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
             
-            sendMsg.pot0 = tempPot0; // TODO: implement and rename when being used.
-            sendMsg.pot1 = clawActual;
-            
-            sendMsg.pot2 = tempPot2 / voltCount; // TODO: implement and rename when being used.
+            sendMsg.pot0 = ADC1BUF2; // TODO: implement and rename when being used.
+            sendMsg.pot1 = msg->clawGrip;
+            sendMsg.pot2 = clawActual;
+            //sendMsg.pot2 = tempPot2 / voltCount; // TODO: implement and rename when being used.
             
             voltCount = 0;
             tempPot2 = 0;
@@ -199,8 +199,8 @@ int16_t main(void)
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
-            //sendMsg.pot0 = avg;
-            //sendMsg.pot1 = msg->clawGrip;
+            //sendMsg.pot0 = clawCommand;
+            //sendMsg.pot1 = ADC_out;
             //sendMsg.pot2 = error;
             //sendMsg.pot3 = clawGripOut;
             //sendMsg.claw = ret;

@@ -6,6 +6,7 @@
             <file>file:/Users/Simon/OWR_ControlBoard_Firmware/message.h</file>
             <file>file:/Users/Simon/OWR_ControlBoard_Firmware/user.c</file>
             <file>file:/Users/Simon/OWR_ControlBoard_Firmware/adc_lib.c</file>
+            <file>file:/Users/Simon/OWR_ControlBoard_Firmware/gripController.c</file>
             <file>file:/Users/Simon/OWR_ControlBoard_Firmware/main.c</file>
         </group>
     </open-files>
