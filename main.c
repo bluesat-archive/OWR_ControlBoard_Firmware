@@ -58,8 +58,53 @@ int16_t main(void)
     //init_mpu();
     init_hmc();
     double p_k = 0.1;
+    int avg = 0;
+    int count = 0;
+    int prev_grip = 0;
+    uint16_t clawActual = 0;
+    uint16_t clawGripOut = 0;
+    uint16_t ADC_out = 0;
+    uint16_t clawCommand = 0;
+    int error = 0;
+    int avg_error = 0;
+    int error_sum = 0;
+    uint16_t avg_pos = 0;
+    pwm_set_p13(1500);
+    while(clawActual != 1500) {
+        int tmp = gripController(clawCommand, &clawActual, &error, &error_sum);
+    }
+    error_sum = 0;
     while(1)
     {
+        
+        if(adc_ready) {
+                clawActual = 0;
+                count++;
+                clawGripOut = gripController(clawCommand, &clawActual, &error, &error_sum);
+                avg += clawGripOut;
+                avg_pos += clawActual;
+                avg_error += error;
+                if(count == 10) {
+                    avg /= count;
+                    avg_error /= count;
+                    avg_pos /= count;
+                    int error_out = clawCommand - avg_pos;
+                    uint16_t out;
+                    if(error_out < -50 || error_out > 50) {
+                        error_out = 0;
+                        out = 0;
+                    } else {
+                        out = (double)(0.5*(double)(error_out) + avg_pos);
+                    }
+                    sendMsg.pot0 = avg;
+                    pwm_set_p13(out);
+                    avg = 0;
+                    avg_error = 0;
+                    avg_pos = 0;
+                    count = 0;
+                }
+                ADC_out = ADC1BUF1;
+        }
         
         if (msg = recieveMessage()) {
             pwm_set_p17(msg->flSpeed);
@@ -76,16 +121,13 @@ int16_t main(void)
             pwm_set_p16(msg->clawRotate); // colorful
             
             //move clawGrip msg as it needs to be adjusted
-            //int ret ADCBUF2;
-            uint16_t ADC_out = 0;
-            uint16_t clawGripOut = 0;
-            uint16_t clawActual = 0;
-            int error = 0;
-            if(adc_ready) {
-                clawActual = 0;
-                clawGripOut = gripController(msg->clawGrip, &clawActual, &error);
-                pwm_set_p13(msg->clawGrip);
-                ADC_out = ADC1BUF1;
+            //int ret ADCB
+            
+            if(clawCommand != msg->clawGrip) {
+                clawCommand = msg->clawGrip;
+                avg = 0;
+                count = 0;
+                error_sum = 0;
             }
             // white and red
             pwm_set_p2(msg->cameraBottomRotate);
@@ -118,7 +160,7 @@ int16_t main(void)
             sendMsg.vbat = 0;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
-            sendMsg.pot0 = clawActual;
+            //sendMsg.pot0 = avg;
             sendMsg.pot1 = msg->clawGrip;
             sendMsg.pot2 = error;
             sendMsg.pot3 = clawGripOut;
