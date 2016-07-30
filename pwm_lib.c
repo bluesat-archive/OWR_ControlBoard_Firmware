@@ -177,7 +177,7 @@ void pwm_init_p13(void) {
 }
 
 void pwm_set_p13(uint16_t pulse) {
-    OC11R = safety_cap_pwm(pulse) / HARD_PWM_DIV;
+    OC11R = (pulse) / HARD_PWM_DIV;
 }
 
 /* LIDAR control sowftware pwm here

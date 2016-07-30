@@ -50,6 +50,11 @@ void setupADC1(void) {
     ANSELEbits.ANSE2 = 1;
     ANSELEbits.ANSE3 = 1;
     
+    //setup register for arm feedback.
+    //B10 for analog input
+    TRISBbits.TRISB10 = 1;
+    ANSELBbits.ANSB10 = 1;
+    
     // Set the control registers to zero, these contain garbage after a reset
     // This also ensures the ADC module is OFF
     AD1CON1 = 0;

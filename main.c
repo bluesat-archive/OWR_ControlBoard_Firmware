@@ -30,6 +30,7 @@
 #include "encoder.h"
 #include "pca9685.h"
 #include "adc_lib.h"
+#include "gripController.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -58,6 +59,25 @@ int16_t main(void)
     //init_mpu();
     //init_hmc();
     
+    double p_k = 0.1;
+    int avg = 0;
+    int count = 0;
+    int prev_grip = 0;
+    uint16_t clawActual = 0;
+    uint16_t clawGripOut = 0;
+    uint16_t ADC_out = 0;
+    uint16_t clawCommand = 0;
+    int error = 0;
+    int avg_error = 0;
+    int error_sum = 0;
+    uint16_t avg_pos = 0;
+    pwm_set_p13(1500);
+    while(clawActual != 1500) {
+        int tmp = gripController(clawCommand, &clawActual, &error, &error_sum);
+    }
+    error_sum = 0;
+
+
     external_pwm_init();
 
     int voltCount = 0;
@@ -83,7 +103,7 @@ int16_t main(void)
         if(adc_ready){
             tempPot0 = ADC1BUF0;
             tempSwerveLeft = ADC1BUF1;
-            tempPot1 = ADC1BUF2;
+            //tempPot1 = ADC1BUF2;
             tempSwerveRight = ADC1BUF3;
             tempArmLower = ADC1BUF4;
             tempArmHigher = ADC1BUF5;
@@ -96,6 +116,33 @@ int16_t main(void)
             }
             
             tempPot3 = ADC1BUF9;
+
+            clawActual = 0;
+            count++;
+            clawGripOut = gripController(clawCommand, &clawActual, &error, &error_sum);
+            avg += clawGripOut;
+            avg_pos += clawActual;
+            avg_error += error;
+            if(count == 10) {
+                avg /= count;
+                avg_error /= count;
+                avg_pos /= count;
+                int error_out = clawCommand - avg_pos;
+                uint16_t out;
+                if(error_out < -50 || error_out > 50) {
+                    error_out = 0;
+                    out = 0;
+                } else {
+                    out = (double)(0.5*(double)(error_out) + avg_pos);
+                }
+                sendMsg.pot0 = avg;
+                pwm_set_p13(out);
+                avg = 0;
+                avg_error = 0;
+                avg_pos = 0;
+                count = 0;
+            }
+            ADC_out = ADC1BUF1;
         }
         
         adc_ready = 0;
@@ -114,8 +161,17 @@ int16_t main(void)
             external_pwm_set(3, msg->armTop);
             external_pwm_set(4, msg->armBottom);
             pwm_set_p16(msg->clawRotate); // colorful
-            pwm_set_p13(msg->clawGrip); // white and red
             
+            //move clawGrip msg as it needs to be adjusted
+            //int ret ADCB
+            
+            if(clawCommand != msg->clawGrip) {
+                clawCommand = msg->clawGrip;
+                avg = 0;
+                count = 0;
+                error_sum = 0;
+            }
+            // white and red
             pwm_set_p2(msg->cameraBottomRotate);
             pwm_set_p3(msg->cameraBottomTilt);
             pwm_set_p4(msg->cameraTopRotate);
@@ -123,8 +179,6 @@ int16_t main(void)
             
             //Set lidar tilt pwm
             pwm_set_p24(msg->lidarTilt);
-
-            
             
             sendMsg.pot0 = tempPot0; // TODO: implement and rename when being used.
             sendMsg.pot1 = tempPot1;
@@ -145,6 +199,14 @@ int16_t main(void)
             sendMsg.magic = MESSAGE_MAGIC;
             sendMsg.gpsData = gpsData;
             sendMsg.magData = read_hmc();
+            //sendMsg.pot0 = avg;
+            sendMsg.pot1 = msg->clawGrip;
+            sendMsg.pot2 = error;
+            sendMsg.pot3 = clawGripOut;
+            //sendMsg.claw = ret;
+            //sendMsg.clawIn = msg->clawGrip;
+            //sendMsg.clawCommand = clawGripOut;
+            //sendMsg.clawActual = clawActual;
             //sendMsg.imuData = read_mpu();
             
             
