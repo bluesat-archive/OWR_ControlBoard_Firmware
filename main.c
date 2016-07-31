@@ -72,9 +72,9 @@ int16_t main(void)
     int error_sum = 0;
     uint16_t avg_pos = 0;
     pwm_set_p13(1500);
-    while(clawActual != 1500) {
-        clawActual = (int)(((double)ADC1BUF2)*0.565 + 383.839);
-    }
+    //while(clawActual != 1500) {
+    //    clawActual = (int)(((double)ADC1BUF2)*0.565 + 383.839);
+    //}
     error_sum = 0;
 
 
